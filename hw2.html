@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html>
+      <head>
+        <meta charset="utf-8" /> 
+        <title>
+           Hanyang's page
+        </title>
+         <link rel="stylesheet" type="text/css" href="hw2.css">
+         <link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet">
+      </head>
+      
+      <body bgcolor="lightgrey">
+          <h1 style="color:white">Choose a gift for your friend!</h1>
+
+
+    <div class="content">
+            <section class="main-content">
+                <form class="cart" id="cart-hplus">
+             <div class="item1">
+                     <img src = "https://images.unsplash.com/photo-1485170536212-67180b105ff6?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8e210247da43b9bf5178c1fba0bc687b&auto=format&fit=crop&w=1350&q=80" width = "300" height = "180" />
+                    <h2>Headphones</h2>
+                    
+        
+                    <div class="price1">
+                         <span>$150</span>
+                    </div>
+        
+                    <div class="label1">
+                        <label for="txt-q-head">Quantity desired:</label>
+                        <input type="number" id="txt-q-head" size="3" placeholder="0">
+                    </div>
+         </div>
+    
+
+         <div class="item2">
+                    <img src = "https://images.unsplash.com/photo-1510010652842-09faf41b551b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=3018e03de3e79cd51199cc911164f5cd&auto=format&fit=crop&w=1350&q=80" width = "300" height = "180" />
+                    <h2>Wool Sweater</h2>
+        
+                    <div class="price2">
+                         <span>$65</span>
+                    </div>
+        
+                    <div class="label2">
+                        <label for="txt-q-swea">Quantity desired:</label>
+                        <input type="number" id="txt-q-swea" size="3" placeholder="0">
+                    </div>
+         </div>
+    
+
+
+        <div class="item3">
+                    <img src = "https://images.unsplash.com/photo-1514348871858-1d3c20902571?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=21c49bb93c784ef9667bd5c61f829b6f&auto=format&fit=crop&w=1267&q=80" width= "300" height = "180" />
+
+                    <h2>Perfume</h2>
+                
+        
+                    <div class="price3">
+                         <span>$165</span>
+                    </div>
+        
+                    <div class="label3">
+                        <label for="txt-q-perf">Quantity desired:</label>
+                        <input type="number" id="txt-q-perf" size="3" placeholder="0">
+                    </div>
+         </div>
+
+        <div id="group calc">
+                        <p>
+                        <label for="tol_estimate">Click to estimate:</label><br>
+                        <input type="submit" value="Estimate Total" id="tol_estimate">
+                        <input type="text" id="txt-estimate" placeholder="$0.00">
+                        </p> 
+        
+                </form>
+            </section>
+        </div>
+
+
+<script>
+   
+document.getElementById("cart-hplus").addEventListener("submit", estimateTotal);
+
+function estimateTotal(event) {
+
+    event.preventDefault();
+
+    var itemhead = document.getElementById('txt-q-head').value,
+        itemswea = document.getElementById('txt-q-swea').value,
+        itemperf = document.getElementById('txt-q-perf').value;
+        
+ var totalQty = itemhead + itemswea+ itemperf, 
+        estimate = (150 * itemhead) + (65 * itemswea)+ (165 * itemperf);
+
+ document.getElementById("txt-estimate").value = estimate;
+};
+
+
+</script>
+
+                    
+             
+
+        </body>
+    </html>
