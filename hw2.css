@@ -31,3 +31,11 @@ p{
 	top: 650px;
 	left: 700px;
 }
+
+
+#result{
+	position: absolute;
+	top:710px;
+	left: 800px;
+	font-size: 14px;
+}

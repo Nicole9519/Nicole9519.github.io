@@ -71,6 +71,10 @@
                         <input type="submit" value="Estimate Total" id="tol_estimate">
                         <input type="text" id="txt-estimate" placeholder="$0.00">
                         </p> 
+
+        <div id = "result" style = "color:grey"> 
+          </div>
+
         
                 </form>
             </section>
@@ -89,10 +93,15 @@ function estimateTotal(event) {
         itemswea = document.getElementById('txt-q-swea').value,
         itemperf = document.getElementById('txt-q-perf').value;
         
- var totalQty = itemhead + itemswea+ itemperf, 
+ var totalQty = (itemhead * 1) + (itemswea * 1)+ (itemperf * 1 ), 
         estimate = (150 * itemhead) + (65 * itemswea)+ (165 * itemperf);
 
  document.getElementById("txt-estimate").value = estimate;
+
+ var result = document.getElementById("result");
+
+ result.innerHTML = "Total Items: " + totalQty;
+
 };
 
 
