@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset = "utf-8" />
+		<title>
+			JavaScript Library
+		</title>
+		<link rel="stylesheet" type="text/css" href="hw3.css">
+		<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">	
+	</head>
+	  
+	<body id = "myBody">
+	  		<h1>Graph of Nothing!</h1>
+	  		<svg id = "viz" width = "1000" height = "300"></svg>
+	<div id = "text_y">
+			<p>Country</p>
+			<p>China</p>
+			<p>United States</p>
+			<p>Japan</p>
+			<p>France</p>
+			<p>Cuba</p>
+			<p>Switzerland</p>
+	</div>
+		
+
+	<div id = "button">
+	  		<button onclick= "drawCircles(myData)">2015</button>
+	  		<button onclick= "drawCircles(newData)">2016</button>
+	  		<button onclick= "drawCircles(newData2)">2017</button>
+	  		</div>
+
+	<div class = "note">
+	 	<p>*Notes: The data is not real.</p>
+	 	<p>When updating a point, it changes to purple.</p>
+	 	<p>When adding a new point, it is orange.</p>
+	 		
+	 </div>
+</body>
+		
+	<script src = "https://d3js.org/d3.v4.min.js"></script>
+
+	<script>
+
+	var body = d3.select("body")
+				.style("background-color", "#d6f5f5")
+				.attr("id","myBody");
+
+
+	var myData = [12,24,13,14,23];
+	var newData = [14,22,40,30,13,45];
+	var newData2 = [13, 45, 0 ,23];
+
+
+	var drawCircles = function(data){
+				
+				var svg = d3.select("#viz");
+
+				var points = svg.selectAll(".point")
+				.data(data)
+
+		//enter circles
+			points
+				.enter()
+				.append("circle")
+				.attr("class","point")
+				.attr("r",10)
+				.attr("cx",10)
+				.attr("cy", function(d,i){ return 34+ (i* 34) ; })
+				.attr("fill"," #ff9933")
+				.transition()
+				.duration(1000)
+				.attr("cx", function(d){ return d * 5 - 10;})
+				.attr("cy", function(d,i){ return 34+(i* 34) ;})
+				.attr("r",10)
+				;
+
+		//update 
+			points
+				.transition()
+				.duration(1000)
+				.attr("r", 10)
+				.attr("cx",function(d){ return d * 5 - 10 ;})
+				.attr("cy", function(d,i){ return 34+(i* 34) ;})
+				.attr("fill","#9999ff");
+		//exit
+			points
+				.exit()
+				.transition()
+				.duration(1000)
+				.attr("r",0)
+				.remove()
+				.attr("fill","#adebeb");
+				};
+	
+		drawCircles(myData)
+
+			</script>
+
+</html>
+
