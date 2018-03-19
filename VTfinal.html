@@ -23,7 +23,7 @@
           <div class="column is-half">
             <svg class="snow" width="480" height="600"></svg>
           </div>
-          
+         
         </div>
 <div id="shiva"><span class="count">200</span></div>
 	
@@ -60,14 +60,14 @@ d3.queue()
 function ready(error,data) {
 	if(error) throw error;
 
-	var new_york = topojson.feature(data,{
+	var massa = topojson.feature(data,{
 	type:"GeometryCollection",
 	geometries:data.objects.cb_2015_massachusetts_county_20m.geometries
 });
 
 //identify projection&path
     var projection = d3.geoAlbersUsa()
-    .fitExtent([[20,20],[460,580]],new_york);
+    .fitExtent([[20,20],[460,580]],massa);
 
     var geoPath = d3.geoPath()
     .projection(projection);
@@ -109,7 +109,7 @@ d3.csv("1.3jan.csv", function(error, data){
 
 
     d3.select("svg.snow").selectAll("path.third")
-    .data(new_york.features)
+    .data(massa.features)
     .enter()
     .append("path")
     .attr("opacity", 1)
@@ -175,7 +175,7 @@ d3.csv("1.4jan.csv", function(error, data){
 
 
     d3.select("svg.snow").selectAll("path")
-    .data(new_york.features)
+    .data(massa.features)
     .enter()
     .append("path")
     .attr("opacity", 0)
@@ -243,7 +243,7 @@ d3.csv("1.5jan.csv", function(error, data){
 
 
     d3.select("svg.snow").selectAll("path.second")
-    .data(new_york.features)
+    .data(massa.features)
     .enter()
     .append("path")
     .attr("opacity", 0)
