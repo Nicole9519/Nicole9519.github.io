@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+	  <head>
+	  	<meta charset="utf-8" /> 
+	  	<title>
+          Map!
+	  	</title>
+	  	 <script src = "https://d3js.org/d3.v4.min.js"></script>
+	  	 <script src = "https://unpkg.com/topojson@3"></script>
+	  	 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+	  	 	
+	  </head>
+	  
+	  <body>
+	  		<svg id = "map" width = 1200 height = 600>
+	  		<rect width = 1200 height = 600 fill = "none"></rect>
+	  	</svg>
+	  </body>
+	
+<script>
+
+var snow_domain = [0,3,6,9,12,15,18];
+var color = d3.scaleThreshold()
+    .domain(snow_domain)
+    .range(d3.schemeGreens[7]);
+
+var snowData = d3.map();
+
+d3.json("ma.json", function(error, data){
+
+		var geoJSON = topojson.feature(data,data.objects.cb_2015_massachusetts_county_20m);
+
+		console.log(geoJSON);
+	
+		var proj = d3.geoMercator()
+						.fitSize([1200,600],geoJSON);
+
+		var path = d3.geoPath()
+					.projection(proj);
+
+d3.csv("ma_snow.csv", function(error, data){
+  
+     if(error) {
+            console.log(error);
+     } else {
+
+ 
+ 	data.forEach(function(d,i){
+ 		d.snowfall = +d.snowfall;
+        d.county = d.county;
+
+		d.date = data.filter(function(d){
+  		return d.date == "1/5/18";
+		});
+
+		console.log(d.date);
+})
+             
+        
+
+ 		var max = d3.max(data, function(d){ return d.snowfall;});
+        var min = 0;
+
+console.log(max);
+
+        var linear = d3.scaleLinear()
+                .domain([min,max])
+                .range([0,1]);
+
+        var a = d3.rgb(255,255,255);
+        var b = d3.rgb(102, 153, 0);
+
+        var computeColor = d3.interpolate(a,b);
+
+		var countries = d3.select("#map").selectAll("path")
+							.data(geoJSON.features);
+
+
+		countries.enter()
+		    .append("path")
+		    .attr("opacity", 0)
+		    .attr("d",path)
+		    .transition()
+		    .duration(2000)
+		    .attr("opacity",1)
+		    .attr("fill", function(d){
+      return color(d.snowfall = snowData.get(d.properties.NAME));
+   });
+
+  };
+
+});
+});
+
+
+
+
+</script>
+
+</html>
