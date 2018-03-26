@@ -85,7 +85,9 @@ var svg = d3.select("body")
 // Get the data
 d3.csv("majan2.csv", function(error, data) {
 
-    if (error) throw error;
+    if(error){
+      console.log("error")
+    } else {
 
     data.forEach(function(d) {
     d.year = parseDate(d.year);
@@ -171,7 +173,7 @@ d3.csv("majan2.csv", function(error, data) {
       });
       
  
-});
+})};
  
 
 
