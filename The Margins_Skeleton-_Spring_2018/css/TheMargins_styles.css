@@ -1,0 +1,371 @@
+/* Hamburger nav and menu
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+a
+{
+  text-decoration: none;
+  color: #232323;
+  
+  transition: color 0.3s ease;
+}
+
+a:hover
+{
+  color: orangered;
+}
+
+/*
+ * Black bar with logo
+ */
+
+.TheMargins_nav {   
+    background-color: black;
+    height: 55px;
+    background-image: url(../images/TheMargins_logo_final.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto 36px;
+
+}
+
+#menuToggle
+{
+  display: block;
+  position: relative;
+  top: 18px;
+  left: 20px;
+  
+  z-index: 1;
+  
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#menuToggle input
+{
+  display: block;
+  width: 40px;
+  height: 32px;
+  position: absolute;
+  top: -7px;
+  left: -5px;
+  
+  cursor: pointer;
+  
+  opacity: 0; /* hide this */
+  z-index: 2; /* and place it over the hamburger */
+  
+  -webkit-touch-callout: none;
+}
+
+/*
+ * Just a quick hamburger
+ */
+#menuToggle span
+{
+  display: block;
+  width: 33px;
+  height: 4px;
+  margin-bottom: 5px;
+  position: relative;
+  
+  background: #cdcdcd;
+  border-radius: 3px;
+  
+  z-index: 1;
+  
+  transform-origin: 4px 0px;
+  
+  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+              background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+              opacity 0.55s ease;
+}
+
+#menuToggle span:first-child
+{
+  transform-origin: 0% 0%;
+}
+
+#menuToggle span:nth-last-child(2)
+{
+  transform-origin: 0% 100%;
+}
+
+/* 
+ * Transform all the slices of hamburger
+ * into a crossmark.
+ */
+#menuToggle input:checked ~ span
+{
+  opacity: 1;
+  transform: rotate(45deg) translate(-2px, -1px);
+  background: #232323;
+}
+
+/*
+ * But let's hide the middle one.
+ */
+#menuToggle input:checked ~ span:nth-last-child(3)
+{
+  opacity: 0;
+  transform: rotate(0deg) scale(0.2, 0.2);
+}
+
+/*
+ * Ohyeah and the last one should go the other direction
+ */
+#menuToggle input:checked ~ span:nth-last-child(2)
+{
+  transform: rotate(-45deg) translate(0, -1px);
+}
+
+
+#menu
+{
+  position: absolute;
+  width: 300px;
+  margin: -100px 0 0 -50px;
+  padding: 50px;
+  padding-top: 125px;
+  
+  background: #ededed;
+    opacity: 0.9;
+  list-style-type: none;
+  -webkit-font-smoothing: antialiased;
+  /* to stop flickering of text in safari */
+  
+  transform-origin: 0% 0%;
+  transform: translate(-100%, 0);
+  
+  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+}
+
+#menu li
+    {
+    padding: 10px 0;
+    font-size: 22px;
+    font-family: "Metric-Bold",Helvetica,sans-serif;    
+}
+
+/*
+ * And let's slide it in from the left
+ */
+#menuToggle input:checked ~ ul
+{
+  transform: none;
+}
+
+/* Load Arnham and Metric fonts
+–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– */
+@font-face {
+ font-family: "Metric-Bold";
+  src: url(https://web.northeastern.edu/themargins/Fonts/Metric-Bold.otf);
+}   
+    body {font-family: "Metric-Bold","Helvetica-Bold",sans-serif}
+
+@font-face {
+ font-family: "Metric-Regular";
+  src: url(https://web.northeastern.edu/themargins/Fonts/Metric-Regular.otf);
+}   
+    body {font-family: "Metric-Regular","Helvetica",sans-serif}
+
+@font-face {
+ font-family: "ArnhemPro-Blond";
+  src: url(https://web.northeastern.edu/themargins/Fonts/ArnhemPro-Blond.otf);
+}   
+    body {font-family: "ArnhemPro-Blond","Georgia",serif}
+
+@font-face {
+ font-family: "ArnhemPro-BlondItalic";
+  src: url(https://web.northeastern.edu/themargins/Fonts/ArnhemPro-BlondItalic.otf);
+}   
+    body {font-family: "ArnhemPro-BlondItalic","Georgia-Italic",serif}
+
+@font-face {
+ font-family: "ArnhemPro-Bold";
+  src: url(https://web.northeastern.edu/themargins/Fonts/ArnhemPro-Bold.otf);
+}   
+    body {font-family: "ArnhemPro-Bold","Georgia-Bold",serif}
+
+@font-face {
+ font-family: "ArnhemPro-BoldItalic";
+  src: url(https://web.northeastern.edu/themargins/Fonts/ArnhemPro-Bold.otf);
+}   
+    body {font-family: "ArnhemPro-BoldItalic","Georgia-BoldItalic",serif}
+
+@font-face {
+ font-family: "ArnhemPro-Black";
+  src: url(https://web.northeastern.edu/themargins/Fonts/ArnhemPro-Bold.otf);
+}   
+    body {font-family: "ArnhemPro-Black","Georgia-Bold",serif}
+
+/* Basic text styles for The Margina
+–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+
+h1.TheMargins_head {
+    font-family: "Metric-Bold","Helvetica",sans-serif;
+  color: white;
+  font-size: 4.1em;
+  margin: auto;
+  position: absolute; 
+  text-align: center; 
+  top: 360px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+ }
+
+h2.TheMargins_head {
+    font-family: "Metric","Helvetica",sans-serif;
+      font-size: 1.5em;
+  color: #e0e0eb;
+  margin: auto;
+  position: absolute; 
+  text-align: center; 
+  top: 420px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+div.TheMargins p {
+    font-family: "Arnhem","Georgia",serif;
+    font-size: 20px;
+    line-height: 1.5em;
+    color:#343c40;
+}
+
+a   {
+    text-decoration: none;
+    border-bottom: 1px orangered solid;
+    color: #232323;
+    padding-bottom: 2px;
+    transition: color 0.3s ease;
+    }
+
+a:visited {
+    color:#66b3ff;
+    }
+
+a:hover {
+    color: orangered;
+    }
+
+a:active {
+    color: orangered;
+    }
+
+
+
+
+/* Footer
+–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+h6.TheMargins_footer {
+    font-family: "ArnhemPro-Blond","Georgia",serif;
+    font-weight: 100;
+    color: #666;
+    text-transform: none;
+    text-align: center;
+    letter-spacing: 0em;
+    border-top: 1px solid #666;
+    padding: 20px;
+}
+
+span.TheMargins_footer {
+    font-family: "Metric-Bold","Helvetica",sans-serif;
+    font-weight: 100;
+    font-size: 20px;
+    color: black;
+}
+
+/*topo*/
+
+.headline{
+font-family: Metric;
+font-size: 60px;
+text-align: center; 
+color: #ffffff;
+text-transform: uppercase;
+font-weight: 800;
+}
+
+
+.subhead{
+font-family:Arnhem Pro;
+ font-size:  34px;
+text-align: center;
+color: #ffffff;
+}
+
+.bodytext{ 
+font-family:Arnhem Pro;
+font-size:22px;
+text-align: center;
+color: #000000;
+font-weight: 100;
+}
+
+.byline{  
+font-family:Metric; 
+font-size:22px ;
+font-weight: 600;
+text-align: left;
+color: #000000;
+
+}
+
+div.TheMargins p.myquote{
+font-family:  Metric-bold;
+font-weight: 300px;
+font-size:  36px;
+color: #ed8222;
+text-align: left;
+margin-left:0;
+
+}
+
+.caption{
+font-family: Arnhem Pro;
+font-size:18px;
+text-align: center;
+color:#ed8222;
+} 
+
+.credit{
+font-family: Arnhem Pro;
+font-size:18px;
+text-align: center;
+color:#645f5d;
+} 
+
+a:link {
+    color: #66b3ff;
+}
+
+a:hover {
+    color: #ed8222;
+}
+
+.caption{
+font-family: Arnhem Pro;
+font-size:18px;
+text-align: left;
+color:#645f5d;
+} 
+
+.u-pull-left {
+  float: left; 
+}
+
+
+div.TheMargins h3.kkk {
+    color: #ed8222;
+    font-size: 16px;
+    font-family: Arnhem Pro;
+    font-weight: 18px;
+    }
+
+
