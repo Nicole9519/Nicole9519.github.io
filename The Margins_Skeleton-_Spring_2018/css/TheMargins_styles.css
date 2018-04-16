@@ -230,6 +230,20 @@ h2.TheMargins_head {
   z-index: 1;
 }
 
+p.mycredit {
+    font-family: "Metric-Bold","Helvetica",sans-serif;
+  color: white;
+  font-size: 0.9em;
+  margin: auto;
+  position: absolute; 
+  text-align: right; 
+  top: 780px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+ }
+
 div.TheMargins p {
     font-family: "Arnhem","Georgia",serif;
     font-size: 20px;
@@ -240,7 +254,7 @@ div.TheMargins p {
 a   {
     text-decoration: none;
     border-bottom: 1px orangered solid;
-    color: #232323;
+    color: #66b3ff;
     padding-bottom: 2px;
     transition: color 0.3s ease;
     }
@@ -251,7 +265,7 @@ a:visited {
 
 a:hover {
     color: orangered;
-    }
+}
 
 a:active {
     color: orangered;
@@ -294,10 +308,11 @@ font-weight: 800;
 
 
 .subhead{
-font-family:Arnhem Pro;
+font-family:"Metric-Bold",sans-serif;
  font-size:  34px;
 text-align: center;
 color: #ffffff;
+font-weight: 800;
 }
 
 .bodytext{ 
@@ -323,37 +338,29 @@ font-weight: 300px;
 font-size:  36px;
 color: #ed8222;
 text-align: left;
-margin-left:0;
+margin-left:-200px;
+
 
 }
 
-.caption{
-font-family: Arnhem Pro;
-font-size:18px;
-text-align: center;
-color:#ed8222;
-} 
 
 .credit{
-font-family: Arnhem Pro;
+font-family: "Metric-Bold",sans-serif;
 font-size:18px;
 text-align: center;
 color:#645f5d;
 } 
 
-a:link {
-    color: #66b3ff;
-}
 
-a:hover {
-    color: #ed8222;
-}
 
 .caption{
-font-family: Arnhem Pro;
+font-family: Arnhem Pro-bold;
 font-size:18px;
-text-align: left;
-color:#645f5d;
+text-align: right;
+color:white;
+background-color: #645f5d;
+position: relative;
+top: 500px;
 } 
 
 .u-pull-left {
@@ -361,11 +368,139 @@ color:#645f5d;
 }
 
 
-div.TheMargins h3.kkk {
-    color: #ed8222;
-    font-size: 16px;
-    font-family: Arnhem Pro;
-    font-weight: 18px;
+
+
+.parallax { 
+    /* The image used */
+    background-image: url("Rosana.jpg");
+
+    /* Set a specific height */
+    height: 800px; 
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+.parallax2 { 
+    /* The image used */
+    background-image: url("market.jpg");
+
+    /* Set a specific height */
+    height: 800px; 
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+p.stories{
+
+  text-align: center;
+  font-family: "Metric-Bold",sans-serif;
+ 
+}
+
+
+@media (max-width: 414px) {
+  h1.TheMargins_head {
+  width: 100%;
+  padding-top: 0px;
+  margin-top: -250px;
+  font-size: 40px;
+
+}
+
+div.row p.myquote{
+  display: none;
+}
+
+h2.TheMargins_head {
+  width: 220px;
+  padding-top: 0px;
+  margin-top: -200px;
+  font-size: 15px;
+}
+
+p.mycredit{
+  padding-top: 0px;
+  margin-top: -200px;
+  color: white;
+  font-size: 0em;
+}
+
+p.credit{
+  color: white;
+}
+
+
+
+div.TheMargins p.myquote{
+font-family:  Metric-bold;
+font-weight: 300px;
+color: #ed8222;
+text-align: center;
+font-size: 12px;
+
+}
+
+
+.parallax { 
+    /* The image used */
+    background-image: url("Rosana2.jpg");
+
+    /* Set a specific height */
+    height: 800px; 
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+img.myselect{
+  width:100%;
+}
+
+div.row p.myquote{
+  width: 1000;
+  color: #orangered;
+}
+
+
+
+}
+
+
+
+a.title_A  {
+    text-decoration: none;
+    color: #66b3ff;
+    transition: color 0.3s ease;
+    color: black;
+    border-bottom: 0px orangered solid;
     }
 
+
+a.title_A:visited {
+    color:#66b3ff;
+    }
+
+
+a.title_A:hover {
+    color: orangered;
+}
+
+
+a.title_A:active {
+    color: orangered;
+    }
 

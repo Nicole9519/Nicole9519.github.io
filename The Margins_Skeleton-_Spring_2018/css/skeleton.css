@@ -411,7 +411,7 @@ there.
 
 
 /* Larger than mobile */
-@media (min-width: 415px) {
+@media (max-width: 415px) {
   #hero-image {
   width: 100%;
   padding-top: 0px;
