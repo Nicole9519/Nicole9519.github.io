@@ -1,0 +1,506 @@
+/* Hamburger nav and menu
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+a
+{
+  text-decoration: none;
+  color: #232323;
+  
+  transition: color 0.3s ease;
+}
+
+a:hover
+{
+  color: orangered;
+}
+
+/*
+ * Black bar with logo
+ */
+
+.TheMargins_nav {   
+    background-color: black;
+    height: 55px;
+    background-image: url(../images/TheMargins_logo_final.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto 36px;
+
+}
+
+#menuToggle
+{
+  display: block;
+  position: relative;
+  top: 18px;
+  left: 20px;
+  
+  z-index: 1;
+  
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#menuToggle input
+{
+  display: block;
+  width: 40px;
+  height: 32px;
+  position: absolute;
+  top: -7px;
+  left: -5px;
+  
+  cursor: pointer;
+  
+  opacity: 0; /* hide this */
+  z-index: 2; /* and place it over the hamburger */
+  
+  -webkit-touch-callout: none;
+}
+
+/*
+ * Just a quick hamburger
+ */
+#menuToggle span
+{
+  display: block;
+  width: 33px;
+  height: 4px;
+  margin-bottom: 5px;
+  position: relative;
+  
+  background: #cdcdcd;
+  border-radius: 3px;
+  
+  z-index: 1;
+  
+  transform-origin: 4px 0px;
+  
+  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+              background 0.5s cubic-bezier(0.77,0.2,0.05,1.0),
+              opacity 0.55s ease;
+}
+
+#menuToggle span:first-child
+{
+  transform-origin: 0% 0%;
+}
+
+#menuToggle span:nth-last-child(2)
+{
+  transform-origin: 0% 100%;
+}
+
+/* 
+ * Transform all the slices of hamburger
+ * into a crossmark.
+ */
+#menuToggle input:checked ~ span
+{
+  opacity: 1;
+  transform: rotate(45deg) translate(-2px, -1px);
+  background: #232323;
+}
+
+/*
+ * But let's hide the middle one.
+ */
+#menuToggle input:checked ~ span:nth-last-child(3)
+{
+  opacity: 0;
+  transform: rotate(0deg) scale(0.2, 0.2);
+}
+
+/*
+ * Ohyeah and the last one should go the other direction
+ */
+#menuToggle input:checked ~ span:nth-last-child(2)
+{
+  transform: rotate(-45deg) translate(0, -1px);
+}
+
+
+#menu
+{
+  position: absolute;
+  width: 300px;
+  margin: -100px 0 0 -50px;
+  padding: 50px;
+  padding-top: 125px;
+  
+  background: #ededed;
+    opacity: 0.9;
+  list-style-type: none;
+  -webkit-font-smoothing: antialiased;
+  /* to stop flickering of text in safari */
+  
+  transform-origin: 0% 0%;
+  transform: translate(-100%, 0);
+  
+  transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+}
+
+#menu li
+    {
+    padding: 10px 0;
+    font-size: 22px;
+    font-family: "Metric-Bold",Helvetica,sans-serif;    
+}
+
+/*
+ * And let's slide it in from the left
+ */
+#menuToggle input:checked ~ ul
+{
+  transform: none;
+}
+
+/* Load Arnham and Metric fonts
+–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– */
+@font-face {
+ font-family: "Metric-Bold";
+  src: url(https://web.northeastern.edu/themargins/Fonts/Metric-Bold.otf);
+}   
+    body {font-family: "Metric-Bold","Helvetica-Bold",sans-serif}
+
+@font-face {
+ font-family: "Metric-Regular";
+  src: url(https://web.northeastern.edu/themargins/Fonts/Metric-Regular.otf);
+}   
+    body {font-family: "Metric-Regular","Helvetica",sans-serif}
+
+@font-face {
+ font-family: "ArnhemPro-Blond";
+  src: url(https://web.northeastern.edu/themargins/Fonts/ArnhemPro-Blond.otf);
+}   
+    body {font-family: "ArnhemPro-Blond","Georgia",serif}
+
+@font-face {
+ font-family: "ArnhemPro-BlondItalic";
+  src: url(https://web.northeastern.edu/themargins/Fonts/ArnhemPro-BlondItalic.otf);
+}   
+    body {font-family: "ArnhemPro-BlondItalic","Georgia-Italic",serif}
+
+@font-face {
+ font-family: "ArnhemPro-Bold";
+  src: url(https://web.northeastern.edu/themargins/Fonts/ArnhemPro-Bold.otf);
+}   
+    body {font-family: "ArnhemPro-Bold","Georgia-Bold",serif}
+
+@font-face {
+ font-family: "ArnhemPro-BoldItalic";
+  src: url(https://web.northeastern.edu/themargins/Fonts/ArnhemPro-Bold.otf);
+}   
+    body {font-family: "ArnhemPro-BoldItalic","Georgia-BoldItalic",serif}
+
+@font-face {
+ font-family: "ArnhemPro-Black";
+  src: url(https://web.northeastern.edu/themargins/Fonts/ArnhemPro-Bold.otf);
+}   
+    body {font-family: "ArnhemPro-Black","Georgia-Bold",serif}
+
+/* Basic text styles for The Margina
+–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+
+h1.TheMargins_head {
+    font-family: "Metric-Bold","Helvetica",sans-serif;
+  color: white;
+  font-size: 4.1em;
+  margin: auto;
+  position: absolute; 
+  text-align: center; 
+  top: 360px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+ }
+
+h2.TheMargins_head {
+    font-family: "Metric","Helvetica",sans-serif;
+      font-size: 1.5em;
+  color: #e0e0eb;
+  margin: auto;
+  position: absolute; 
+  text-align: center; 
+  top: 420px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+p.mycredit {
+    font-family: "Metric-Bold","Helvetica",sans-serif;
+  color: white;
+  font-size: 0.9em;
+  margin: auto;
+  position: absolute; 
+  text-align: right; 
+  top: 780px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+ }
+
+div.TheMargins p {
+    font-family: "Arnhem","Georgia",serif;
+    font-size: 20px;
+    line-height: 1.5em;
+    color:#343c40;
+}
+
+a   {
+    text-decoration: none;
+    border-bottom: 0px orangered solid;
+    color: #66b3ff;
+    padding-bottom: 2px;
+    transition: color 0.3s ease;
+    }
+
+a:visited {
+    color:#66b3ff;
+    }
+
+a:hover {
+    color: orangered;
+}
+
+a:active {
+    color: orangered;
+    }
+
+
+
+
+/* Footer
+–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+h6.TheMargins_footer {
+    font-family: "ArnhemPro-Blond","Georgia",serif;
+    font-weight: 100;
+    color: #666;
+    text-transform: none;
+    text-align: center;
+    letter-spacing: 0em;
+    border-top: 1px solid #666;
+    padding: 20px;
+}
+
+span.TheMargins_footer {
+    font-family: "Metric-Bold","Helvetica",sans-serif;
+    font-weight: 100;
+    font-size: 20px;
+    color: black;
+}
+
+/*topo*/
+
+.headline{
+font-family: Metric;
+font-size: 60px;
+text-align: center; 
+color: #ffffff;
+text-transform: uppercase;
+font-weight: 800;
+}
+
+
+.subhead{
+font-family:"Metric-Bold",sans-serif;
+ font-size:  34px;
+text-align: center;
+color: #ffffff;
+font-weight: 800;
+}
+
+.bodytext{ 
+font-family:Arnhem Pro;
+font-size:22px;
+text-align: center;
+color: #000000;
+font-weight: 100;
+}
+
+.byline{  
+font-family:Metric; 
+font-size:22px ;
+font-weight: 600;
+text-align: left;
+color: #000000;
+
+}
+
+div.TheMargins p.myquote{
+font-family:  Metric-bold;
+font-weight: 300px;
+font-size:  36px;
+color: #ed8222;
+text-align: left;
+margin-left:-200px;
+
+
+}
+
+
+.credit{
+font-family: "Metric-Bold",sans-serif;
+font-size:18px;
+text-align: center;
+color:#645f5d;
+} 
+
+
+
+.caption{
+font-family: Arnhem Pro-bold;
+font-size:18px;
+text-align: right;
+color:white;
+background-color: #645f5d;
+position: relative;
+top: 500px;
+} 
+
+.u-pull-left {
+  float: left; 
+}
+
+
+
+
+.parallax { 
+    /* The image used */
+    background-image: url("Rosana.jpg");
+
+    /* Set a specific height */
+    height: 800px; 
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+.parallax2 { 
+    /* The image used */
+    background-image: url("market.jpg");
+
+    /* Set a specific height */
+    height: 800px; 
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+p.stories{
+
+  text-align: center;
+  font-family: "Metric-Bold",sans-serif;
+ 
+}
+
+
+@media (max-width: 414px) {
+  h1.TheMargins_head {
+  width: 100%;
+  padding-top: 0px;
+  margin-top: -250px;
+  font-size: 40px;
+
+}
+
+div.row p.myquote{
+  display: none;
+}
+
+h2.TheMargins_head {
+  width: 220px;
+  padding-top: 0px;
+  margin-top: -200px;
+  font-size: 15px;
+}
+
+p.mycredit{
+  padding-top: 0px;
+  margin-top: -200px;
+  color: white;
+  font-size: 0em;
+}
+
+p.credit{
+  color: white;
+}
+
+
+
+div.TheMargins p.myquote{
+font-family:  Metric-bold;
+font-weight: 300px;
+color: #ed8222;
+text-align: center;
+font-size: 12px;
+
+}
+
+
+.parallax { 
+    /* The image used */
+    background-image: url("Rosana2.jpg");
+
+    /* Set a specific height */
+    height: 800px; 
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+img.myselect{
+  width:100%;
+}
+
+div.row p.myquote{
+  width: 1000;
+  color: #orangered;
+}
+
+
+
+}
+
+
+
+a.title_A  {
+    text-decoration: none;
+    color: #66b3ff;
+    transition: color 0.3s ease;
+    color: black;
+    border-bottom: 0px orangered solid;
+    }
+
+
+a.title_A:visited {
+    color:#66b3ff;
+    }
+
+
+a.title_A:hover {
+    color: orangered;
+}
+
+
+a.title_A:active {
+    color: orangered;
+    }
+
