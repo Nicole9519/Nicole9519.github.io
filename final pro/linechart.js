@@ -158,30 +158,8 @@ var initialGraph = function(county){
                     } else{
                       return "blue";
                     }  
-                })
-      .on("mouseover",function(d){ 
-        d3.select(this).transition().duration(100)
-              .style("fill", "black")
-              .style("opacity",1)
-              .attr("r", 12);
-      })
-      .on("mousemove",function(d){
-      
-        tooltip.style("left", "800px")
-            .style("top", "500px");
-      })
-      .on("mouseout",function(d){
-       
-        d3.select(this).style("fill", function(d,i) { 
-                    if (d.values[4].kind == "snow") {
-                      return "red"; 
-                    } else{
-                      return "blue";
-                    }  
-                })
-        .attr("r",4);
-      });
-      
+                });
+
  
 
 
@@ -275,30 +253,7 @@ var initialGraph = function(county){
                       return "blue";
                     }  
                 })
-        .on("mouseover",function(d){ 
-        d3.select(this).transition().duration(100)
-              .style("fill", "black")
-              .style("opacity",1)
-              .attr("r", 12);
-      })
-      .on("mousemove",function(d){
-      
-        tooltip.style("left", "800px")
-            .style("top", "500px");
-      })
-      .on("mouseout",function(d){
-       
-        d3.select(this).style("fill",function(d) { 
-                    if (d.key == "snow") {
-                      return "red"; 
-                    } else{
-                      return "blue";
-                    }  
-                })
-        .attr("r",4);
-      });
      
- 
 };
 
 
