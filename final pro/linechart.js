@@ -176,7 +176,7 @@ var initialGraph = function(county){
         .data(function(d) { return d.values; })
         .enter()
         .append("text")
-        .text(function(d){ return d.key})
+        .text(function(d){ return "<br><br>" + d.key})
         .attr("x", width)
         .attr("y", function(d){ 
             var falls = d.values[d.values.length - 1].falls;
