@@ -68,7 +68,13 @@ var color = d3.scaleThreshold()
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(x).ticks(5));
 
-
+    svg.append("text")             
+      .attr("transform",
+            "translate(" + (width/2) + " ," + 
+                           (height + margin.top + 20) + ")")
+      .style("text-anchor", "middle")
+      .text("Year");
+ 
   // Add yAxis
     svg.append("g")
       .attr("class", "axis")
