@@ -176,11 +176,11 @@ var initialGraph = function(county){
         .data(function(d) { return d.values; })
         .enter()
         .append("text")
-        .text(function(d){ return "<br><br>" + d.key})
+        .text(function(d){ return  d.key})
         .attr("x", width)
         .attr("y", function(d){ 
             var falls = d.values[d.values.length - 1].falls;
-            return y(falls);
+            return y(falls + "20px" );
            
 
          })
