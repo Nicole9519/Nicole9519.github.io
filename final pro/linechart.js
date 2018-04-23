@@ -230,7 +230,7 @@ var initialGraph = function(county){
         .data(function(d) { return d.values; })
         .transition()
         .duration(1000)
-        .text(function(d){ return d.key})
+        .text(function(d){ return "<br><br>" + d.key})
         .attr("x", width)
         .attr("y", function(d){ 
             var falls = d.values[d.values.length - 1].falls;
