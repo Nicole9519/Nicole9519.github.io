@@ -234,7 +234,7 @@ var initialGraph = function(county){
         .attr("x", width)
         .attr("y", function(d){ 
             var falls = d.values[d.values.length - 1].falls;
-            return y(falls + "20px" );
+            return y(falls);
            
 
          })
