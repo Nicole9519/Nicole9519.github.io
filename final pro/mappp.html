@@ -9,7 +9,7 @@
 	  	 <script src = "https://unpkg.com/topojson@3"></script>
 	  	 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 	  	 <link rel="stylesheet" type="text/css" href="finalmap.css">
-	  	 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js">
+	  	 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js">
 	  	 <link href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
 	</script>
 	  	 <style>
@@ -28,7 +28,7 @@ font-size: 55px;
 
 .title{
 text-align: center;
-padding-top:40px;
+padding-top:0px;
 }
 
 .content h1{
@@ -48,8 +48,8 @@ padding-top:40px;
 	padding:0px;
 	text-align: center;
 	width:400px;
-	height:200px;
 }
+
 
 #button{
 	text-align: center;
@@ -130,6 +130,34 @@ font-family: 'Abril Fatface', cursive;
 
 }
 
+a {
+    text-decoration: none;
+    border-bottom: 0px orangered solid;
+    color: #66b3ff;
+    padding-bottom: 2px;
+    transition: color 0.3s ease;
+    }
+
+a:visited {
+    color:#66b3ff;
+    }
+
+a:hover {
+    color: orangered;
+}
+
+a:active {
+    color: orangered;
+    }
+
+ iframe:focus { 
+    outline: none;
+}
+
+iframe[seamless] { 
+    display: block;
+}
+
 	  	 </style>
 	  </head>
 	  
@@ -180,23 +208,42 @@ font-family: 'Abril Fatface', cursive;
 		<div id = "img">
 			<img src = "photo.jpg" width = "70%" height = "70%"></img>
 			<br><p style = "color:#808080">Credit: The Massachusetts Real Estate Law Blog</p>
+		</div><br>
+
+		<div class = "title">
+			<h1><b>Rainfall and snowfall in history</b></h1>
 		</div>
 
 		<div class = "title">
-			<h1><b>Rainfall and snowfall in January in history</b></h1>
+			<p><b>Snowfall and rainfall in January in recent five years</b></p>
 		</div>
 
+		
 		<div id = "content2">
-			<p>According to NOAA, for the last five year. 2018 seemes to have the most snowy January. Bristol received more than 22 inches snowfall in total in January. Meanwhile, Nantacket saw the least snowfall.
-			<p>For the last three years, which county had the most snowfall?  Due to the location of Massachusetts, snow comes more heavier than rain.<b>Check answers below.</b></p>
+			<p>According to NOAA, during the last five year, Massachusetts residents seemeed to see the most snowy January in 2014 and 2018. In 2014, it said that up to <a href = "https://heavy.com/news/2014/01/winter-storm-hercules-2014-snowfall-totals-massachusetts-how-did-you-stack-up/">100 million Americans</a> was affected by the storm "Hercules". Especially, Boxford, in Essex County, is topping the chart at 23.8 inches daily. 
+			<br>In 2018, Bristol received more than 22 inches snowfall in total in January and 15.5 inches in January 5. However, Nantacket saw the least snowfall.
+			<p>So which county had the most snowfall in recent years? What about rainfall amount? Also, due to the location of Massachusetts, it seems taht snow comes more heavier than the rain.</p>
 		</div>
-	<br><br>
-
+	<br><br><br>
 
 		<div id = "Dropdown"></div>
 		<div id="graph" style="text-align:center"></div>
 		<div id = "linechart">
 			 <script type="text/javascript" src="linechart.js"></script>
+		</div>
+
+
+		<div class = "title">
+			<p><b>Massachusetts 1-Day Snowfall Extremes by County</b></p>
+		</div>
+
+		<div id = "content2">
+			<p>Since 1980, there's more and more heavy snow in Massachusetts.<p>
+
+		</div>
+
+		<div id = "dot" style = "text-align :right">
+			<iframe src="dot.html" width = "900" height = "500" frameborder="no"></iframe>
 		</div>
 
 		<div id="tooltip"></div>

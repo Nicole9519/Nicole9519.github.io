@@ -68,13 +68,7 @@ var color = d3.scaleThreshold()
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(x).ticks(5));
 
-    svg.append("text")             
-      .attr("transform",
-            "translate(" + (width/2) + " ," + 
-                           (height + margin.top + 20) + ")")
-      .style("text-anchor", "middle")
-      .text("Year");
- 
+
   // Add yAxis
     svg.append("g")
       .attr("class", "axis")
@@ -82,12 +76,12 @@ var color = d3.scaleThreshold()
   
 //text
    svg.append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 0 - margin.left)
-      .attr("x",0 - (height / 2))
-      .attr("dy", "1em")
-      .style("text-anchor", "middle")
-      .text("Values(inch)");    
+            .attr("transform", "rotate(-90)")
+            .attr("y", 0 - margin.left)
+            .attr("x", 0 - (height/2))
+            .attr("dy", "1em")
+            .style("text-anchor", "middle")
+            .text("(inches)");
 
  // Create a dropdown
     var Menu = d3.select("#Dropdown")
@@ -159,7 +153,7 @@ var initialGraph = function(county){
                       return "blue";
                     }  
                 });
-
+      
  
 
 
@@ -167,7 +161,7 @@ var initialGraph = function(county){
         .data(function(d) { return d.values; })
         .enter()
         .append("text")
-        .text(function(d){ return  d.key})
+        .text(function(d){ return d.key})
         .attr("x", width)
         .attr("y", function(d){ 
             var falls = d.values[d.values.length - 1].falls;
@@ -252,8 +246,10 @@ var initialGraph = function(county){
                     } else{
                       return "blue";
                     }  
-                })
+                });
+        
      
+ 
 };
 
 
