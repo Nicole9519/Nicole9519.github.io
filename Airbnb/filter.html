@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset = "utf-8" />
+		<title>
+			JavaScript Library
+		</title>
+	<style>
+div.tooltip { 
+    position: absolute;
+    bottom: 0;
+    width: 230px;
+    left: -125px;
+    font-size: 12px;
+    line-height: 16px;
+    padding: 10px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #000;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(200, 200, 200, 0.85);
+    text-align: center; 
+    height: 50px;
+}
+</style>
+	</head>
+	  
+<body id = "myBody">
+	  		<h1>Airbnb in Boston</h1>
+	  		<svg id = "viz" width = "1024" height = "1000"></svg>
+
+</body>
+
+<script src = "https://d3js.org/d3.v4.min.js"></script>
+
+
+	<script>
+ 	 	width = 1024;
+    height = 1000;
+
+	var body = d3.select("body")
+				.style("background-color", "white")
+				.attr("id","myBody");
+	
+
+	var div = d3.select("body").append("div")	
+    	.attr("class", "tooltip")				
+    	.style("opacity", 0);
+
+   d3.queue()
+    .defer(d3.csv, "air18.csv")
+    .defer(d3.csv, "gun.csv")
+    .awaitAll(function(error,dataArray){
+        data = dataArray[0];
+        gun = dataArray[1];
+     
+
+        var colorScale = d3.scaleOrdinal(d3.schemeCategory20c);
+
+		var radiusScale = d3.scaleSqrt().domain([0,1]).range([0,1])
+
+	    var simulation = d3.forceSimulation()
+      //create a force .force("name of it", define it)
+      //Moving them to center of SVG
+      .force("xCenter", d3.forceX(width/3).strength(.06))
+      .force("yCenter", d3.forceY(height/3).strength(.06))
+      //Keep them from colliding (radius of the area that we want
+      //collision to avoid)
+      .force("noCollision", d3.forceCollide(function (d) {
+        return radiusScale(d.coli) + 6;
+      }))
+
+
+				var svg = d3.select("#viz");
+
+				var points = svg.selectAll("circles")
+				.data(data)
+				.enter()
+				.append("circle")
+				.attr("class","air")
+				 .attr("r", function(d) {
+           			 return radiusScale(d.coli *5)
+        				  })
+				//.attr("cx", function(d,i){ return d.x * 8; })
+				//.attr("cy", function(d,i){ return d.y*8 +3 ;})
+				.attr("fill", function(d){
+					return colorScale(d.neighbourhood);
+				})
+				
+				var circles = points 
+				.on("mouseover", function(d){
+					d3.select(this)
+					.transition(100)
+					.attr("fill","black")
+					.attr("r", function(d) {
+           			 return radiusScale(d.coli * 8)
+        				  });
+				
+			div.transition().duration(200).style("opacity",.9);
+
+			div.html(d.name+ "<br>By: " + d.host_name + "<br/>" + d.neighbourhood)
+				 .style("left", (d3.event.pageX) + "px")		
+               	 .style("top", (d3.event.pageY - 28) + "px")
+               	 .style("opacity",1.0);
+
+				})
+				.on("mouseout", function(d){
+					d3.select(this)
+					.transition(100)
+					.attr("fill","#ff9933")
+					.attr("r", function(d) {
+           			 return radiusScale(d.coli* 5 )
+        			  });;
+
+			//console.log(d.neighbourhood);
+
+
+
+				});
+
+
+	 simulation.nodes(data)
+        .on('tick', ticked)
+
+      //Control the tick - updates data points with cx and cy
+      function ticked (d) {
+        circles
+          .attr("cx", function (d) {
+            return d.x
+          })
+          .attr("cy", function (d) {
+            return d.y
+          })
+      }
+               
+	   
+        });
+		
+
+
+</script>
+
+</html>
+
+
