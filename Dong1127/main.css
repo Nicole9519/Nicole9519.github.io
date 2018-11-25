@@ -1,0 +1,42 @@
+
+#circle-graphic{
+    width: 100%;
+    min-height: 100vh;
+}
+.main-container .row{
+    position: relative;
+}
+
+.graphic-wrapper{
+    position: relative;
+    top: 0px;
+}
+.circle-graphic{
+
+}
+.trigger{
+    margin: 300px 0px 300px 0px;
+    background-color: rgba(255, 255, 255, 0.6);
+    padding: 15px;
+}
+
+.fixed{
+    position: fixed;
+    top: 0px;
+}
+.relativeTop{
+    position: absolute;
+    top: 0px
+}
+.lessthan100{
+    color: #ffcccc;
+}
+.to200{
+    color: #ff6666;
+}
+.to300{
+    color: #cc0000;
+}
+.morethan300{
+    color: #4d0000;
+}
