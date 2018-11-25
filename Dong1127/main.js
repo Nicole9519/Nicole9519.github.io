@@ -147,11 +147,11 @@ function graphicUpdate(step) {
     } else if(step ==2){
 
         var forceX = d3.forceX().x(function (d) {
-            return barByPriceX(d);
+            return barBypriceX(d);
         }).strength(2.5);
 
         var forceY = d3.forceY().y(function (d) {
-            return barByPriceY(d)
+            return barBypriceY(d)
         }).strength(2.5);
         forceLayout(data, forceX, forceY);
         drawtext(Investor);
@@ -257,11 +257,11 @@ var drawlegend = function(data){
   
       }     
 
-function barByPriceY(d) {
+function barBypriceY(d) {
     return   3 * height/5- Math.floor(d.count/4)*8
 }
 
-function barByPriceX(d) {
+function barBypriceX(d) {
     var scaleX1 = d3.scaleBand()
         .domain(axisData)
         .range([width/4, width * 2 /4]);
@@ -272,9 +272,9 @@ function barByPriceX(d) {
 
     var baseX;
     if(d.attr=='East Boston'){
-        baseX = scaleX1(d.Price);
+        baseX = scaleX1(d.price);
     } else{
-        baseX = scaleX2(d.Price)
+        baseX = scaleX2(d.price)
     }
 
     if(d.count%4==0){
@@ -310,10 +310,10 @@ function forceLayout(data, forceX, forceY) {
                 return d.y
             })
             .attr('fill', function (d) {
-                return colorByPrice(d.Price)
+                return colorByprice(d.price)
             });
     }
-    function colorByPrice(d) {
+    function colorByprice(d) {
         if(d=='lessthan100'){
             return '#ffcccc'
         } else if(d=='100to200'){
@@ -347,10 +347,10 @@ function forceLayout2(data, forceX, forceY) {
                 return d.y
             })
             .attr('fill', function (d) {
-                return colorByPrice(d.Price)
+                return colorByprice(d.price)
             });
     }
-    function colorByPrice(d) {
+    function colorByprice(d) {
         if(d=='lessthan100'){
             return '#ffcccc'
         } else if(d=='100to200'){
@@ -384,10 +384,10 @@ function forceLayout3(data, forceX, forceY) {
                 return d.y
             })
             .attr('fill', function (d) {
-                return colorByPrice(d.Price)
+                return colorByprice(d.price)
             });
     }
-    function colorByPrice(d) {
+    function colorByprice(d) {
         if(d =='non'){
             return 'red'
         } else if(d=='inv'){
@@ -427,23 +427,23 @@ function createCircleData() {
             var datum = {
                 id: i,
                 attr: 'East Boston',
-                Price: 'other',
+                price: 'other',
             };
 
             if (i< 118){
-                datum.Price = 'lessthan100';
+                datum.price = 'lessthan100';
                 datum.count = i;
                 datum.count2 = i;
             } else if(i< 237){
-                datum.Price = '100to200';
+                datum.price = '100to200';
                 datum.count = i-118;
                 datum.count2 = i-118; 
             } else if(i< 286){
-                datum.Price = '200to300';
+                datum.price = '200to300';
                 datum.count = i-237;
                 datum.count2 = i-237;
             } else {
-                datum.Price = 'morethan300';
+                datum.price = 'morethan300';
                 datum.count = i-286;
                 datum.count2 = i-286;
             } 
@@ -453,19 +453,19 @@ function createCircleData() {
                 attr: 'Amazon'
             };
             if(i< 392){
-                datum.Price = 'lessthan100';
+                datum.price = 'lessthan100';
                 datum.count = i-316;
                 datum.count2 = i-316+118; 
             } else if(i< 482){
-                datum.Price = '100to200';
+                datum.price = '100to200';
                 datum.count = i-392;
                 datum.count2 = i-392+119; 
             } else if(i< 538){
-                datum.Price = '200to300';
+                datum.price = '200to300';
                 datum.count = i-482;
                 datum.count2 = i-482+49;
             } else {
-                datum.Price = 'morethan300';
+                datum.price = 'morethan300';
                 datum.count = i-538;
                 datum.count2 = i-538+30;
             } 
@@ -478,7 +478,531 @@ function createCircleData() {
 
 
 
-function createCircleDatabyNeigh(Price = 'morethan300';
+function createCircleDatabyNeigh() {
+    var data =[];
+
+    for(var i = 0; i<595; i++){
+        if(i< 38){
+            var datum = {
+                id: i,
+                attr: 'Allston',
+                yaxis:1,
+                xaxis:1
+            };
+
+            if (i< 23){
+                datum.price = 'lessthan100';
+                datum.count = i;
+
+            } else if(i< 31){
+                datum.price = '100to200';
+                datum.count = i-23;
+          
+            } else if(i< 34){
+                datum.price = '200to300';
+                datum.count = i-31;
+               
+            } else {
+                datum.price = 'morethan300';
+                datum.count = i-34;
+            
+            }
+        } else if (i<84) {
+            var datum = {
+                id: i,
+                attr: 'Back Bay',
+                yaxis:1,
+                xaxis:2
+            };
+            if(i< 42){
+                datum.price = 'lessthan100';
+                datum.count = i-38;
+            } else if(i< 60){
+                datum.price = '100to200';
+                datum.count = i-42;
+            } else if(i< 72){
+                datum.price = '200to300';
+                datum.count = i-60;
+            } else {
+                datum.price = 'morethan300';
+                datum.count = i-72;
+            }  
+        } else if (i < 88) {
+            var datum = {
+                id: i,
+                attr: 'Bay Village',
+                 yaxis:1,
+                 xaxis:3
+            };
+            if(i< 84){
+                datum.price = 'lessthan100';
+                datum.count = i-84;
+            } else if(i< 86){
+                datum.price = '100to200';
+                datum.count = i-84;
+
+            } else if(i< 87){
+                datum.price = '200to300';
+                datum.count = i-86;
+            } else {
+                datum.price = 'morethan300';
+                datum.count = i-87;
+            }
+        } else if (i<113) {
+            var datum = {
+                id: i,
+                attr: 'Beacon Hill',
+                 yaxis:1,
+                 xaxis:4
+            };
+            if(i< 92){
+                datum.price = 'lessthan100';
+                datum.count = i-88;
+            } else if(i< 107){
+                datum.price = '100to200';
+                datum.count = i-92;
+            } else if(i< 111){
+                datum.price = '200to300';
+                datum.count = i-107;
+            } else {
+                datum.price = 'morethan300';
+                datum.count = i-111;
+            }
+        } else if (i<148) {
+            var datum = {
+                id: i,
+                attr: 'Brighton',
+                 yaxis:1,
+                 xaxis:5
+            };
+            if(i< 134){
+                datum.price = 'lessthan100';
+                datum.count = i-113;
+            } else if(i< 143){
+                datum.price = '100to200';
+                datum.count = i-134;
+            } else if(i< 146){
+                datum.price = '200to300';
+                datum.count = i-143;
+            } else {
+                datum.price = 'morethan300';
+                datum.count = i-146;
+            } 
+
+        } else if (i<165) {
+            var datum = {
+                id: i,
+                attr: 'Charlestown',
+                yaxis:2,
+                xaxis:1
+            };
+            if(i< 152){
+                datum.price = 'lessthan100';
+                datum.count = i-148;
+            } else if(i< 159){
+                datum.price = '100to200';
+                datum.count = i-152;
+            } else if(i< 162){
+                datum.price = '200to300';
+                datum.count = i-159;
+            } else {
+                datum.price = 'morethan300';
+                datum.count = i-162;
+            } 
+
+        } else if (i<181) {
+            var datum = {
+                id: i,
+                attr: 'Chinatown',
+                yaxis:2,
+                xaxis:2
+            };
+            if(i< 167){
+                datum.price = 'lessthan100';
+                datum.count = i-165;
+            } else if(i< 172){
+                datum.price = '100to200';
+                datum.count = i-167;
+            } else if(i< 177){
+                datum.price = '200to300';
+                datum.count = i-172;
+            } else {
+                datum.price = 'morethan300';
+                datum.count = i-177;
+            } 
+
+        } else if (i<233) {
+            var datum = {
+                id: i,
+                attr: 'Dorchester',
+                yaxis:2,
+                xaxis:3
+            };
+            if(i< 218){
+                datum.price = 'lessthan100';
+                datum.count = i-181;
+            } else if(i< 230){
+                datum.price = '100to200';
+                datum.count = i-218;
+            } else if(i< 233){
+                datum.price = '200to300';
+                datum.count = i-230;
+            } else {
+                datum.price = 'morethan300';
+                datum.count = i-230;
+            } 
+
+        } else if (i<269) {
+            var datum = {
+                id: i,
+                attr: 'Downtown',
+                yaxis:2,
+                xaxis:4
+            };
+            if(i< 235){
+                datum.price = 'lessthan100';
+                datum.count = i-233;
+            } else if(i< 245){
+                datum.price = '100to200';
+                datum.count = i-235;
+            } else if(i< 256){
+                datum.price = '200to300';
+                datum.count = i-245;
+            } else {
+                datum.price = 'morethan300';
+                datum.count = i-256;
+            } 
+
+        } else if (i<297) {
+            var datum = {
+                id: i,
+                attr: 'East Boston',
+                yaxis:2,
+                xaxis:5
+            };
+            if(i< 285){
+                datum.price = 'lessthan100';
+                datum.count = i-269;
+            } else if(i< 294){
+                datum.price = '100to200';
+                datum.count = i-285;
+            } else if(i< 297){
+                datum.price = '200to300';
+                datum.count = i-294;
+            } else {
+                datum.price = 'morethan300';
+                datum.count = i-297;
+            } 
+
+        } else if (i<345) {
+            var datum = {
+                id: i,
+                attr: 'Fenway',
+                yaxis:3,
+                xaxis:1
+            };
+            if(i< 305){
+                datum.price = 'lessthan100';
+                datum.count = i-297;
+            } else if(i< 322){
+                datum.price = '100to200';
+                datum.count = i-305;
+            } else if(i< 335){
+                datum.price = '200to300';
+                datum.count = i-322;
+            } else {
+                datum.price = 'morethan300';
+                datum.count = i-335;
+            } 
+
+        } else if (i<352) {
+            var datum = {
+                id: i,
+                attr: 'Hyde Park',
+                yaxis:3,
+                xaxis:2
+            };
+            if(i< 351){
+                datum.price = 'lessthan100';
+                datum.count = i-345;
+            } else if(i< 352){
+                datum.price = '100to200';
+                datum.count = i-351;
+            } else if(i< 352){
+                datum.price = '200to300';
+                datum.count = i-352;
+            } else {
+                datum.price = 'morethan300';
+                datum.count = i-352;
+            } 
+
+        } else if (i<401) {
+            var datum = {
+                id: i,
+                attr: 'Jamaica Plain',
+                yaxis:3,
+                xaxis:3
+            };
+            if(i< 374){
+                datum.price = 'lessthan100';
+                datum.count = i-352;
+            } else if(i< 392){
+                datum.price = '100to200';
+                datum.count = i-374;
+            } else if(i< 398){
+                datum.price = '200to300';
+                datum.count = i-392;
+            } else {
+                datum.price = 'morethan300';
+                datum.count = i-398;
+            } 
+
+        } else if (i<402) {
+            var datum = {
+                id: i,
+                attr: 'Leather District',
+                yaxis:3,
+                xaxis:4
+            };
+            if(i< 401){
+                datum.price = 'lessthan100';
+                datum.count = i-401;
+            } else if(i< 402){
+                datum.price = '100to200';
+                datum.count = i-401;
+            } else if(i< 402){
+                datum.price = '200to300';
+                datum.count = i-402;
+            } else {
+                datum.price = 'morethan300';
+                datum.count = i-402;
+            } 
+
+        } else if (i<403) {
+            var datum = {
+                id: i,
+                attr: 'Longwood Medical Area',
+                yaxis:3,
+                xaxis:5
+            };
+            if(i< 403){
+                datum.price = 'lessthan100';
+                datum.count = i-402;
+            } else if(i< 402){
+                datum.price = '100to200';
+                datum.count = i-402;
+            } else if(i< 402){
+                datum.price = '200to300';
+                datum.count = i-402;
+            } else {
+                datum.price = 'morethan300';
+                datum.count = i-402;
+            } 
+
+        } else if (i<407) {
+            var datum = {
+                id: i,
+                attr: 'Mattapan',
+                yaxis:4,
+                xaxis:1
+            };
+            if(i< 407){
+                datum.price = 'lessthan100';
+                datum.count = i-403;
+            } else if(i< 407){
+                datum.price = '100to200';
+                datum.count = i-407;
+            } else if(i< 407){
+                datum.price = '200to300';
+                datum.count = i-407;
+            } else {
+                datum.price = 'morethan300';
+                datum.count = i-407;
+            } //1
+
+        } else if (i<430) {
+            var datum = {
+                id: i,
+                attr: 'Mission Hill',
+                yaxis:4,
+                xaxis:2
+            };
+            if(i< 415){
+                datum.price = 'lessthan100';
+                datum.count = i-407;
+            } else if(i< 421){
+                datum.price = '100to200';
+                datum.count = i-415;
+            } else if(i< 426){
+                datum.price = '200to300';
+                datum.count = i-421;
+            } else {
+                datum.price = 'morethan300';
+                datum.count = i-426;
+            } //2
+
+        } else if (i<455) {
+            var datum = {
+                id: i,
+                attr: 'North End',
+                yaxis:4,
+                xaxis:3
+            };
+            if(i< 434){
+                datum.price = 'lessthan100';
+                datum.count = i-430;
+            } else if(i< 449){
+                datum.price = '100to200';
+                datum.count = i-434;
+            } else if(i< 453){
+                datum.price = '200to300';
+                datum.count = i-449;
+            } else {
+                datum.price = 'morethan300';
+                datum.count = i-453;
+            } //2
+ 
+        } else if (i<467) {
+            var datum = {
+                id: i,
+                attr: 'Roslindale',
+                yaxis:4,
+                xaxis:4
+            };
+            if(i< 464){
+                datum.price = 'lessthan100';
+                datum.count = i-455;
+            } else if(i< 467){
+                datum.price = '100to200';
+                datum.count = i-464;
+            } else if(i< 467){
+                datum.price = '200to300';
+                datum.count = i-467;
+            } else {
+                datum.price = 'morethan300';
+                datum.count = i-467;
+            }//2
+        } else if (i<497) {
+            var datum = {
+                id: i,
+                attr: 'Roxbury',
+                yaxis:4,
+                xaxis:4
+            };
+            if(i< 485){
+                datum.price = 'lessthan100';
+                datum.count = i-466;
+            } else if(i< 493){
+                datum.price = '100to200';
+                datum.count = i-485;
+            } else if(i< 495){
+                datum.price = '200to300';
+                datum.count = i-493;
+            } else {
+                datum.price = 'morethan300';
+                datum.count = i-495;
+            }//3
+        } else if (i<529) {
+            var datum = {
+                id: i,
+                attr: 'South Boston',
+                yaxis:5,
+                xaxis:1
+            };
+            if(i< 502){
+                datum.price = 'lessthan100';
+                datum.count = i-496;
+            } else if(i< 518){
+                datum.price = '100to200';
+                datum.count = i-502;
+            } else if(i< 523){
+                datum.price = '200to300';
+                datum.count = i-518;
+            } else {
+                datum.price = 'morethan300';
+                datum.count = i-523;
+            } //4
+ 
+        } else if (i<532) {
+            var datum = {
+                id: i,
+                attr: 'South Boston Waterfront',
+                yaxis:5,
+                xaxis:2
+            };
+            if(i< 528){
+                datum.price = 'lessthan100';
+                datum.count = i-528;
+            } else if(i< 530){
+                datum.price = '100to200';
+                datum.count = i-528;
+            } else if(i< 531){
+                datum.price = '200to300';
+                datum.count = i-530;
+            } else {
+                datum.price = 'morethan300';
+                datum.count = i-531;
+            } //6
+ 
+        } else if (i<575) {
+            var datum = {
+                id: i,
+                attr: 'South End',
+                yaxis:5,
+                xaxis:3
+            };
+            if(i< 538){
+                datum.price = 'lessthan100';
+                datum.count = i-532;
+            } else if(i< 561){
+                datum.price = '100to200';
+                datum.count = i-538;
+            } else if(i< 568){
+                datum.price = '200to300';
+                datum.count = i-561;
+            } else {
+                datum.price = 'morethan300';
+                datum.count = i-568;
+            } 
+ 
+        } else if (i<589) {
+            var datum = {
+                id: i,
+                attr: 'West End',
+                yaxis:5,
+                xaxis:4
+            };
+            if(i< 577){
+                datum.price = 'lessthan100';
+                datum.count = i-575;
+            } else if(i< 582){
+                datum.price = '100to200';
+                datum.count = i-577;
+            } else if(i< 587){
+                datum.price = '200to300';
+                datum.count = i-582;
+            } else {
+                datum.price = 'morethan300';
+                datum.count = i-587;
+            } 
+        } else if (i<595) {
+            var datum = {
+                id: i,
+                attr: 'West Roxbury',
+                yaxis:5,
+                xaxis:5
+            };
+            if(i< 593){
+                datum.price = 'lessthan100';
+                datum.count = i-589;
+            } else if(i< 594){
+                datum.price = '100to200';
+                datum.count = i-593;
+            } else if(i< 595){
+                datum.price = '200to300';
+                datum.count = i-594;
+            } else {
+                datum.price = 'morethan300';
                 datum.count = i-595;
             } 
         }
@@ -491,7 +1015,384 @@ function createCircleDatabyNeigh(Price = 'morethan300';
 }
 
 
-function createCircleDatabyNeigh2(Pricetum);
+function createCircleDatabyNeigh2() {
+    var data =[];
+
+    for(var i = 0; i<595; i++){
+        if(i< 38){
+            var datum = {
+                id: i,
+                attr: 'Allston',
+                yaxis:1,
+                xaxis:1
+            };
+
+            if (i< 20){
+                datum.price = 'non';
+                datum.count = i;
+
+            } else{
+                datum.price = 'inv';
+                datum.count = i-20;
+          
+            } 
+        } else if (i<84) {
+            var datum = {
+                id: i,
+                attr: 'Back Bay',
+                yaxis:1,
+                xaxis:2
+            };
+            if(i< 58){
+                datum.price = 'non';
+                datum.count = i-38;
+            } else {
+                datum.price = 'inv';
+                datum.count = i-58;
+            } 
+        } else if (i < 88) {
+            var datum = {
+                id: i,
+                attr: 'Bay Village',
+                 yaxis:1,
+                 xaxis:3
+            };
+            if(i< 86){
+                datum.price = 'non';
+                datum.count = i-84;
+            } else {
+                datum.price = 'inv';
+                datum.count = i-86;
+
+            } 
+        } else if (i<113) {
+            var datum = {
+                id: i,
+                attr: 'Beacon Hill',
+                 yaxis:1,
+                 xaxis:4
+            };
+            if(i< 103){
+                datum.price = 'non';
+                datum.count = i-88;
+            } else {
+                datum.price = 'inv';
+                datum.count = i-103;
+            } 
+        } else if (i<148) {
+            var datum = {
+                id: i,
+                attr: 'Brighton',
+                 yaxis:1,
+                 xaxis:5
+            };
+            if(i< 136){
+                datum.price = 'non';
+                datum.count = i-113;
+            } else {
+                datum.price = 'inv';
+                datum.count = i-136;
+            } 
+
+        } else if (i<165) {
+            var datum = {
+                id: i,
+                attr: 'Charlestown',
+                yaxis:2,
+                xaxis:1
+            };
+            if(i< 160){
+                datum.price = 'non';
+                datum.count = i-148;
+            } else {
+                datum.price = 'inv';
+                datum.count = i-160;
+            } 
+        } else if (i<181) {
+            var datum = {
+                id: i,
+                attr: 'Chinatown',
+                yaxis:2,
+                xaxis:2
+            };
+            if(i< 168){
+                datum.price = 'non';
+                datum.count = i-165;
+            } else{
+                datum.price = 'inv';
+                datum.count = i-168;
+            } 
+        } else if (i<233) {
+            var datum = {
+                id: i,
+                attr: 'Dorchester',
+                yaxis:2,
+                xaxis:3
+            };
+            if(i< 206){
+                datum.price = 'non';
+                datum.count = i-181;
+            } else{
+                datum.price = 'inv';
+                datum.count = i-206;
+            } 
+
+        } else if (i<269) {
+            var datum = {
+                id: i,
+                attr: 'Downtown',
+                yaxis:2,
+                xaxis:4
+            };
+            if(i< 246){
+                datum.price = 'non';
+                datum.count = i-233;
+            } else {
+                datum.price = 'inv';
+                datum.count = i-246;
+            }
+        } else if (i<297) {
+            var datum = {
+                id: i,
+                attr: 'East Boston',
+                yaxis:2,
+                xaxis:5
+            };
+            if(i< 287){
+                datum.price = 'non';
+                datum.count = i-269;
+            } else {
+                datum.price = 'inv';
+                datum.count = i-287;
+            } 
+        } else if (i<345) {
+            var datum = {
+                id: i,
+                attr: 'Fenway',
+                yaxis:3,
+                xaxis:1
+            };
+            if(i< 315){
+                datum.price = 'non';
+                datum.count = i-297;
+            } else {
+                datum.price = 'inv';
+                datum.count = i-315;
+            }
+
+        } else if (i<352) {
+            var datum = {
+                id: i,
+                attr: 'Hyde Park',
+                yaxis:3,
+                xaxis:2
+            };
+            if(i< 350){
+                datum.price = 'non';
+                datum.count = i-345;
+            } else {
+                datum.price = 'inv';
+                datum.count = i-350;
+            } 
+
+        } else if (i<401) {
+            var datum = {
+                id: i,
+                attr: 'Jamaica Plain',
+                yaxis:3,
+                xaxis:3
+            };
+            if(i< 389){
+                datum.price = 'non';
+                datum.count = i-352;
+            } else {
+                datum.price = 'inv';
+                datum.count = i-389;
+            } 
+
+        } else if (i<402) {
+            var datum = {
+                id: i,
+                attr: 'Leather District',
+                yaxis:3,
+                xaxis:4
+            };
+            if(i< 402){
+                datum.price = 'non';
+                datum.count = i-401;
+            } else {
+                datum.price = 'inv';
+                datum.count = i-402;
+            } 
+
+        } else if (i<403) {
+            var datum = {
+                id: i,
+                attr: 'Longwood Medical Area',
+                yaxis:3,
+                xaxis:5
+            };
+            if(i< 403){
+                datum.price = 'non';
+                datum.count = i-402;
+            } else {
+                datum.price = 'inv';
+                datum.count = i-403;
+            } 
+
+        } else if (i<407) {
+            var datum = {
+                id: i,
+                attr: 'Mattapan',
+                yaxis:4,
+                xaxis:1
+            };
+            if(i< 406){
+                datum.price = 'non';
+                datum.count = i-403;
+            } else {
+                datum.price = 'inv';
+                datum.count = i-406;
+            }  
+
+        } else if (i<430) {
+            var datum = {
+                id: i,
+                attr: 'Mission Hill',
+                yaxis:4,
+                xaxis:2
+            };
+            if(i< 416){
+                datum.price = 'non';
+                datum.count = i-407;
+            } else {
+                datum.price = 'inv';
+                datum.count = i-416;
+            }
+
+        } else if (i<455) {
+            var datum = {
+                id: i,
+                attr: 'North End',
+                yaxis:4,
+                xaxis:3
+            };
+            if(i< 442){
+                datum.price = 'non';
+                datum.count = i-430;
+            } else {
+                datum.price = 'inv';
+                datum.count = i-442;
+            } 
+ 
+        } else if (i<467) {
+            var datum = {
+                id: i,
+                attr: 'Roslindale',
+                yaxis:4,
+                xaxis:4
+            };
+            if(i< 463){
+                datum.price = 'non';
+                datum.count = i-455;
+            } else {
+                datum.price = 'inv';
+                datum.count = i-463;
+            } 
+
+        } else if (i<497) {
+            var datum = {
+                id: i,
+                attr: 'Roxbury',
+                yaxis:4,
+                xaxis:4
+            };
+            if(i< 482){
+                datum.price = 'non';
+                datum.count = i-466;
+            } else {
+                datum.price = 'inv';
+                datum.count = i-482;
+            } 
+
+        } else if (i<529) {
+            var datum = {
+                id: i,
+                attr: 'South Boston',
+                yaxis:5,
+                xaxis:1
+            };
+            if(i< 516){
+                datum.price = 'non';
+                datum.count = i-496;
+            } else {
+                datum.price = 'inv';
+                datum.count = i-516;
+            } 
+ 
+        } else if (i<532) {
+            var datum = {
+                id: i,
+                attr: 'South Boston Waterfront',
+                yaxis:5,
+                xaxis:2
+            };
+            if(i< 531){
+                datum.price = 'non';
+                datum.count = i-528;
+            } else {
+                datum.price = 'inv';
+                datum.count = i-531;
+            } 
+ 
+        } else if (i<575) {
+            var datum = {
+                id: i,
+                attr: 'South End',
+                yaxis:5,
+                xaxis:3
+            };
+            if(i< 556){
+                datum.price = 'non';
+                datum.count = i-532;
+            } else {
+                datum.price = 'inv';
+                datum.count = i-556;
+            } 
+ 
+        } else if (i<589) {
+            var datum = {
+                id: i,
+                attr: 'West End',
+                yaxis:5,
+                xaxis:4
+            };
+            if(i< 577){
+                datum.price = 'non';
+                datum.count = i-575;
+            } else {
+                datum.price = 'inv';
+                datum.count = i-577;
+            } 
+        } else if (i<595) {
+            var datum = {
+                id: i,
+                attr: 'West Roxbury',
+                yaxis:5,
+                xaxis:5
+            };
+            if(i< 594){
+                datum.price = 'non';
+                datum.count = i-589;
+            } else {
+                datum.price = 'inv';
+                datum.count = i-594;
+            } 
+        }
+
+
+
+        data.push(datum);
     }
     return data;
 }
