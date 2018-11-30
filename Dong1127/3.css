@@ -252,12 +252,14 @@ img.mySlides  {
 â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“â€“ */
 .hero {
     height: 700px; /* This controls height of div */
-    background-image: url(images/IMG_48482.JPG);
+    background-image: url(images/IMG_4848.JPG);
     background-color: #666;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     margin-bottom: 30px;
+     max-width:100%;
+
 }
 
 

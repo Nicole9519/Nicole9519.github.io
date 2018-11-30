@@ -143,7 +143,7 @@ function graphicUpdate(step) {
         forceLayout(data, forceX, forceY);
         drawtext(Investor);
        
- drawlegend(legend);
+
     } else if(step ==2){
 
         var forceX = d3.forceX().x(function (d) {
