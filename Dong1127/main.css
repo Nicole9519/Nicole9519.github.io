@@ -3,7 +3,7 @@
     width: 100%;
     min-height: 100vh;
 }
-.main-container .row{
+.jsmain .row{
     position: relative;
 }
 
@@ -11,9 +11,7 @@
     position: relative;
     top: 0px;
 }
-.circle-graphic{
 
-}
 .trigger{
     margin: 300px 0px 300px 0px;
     background-color: rgba(255, 255, 255, 0.6);
@@ -24,6 +22,7 @@
     position: fixed;
     top: 0px;
 }
+
 .relativeTop{
     position: absolute;
     top: 0px
