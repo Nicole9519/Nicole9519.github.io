@@ -34,35 +34,35 @@ var Investor = [
    ];
 
 var distances = [
-   {names:"Allston", xaxis: 1.5, yaxis: 2.2, count: 379  },
-   {names :"Back Bay", xaxis:3,  yaxis: 2.2, count: 460},
-   {names:"Bay Village", xaxis: 4.7,  yaxis: 2.2, count: 28},
-   {names:"Beacon Hill", xaxis: 6.4,  yaxis: 2.2, count: 251},
-   {names:"Brighton", xaxis: 8.2,  yaxis: 2.2, count: 338},
+   {names:"Allston", xaxis: 1.5, yaxis: 1.7, count: 379  },
+   {names :"Back Bay", xaxis:3,  yaxis: 1.7, count: 460},
+   {names:"Bay Village", xaxis: 4.7,  yaxis: 1.7, count: 28},
+   {names:"Beacon Hill", xaxis: 6.4,  yaxis: 1.7, count: 251},
+   {names:"Brighton", xaxis: 8.2,  yaxis: 1.7, count: 338},
 
-    {names:"Charlestown", xaxis: 1.5, yaxis: 3.7 , count:171},
-   {names :"Chinatown", xaxis:3,  yaxis: 3.7, count: 151},
-   {names:"Dorchester", xaxis: 4.7,  yaxis: 3.7, count: 521},
-   {names:"Downtown", xaxis: 6.4,  yaxis: 3.7, count: 366},
-   {names:"East Boston", xaxis: 8.2,  yaxis: 3.7, count: 282},
+    {names:"Charlestown", xaxis: 1.5, yaxis: 3.0 , count:171},
+   {names :"Chinatown", xaxis:3,  yaxis: 3.0, count: 151},
+   {names:"Dorchester", xaxis: 4.7,  yaxis: 3.0, count: 521},
+   {names:"Downtown", xaxis: 6.4,  yaxis: 3.0, count: 366},
+   {names:"East Boston", xaxis: 8.2,  yaxis: 3.0, count: 282},
 
-    {names:"Fenway", xaxis: 1.5, yaxis: 5.2 , count: 474},
-   {names :"Hyde Park", xaxis:3,  yaxis: 5.2, count:66},
-   {names:"Jamaica Plain", xaxis: 4.7,  yaxis: 5.2, count:494},
-   {names:"Leather District", xaxis: 6.4,  yaxis: 5.2, count: 8 },
-   {names:"Longwood Medical Area", xaxis: 8.2,  yaxis: 5.2, count: 12},
+    {names:"Fenway", xaxis: 1.5, yaxis: 4.2 , count: 474},
+   {names :"Hyde Park", xaxis:3,  yaxis: 4.2, count:66},
+   {names:"Jamaica Plain", xaxis: 4.7,  yaxis: 4.2, count:494},
+   {names:"Leather District", xaxis: 6.4,  yaxis: 4.2, count: 8 },
+   {names:"Longwood Medical Area", xaxis: 8.2,  yaxis: 4.2, count: 12},
 
-    {names:"Mattapan", xaxis: 1.5, yaxis: 6.5 , count:47},
-   {names :"Mission Hill", xaxis:3,  yaxis: 6.5, count:233},
-   {names:"North End", xaxis: 4.7,  yaxis: 6.5, count:246},
-   {names:"Roslindale", xaxis: 6.4,  yaxis: 6.5, count:120},
-   {names:"Roxbury", xaxis: 8.2,  yaxis: 6.5, count:310},
+    {names:"Mattapan", xaxis: 1.5, yaxis: 5.1 , count:47},
+   {names :"Mission Hill", xaxis:3,  yaxis:5.1, count:233},
+   {names:"North End", xaxis: 4.7,  yaxis: 5.1, count:246},
+   {names:"Roslindale", xaxis: 6.4,  yaxis: 5.1, count:120},
+   {names:"Roxbury", xaxis: 8.2,  yaxis: 5.1, count:310},
 
-    {names:"South Boston", xaxis: 1.5, yaxis: 8 , count:331},
-   {names :"South Boston Waterfront", xaxis:2.7,  yaxis: 8, count:47},
-   {names:"South End", xaxis: 5,  yaxis: 8, count:428},
-   {names:"West End", xaxis: 6.4,  yaxis: 8, count:133},
-   {names:"West Roxbury", xaxis: 8.2,  yaxis: 8, count:61}
+    {names:"South Boston", xaxis: 1.5, yaxis: 6.3 , count:331},
+   {names :"South Boston Waterfront", xaxis:2.7,  yaxis:  6.3, count:47},
+   {names:"South End", xaxis: 5,  yaxis:  6.3, count:428},
+   {names:"West End", xaxis: 6.4,  yaxis:  6.3, count:133},
+   {names:"West Roxbury", xaxis: 8.2,  yaxis:  6.3, count:61}
    ];
 
 var textempty = [];
@@ -157,7 +157,7 @@ function graphicUpdate(step) {
         drawtext(Investor);
   
     }  else if(step == 3){
-
+        
         var forceX = d3.forceX().x(function (d) {
       
             if(d.xaxis ==1 ){
@@ -172,24 +172,24 @@ function graphicUpdate(step) {
                 return 5 * width/6 
             }
         }).strength(1);
-
+     
         var forceY = d3.forceY().y(function (d) {
             if(d.yaxis ==1 ){
-                return height/7
+                return height/9
             } else if (d.yaxis == 2) {
-                return width *2 /7
+                return width *2 /9
             } else if (d.yaxis == 3){
-                return 3 * width/7
+                return 3 * width/9
             } else if (d.yaxis == 4){
-                return 4 * width/7
+                return 4 * width/9
             } else if (d.yaxis == 5){
-                return  5* width/7
+                return  5* width/9
             }
         }).strength(1);
         forceLayout2(data2, forceX, forceY);
         drawtext(distances);
        
-    }  
+    }
 }
 /*
 var drawlegend = function(data){
@@ -285,6 +285,31 @@ function barBypriceX(d) {
         return baseX+2*circleR+2
     }else if(d.count%4==3){
         return baseX+4*circleR+4
+    }
+}
+
+function forceLayoutempty(data, forceX, forceY) {
+    drawCircles(data2);
+    
+    simulation
+        .force("collide",d3.forceCollide(circleR).radius(circleR).strength(1) )
+        .force("charge", d3.forceManyBody().strength(0.5))
+        .restart()
+        .alpha(0.06)
+        .force('y', forceY)
+        .force('x', forceX)
+        .on('tick', ticked);
+    
+    function ticked() {
+        d3.selectAll('.circleNode')
+            .attr('cx',function(d){
+                return d.x
+                })
+            .attr('cy',function(d){
+                return d.y
+            })
+            .attr('fill',"white")
+            .attr("opacity","0");
     }
 }
 
@@ -1396,6 +1421,5 @@ function createCircleDatabyNeigh2() {
     }
     return data;
 }
-
 
 
