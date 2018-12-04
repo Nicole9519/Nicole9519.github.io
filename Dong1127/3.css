@@ -289,3 +289,52 @@ text-align: left;
 opacity: 80%;
 
 }
+
+
+/* Media Queries
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+/*
+Note: The best way to structure the use of media queries is to create the queries
+near the relevant code. For example, if you wanted to change the styles for buttons
+on small devices, paste the mobile query code up in the buttons section and style it
+there.
+*/
+/* Mobile */
+@media (max-width: 414px) {
+    .photo1 { 
+    /* The image used */
+    background-image: url(images/IMG_1456.jpg);
+
+    /* Set a specific height */
+    height: 300px; 
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+.photo2 { 
+    /* The image used */
+    background-image: url(images/IMG_0566.jpg);
+
+    /* Set a specific height */
+    height: 300px; 
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+}
+/* Larger than mobile */
+@media (min-width: 415px) {
+    .put_class_name_here {
+    /*css for mobile */   
+    }
+}
