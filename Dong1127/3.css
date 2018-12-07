@@ -290,6 +290,13 @@ opacity: 80%;
 
 }
 
+.img{
+  display: none;
+}
+.frame{
+  display: none;
+}
+
 
 /* Media Queries
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
@@ -313,7 +320,7 @@ there.
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    display:none;
+    display: none;
 }
 
 
@@ -322,14 +329,29 @@ there.
     background-image: url(images/IMG_0566.jpg);
 
     /* Set a specific height */
-    height: 300px; 
+    height: 210px; 
 
     /* Create the parallax scrolling effect */
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-     display:none;
+    display: none;
+}
+
+.img{
+display: block;
+
+}
+
+.frame{
+  display: block;
+}
+
+
+
+#javascript1{
+  display: none;
 }
 
 
