@@ -348,12 +348,13 @@ display: block;
   display: block;
 }
 
-
-
 #javascript1{
   display: none;
 }
 
+.myquote{
+display: none;
+}
 
 }
 /* Larger than mobile */
