@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="https://d3js.org/d3.v4.js"></script>
+    <link rel="stylesheet" type="text/css" href="neigh.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/noframework.waypoints.js"></script>
+<link rel="stylesheet" href="https://camd.northeastern.edu/mediainnovation19/css/skeleton.css">
+<link rel="stylesheet" href="https://camd.northeastern.edu/mediainnovation19/css/normalize.css">
+<link rel="stylesheet" href="3.css">
+<script src="https://d3js.org/topojson.v1.min.js" charset="utf-8"></script>
+<style>
+ @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,600');
+  *{
+    margin:0;
+    padding:0;
+  }
+  html,
+  body{
+     height: 100%;
+     padding: 0;
+     scroll-behavior: smooth;
+     color: #666;
+     font-family: 'Open Sans', sans-serif;
+     font-weight: 300;
+  }
+  h2{
+    line-height: 1.25;
+    padding-top: 45px;
+    font-weight: 300;
+  }
+  svg{
+    padding: 20px;
+  }
+  text{
+    font-size: 10px;
+  }
+  strong{
+    font-weight: 600;
+  }
+  #graphic {
+    max-width:  1440px;
+    width: 100%;
+    position:   relative; 
+    height:  100%;
+    position:  relative; 
+    margin:auto;
+  }
+  .container2 {
+    height: 100%;
+    max-width: 440px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    height: 100%;
+    line-height: 1.5;
+    left: 650px;
+  }
+  .container2 div {
+    height: 100%;
+    display: block;
+    padding: 0 45px;
+  }
+  .fixed {
+    position: fixed;
+    width: 700px;
+    height: 500px;
+    top: 50px;
+    left: 100px;
+  }
+  p.first{
+    margin-left: 40px;
+    margin-top: 25px;
+  }
+  p.second{
+    margin-left: 40px;
+    margin-top: 35px;
+  }
+   p.third{
+    margin-left: 40px;
+    margin-top: 45px;
+  }
+   p.fourth{
+    margin-left: 40px;
+    margin-top: 55px;
+  }
+   p.fifth{
+    margin-left: 40px;
+    margin-top: 65px;
+  }
+.c1{
+    color: #ffcccc
+}
+.c2{
+    color: #ff6666
+}
+.c3{
+    color: #cc0000
+}
+.c4{
+    color:#4d0000
+}
+
+  </style>
+
+</head>
+
+<body id = "myBody">
+  <div id="graphic">  
+  <div class="container2">
+    <div id="div1">
+      <br><br><br><br><br><br><br><br>
+      <p>As we can see, neighborhoods like <strong>Back Bay, Dorchester, South End, and Jamaica Plain are Airbnb concentrated</strong>, while the price in Back Bay and South End are much higher than the others. Besides, in <strong>Downtown, Fenway, Chinatown, there are more Airbnb that has higher price.</strong> </p>
+                    <span class="c1">●</span> <$100<br/>
+                    <span class="c2">●</span> <$200<br/>
+                    <span class="c3">●</span> <$300<br/>
+                    <span class="c4">●</span> >$300<br/>
+    </div><br><br><br><br><br><br><br><br><br>
+    <div id="div2">
+      <p>According to the data from Airbnb Insider, <font size= "10">88</font> percent of Airbnb hosts in the City of Boston rented out 2 units or fewer. This supports the Airbnb company line that the majority of users are average joes renting out their homes. The other 12% of hosts, however, listed from 3 to 320 units. They were responsible for <font size= "10">52</font> percent of all the listings in the city.</p>
+      <p></p>
+    </div>
+     <div id="div3">
+      <p>According to the data from Airbnb Insider, <font size= "10">88</font> percent of Airbnb hosts in the City of Boston rented out 2 units or fewer. This supports the Airbnb company line that the majority of users are average joes renting out their homes. The other 12% of hosts, however, listed from 3 to 320 units. They were responsible for <font size= "10">52</font> percent of all the listings in the city.</p>
+      <p></p>
+    </div>
+  </div>
+    <div class="fixed"><svg id="viz" width="100%" height="100%">
+     <div class = "text">
+  
+
+
+ </div></svg></div>
+
+</div><!-- /graphic -->
+  
+
+  
+
+
+ </body> 
+  
+  <script>
+ 	
+  
+
+ let spacing = 40;
+    let rows = 10;
+    let column = 10;
+    let randnum = (min,max) => Math.round( Math.random() * (max-min) + min );
+
+var width = 500,
+    height = 500;
+
+var svg = d3.select("#viz")
+  .append("svg")
+  .attr("height", height)
+  .attr("width", width)
+  .append("g")
+  .attr("transform", "translate(0,0)")
+
+
+var myData = [12,24,13,14,23];
+  var newData = [14,22,40,30,13,45];
+  var newData2 = [13, 45, 0 ,23];
+
+var Investor = [
+   {names:"Non-investor Airbnb", xaxis: 1.3 , yaxis: 3.5},
+   {names :"Investor Airbnb", xaxis:4.3 , yaxis :3.5 }
+   ];
+
+ var distances = [
+   {names:"Allston", xaxis: 1, yaxis: 1, count: 379  },
+   {names :"Back Bay", xaxis:2,  yaxis: 1, count: 460},
+   {names:"Bay Village", xaxis: 3,  yaxis: 1, count: 28},
+   {names:"Beacon Hill", xaxis: 4,  yaxis: 1, count: 251},
+   {names:"Brighton", xaxis: 5,  yaxis: 1, count: 338},
+
+    {names:"Charlestown", xaxis: 1, yaxis: 2 , count:171},
+   {names :"Chinatown", xaxis:2,  yaxis: 2, count: 151},
+   {names:"Dorchester", xaxis: 3,  yaxis: 2, count: 521},
+   {names:"Downtown", xaxis: 4,  yaxis: 2, count: 366},
+   {names:"East Boston", xaxis: 5,  yaxis: 2, count: 282},
+
+    {names:"Fenway", xaxis: 1, yaxis: 3 , count: 474},
+   {names :"Hyde Park", xaxis:2,  yaxis: 3, count:66},
+   {names:"Jamaica Plain", xaxis: 3,  yaxis: 3, count:494},
+   {names:"Leather District", xaxis: 4,  yaxis: 3, count: 8 },
+   {names:"Longwood Medical Area", xaxis: 5,  yaxis: 3, count: 12},
+
+    {names:"Mattapan", xaxis: 1, yaxis: 4 , count:47},
+   {names :"Mission Hill", xaxis:2,  yaxis: 4, count:233},
+   {names:"North End", xaxis: 3,  yaxis: 4, count:246},
+   {names:"Roslindale", xaxis: 4,  yaxis: 4, count:120},
+   {names:"Roxbury", xaxis: 5,  yaxis: 4, count:310},
+
+    {names:"South Boston", xaxis: 1, yaxis: 5 , count:331},
+   {names :"South Boston Waterfront", xaxis:2,  yaxis: 5, count:47},
+   {names:"South End", xaxis: 3,  yaxis: 5, count:428},
+   {names:"West End", xaxis: 4,  yaxis: 5, count:133},
+   {names:"West Roxbury", xaxis: 5,  yaxis: 5, count:61}
+   ];
+
+   var textempty = [];
+
+  var drawCircles = function(data){
+        
+        var svg = d3.select("#viz");
+
+          var text = svg.selectAll("text")
+        .data(data);
+
+    //enter circles
+ 
+
+      text
+        .enter()
+        .append("text")
+        .attr("class","enter")
+        .attr("x", function(d,i){ return d.xaxis * 100 - 90 ;})
+        .attr("y", function(d,i){ return d.yaxis * 95; })
+        .text(function(d){ return d.names ;})
+        .style("font-size","13")
+        .style("font-weight","1000");
+
+     
+    //update 
+
+    text
+        .transition()
+        .duration(1000)
+        .attr("x",function(d){ return d.xaxis * 80 ;})
+        .attr("y", function(d,i){ return d.yaxis * 90;})
+        .text( function(d){return d.names ;}) 
+        .style("font-size","13")
+        .style("font-weight","1000");
+    //exit
+    
+
+        text.exit().remove();
+  
+      }        
+
+  function byNei() {
+
+    //padding = 1.5, // separation between same-color nodes
+    //clusterPadding = 6, // separation between different-color nodes
+    //maxRadius = 15;
+
+//var n = 67, // total number of nodes
+   // m = 3; // number of distinct clusters
+
+
+var radiusScale = d3.scaleSqrt().domain([0, 1]).range([0, 1])
+
+
+
+// the simulation is a collection of forces
+// about where we want our circles to go
+// and how we want them to interact
+// STEP ONE: get them to the middle
+// STEP TWO: don't have them collide!
+
+var forceXSplit = d3.forceX(function(d){
+    if(d.neighbourhood ==="Allston") {
+      return (width * .10) 
+    } else if(d.neighbourhood === "Back Bay"){
+      return (width * .30) 
+    } else if(d.neighbourhood ==="Bay Village"){
+      return (width * .50)
+    } else if (d.neighbourhood ==="Beacon Hill"){
+      return (width * .70)
+    } else if (d.neighbourhood ==="Brighton"){
+      return (width * .90)
+    } else if (d.neighbourhood ==="Charlestown"){
+      return (width * .10)
+    } else if (d.neighbourhood ==="Chinatown"){
+      return (width * .30)
+    } else if (d.neighbourhood ==="Dorchester"){
+      return (width * .50)
+    } else if (d.neighbourhood ==="Downtown"){
+      return (width * .70)
+    } else if (d.neighbourhood ==="East Boston"){
+      return (width * .90)
+    } else if (d.neighbourhood ==="Fenway"){
+      return (width * .10)
+    } else if (d.neighbourhood ==="Hyde Park"){
+      return (width * .30)
+    } else if (d.neighbourhood ==="Jamaica Plain"){
+      return (width * .50)
+    } else if (d.neighbourhood ==="Leather District"){
+      return (width * .70)
+    } else if (d.neighbourhood ==="Longwood Medical Area"){
+      return (width * .90)
+    } else if (d.neighbourhood ==="Mattapan"){
+      return (width * .10)
+    } else if (d.neighbourhood ==="Mission Hill"){
+      return (width * .30)
+    } else if (d.neighbourhood ==="North End"){
+      return (width * .50)
+    } else if (d.neighbourhood ==="Roslindale"){
+      return (width * .70)
+    } else if (d.neighbourhood ==="Roxbury"){
+      return (width * .90)
+    } else if (d.neighbourhood ==="South Boston"){
+      return (width * .10)
+    } else if (d.neighbourhood ==="South Boston Waterfront"){
+      return (width * .30)
+    } else if (d.neighbourhood ==="South End"){
+      return (width * .50)
+    } else if (d.neighbourhood ==="West End"){
+      return (width * .70)
+    } else if (d.neighbourhood ==="West Roxbury"){
+      return (width * .90)
+    } 
+  }).strength(0.15);
+
+var forceYSplit = d3.forceY(function(d){
+    if(d.neighbourhood ==="Allston") {
+      return (height * .10) 
+    } else if(d.neighbourhood === "Back Bay"){
+      return (height * .10) 
+    } else if(d.neighbourhood ==="Bay Village"){
+      return (height * .10)
+    } else if (d.neighbourhood ==="Beacon Hill"){
+      return (height * .10)
+    } else if (d.neighbourhood ==="Brighton"){
+      return (height * .10)
+    } else if (d.neighbourhood ==="Charlestown"){
+      return (height * .30)
+    } else if (d.neighbourhood ==="Chinatown"){
+      return (height * .30)
+    } else if (d.neighbourhood ==="Dorchester"){
+      return (height * .30)
+    } else if (d.neighbourhood ==="Downtown"){
+      return (height * .30)
+    } else if (d.neighbourhood ==="East Boston"){
+      return (height * .30)
+    } else if (d.neighbourhood ==="Fenway"){
+      return (height * .50)
+    } else if (d.neighbourhood ==="Hyde Park"){
+      return (height * .50)
+    } else if (d.neighbourhood ==="Jamaica Plain"){
+      return (height * .50)
+    } else if (d.neighbourhood ==="Leather District"){
+      return (height * .50)
+    } else if (d.neighbourhood ==="Longwood Medical Area"){
+      return (height * .50)
+    } else if (d.neighbourhood ==="Mattapan"){
+      return (height * .70)
+    } else if (d.neighbourhood ==="Mission Hill"){
+      return (height * .70)
+    } else if (d.neighbourhood ==="North End"){
+      return (height * .70)
+    } else if (d.neighbourhood ==="Roslindale"){
+      return (height * .70)
+    } else if (d.neighbourhood ==="Roxbury"){
+      return (height * .70)
+    }  else if (d.neighbourhood ==="South Boston"){
+      return (height * .90)
+    } else if (d.neighbourhood ==="South Boston Waterfront"){
+      return (height * .90)
+    } else if (d.neighbourhood ==="South End"){
+      return (height * .90)
+    } else if (d.neighbourhood ==="West End"){
+      return (height * .90)
+    } else if (d.neighbourhood ==="West Roxbury"){
+      return (height * .90)
+  }
+}).strength(0.15); 
+
+
+
+//var forceXCombine = d3.forceX((width)/2).strength(0.1);
+//var forceYCombine = d3.forceY((width)/2).strength(0.1);
+
+
+var forceCollide = d3.forceCollide(function(d){
+    return radiusScale(d.coli) + 0;
+  })
+
+
+var simulation = d3.forceSimulation()
+  .force("x", forceXSplit)
+  .force("y", forceYSplit)
+  .force("collide", forceCollide) 
+
+
+
+  var tooltip = d3.select("body")
+    .append("div")
+    .style("position", "absolute")
+    .style("z-index", "20")
+    .style("visibility", "hidden")
+    .style("color", "black")
+    .style("padding", "8px")
+    .style("background-color", "rgba(255, 255, 255, 0.9)")
+    .style("border-radius", "6px")
+    .style("font", "10px sans-serif")
+    .style("box-shadow", " 0 1px 5px rgba(0, 0, 0, 0.4)")
+    .text("");  
+
+
+
+ 
+
+  d3.queue()
+  .defer(d3.csv, "air18.csv")
+  .await(ready)
+
+
+function ready (error, data) {
+ 
+  var circles = svg.selectAll(".Character")
+  .data(data)
+  .enter().append("circle")
+  .attr("class", "Character")
+  .attr("r", function(d){
+    return radiusScale(d.coli)
+  })
+  .style("fill", function(d) { 
+    var returnColor;
+    
+    if(d.price  <= 100) {
+      returnColor = "#ffcccc";
+    } else if(d.price <= 200){
+      returnColor = "#ff6666";
+    } else if(d.price <=300){
+      returnColor = "#cc0000";
+    } else if (d.price > 300){
+      returnColor = "#4d0000";
+    };
+    return returnColor;
+  })
+  .on("mouseover", function(d) {
+              tooltip.html("<strong>" +d.name + "</strong><br>Host name: " + d.host_name + "<br> Location: " + d.neighbourhood + "<br>Room type: " + d.room_type +"<br>Average price: $" + d.price);
+              tooltip.style("visibility", "visible");
+      })
+      .on("mousemove", function() {
+          return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
+      })
+      .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+
+/// Adding Toggle Switches  
+
+  
+
+  simulation.nodes(data)
+    .on('tick', ticked)
+
+drawCircles(distances);
+
+ function ticked() {
+    circles
+      .attr("cx", function(d) {
+        return d.x
+      })
+      .attr("cy", function(d) {
+        return d.y
+      })
+  } 
+
+   /* nodes.append("text")
+         .attr("class","system")
+         .attr("text-anchor", "middle")
+         .text(function(d) {
+           return d.neighbourhood;
+          })
+         .attr("fill","black"); */
+}   
+
+
+};
+
+
+function byIn() {
+
+
+var radiusScale = d3.scaleSqrt().domain([0, 1]).range([0, 1])
+
+
+
+// the simulation is a collection of forces
+// about where we want our circles to go
+// and how we want them to interact
+// STEP ONE: get them to the middle
+// STEP TWO: don't have them collide!
+
+var forceXSplit = d3.forceX(function(d){
+    if(d.own == 1) {
+      return (width * .30)
+    } else {
+      return (width * .70)
+    }
+  }).strength(0.15)
+  
+
+
+
+var forceCollide = d3.forceCollide(function(d){
+    return radiusScale(d.coli) + 0.1
+  })
+
+
+var simulation = d3.forceSimulation()
+  .force("x", forceXSplit)
+  .force("y", d3.forceY(height / 2).strength(0.15))
+  .force("collide", forceCollide) 
+
+
+
+
+//var forceXCombine = d3.forceX((width)/2).strength(0.1);
+//var forceYCombine = d3.forceY((width)/2).strength(0.1);
+
+
+
+
+  var tooltip = d3.select("body")
+    .append("div")
+    .style("position", "absolute")
+    .style("z-index", "20")
+    .style("visibility", "hidden")
+    .style("color", "black")
+    .style("padding", "8px")
+    .style("background-color", "rgba(255, 255, 255, 0.9)")
+    .style("border-radius", "6px")
+    .style("font", "10px sans-serif")
+    .style("box-shadow", " 0 1px 5px rgba(0, 0, 0, 0.4)")
+    .text("");  
+
+
+d3.queue()
+  .defer(d3.csv, "air18.csv")
+  .await(ready)
+
+
+ 
+
+
+function ready (error, data) {
+
+  var circles = svg.selectAll(".Character")
+  .data(data)
+  .enter().append("circle")
+  .attr("class", "Character")
+  .attr("r", function(d){
+    return radiusScale(d.coli)
+  })
+  .style("fill", function(d) { 
+    var returnColor;
+    
+    if(d.price  <= 100) {
+      returnColor = "#ffcccc";
+    } else if(d.price <= 200){
+      returnColor = "#ff6666";
+    } else if(d.price <=300){
+      returnColor = "#cc0000";
+    } else if (d.price > 300){
+      returnColor = "#4d0000";
+    };
+    return returnColor;
+  })
+  .on("mouseover", function(d) {
+              tooltip.html("<strong>" +d.name + "</strong><br>Host name: " + d.host_name + "<br> Location: " + d.neighbourhood + "<br>Room type: " + d.room_type +"<br>Average price: $" + d.price);
+              tooltip.style("visibility", "visible");
+      })
+      .on("mousemove", function() {
+          return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
+      })
+      .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+
+
+  
+/// Adding Toggle Switches  
+  drawCircles(Investor);
+
+  simulation.nodes(data)
+    .on('tick', ticked)
+
+
+  function ticked() {
+    circles
+      .attr("cx", function(d) {
+        return d.x
+      })
+      .attr("cy", function(d) {
+        return d.y
+      })
+  } 
+}   
+}
+
+  
+function byNei2() {
+
+d3.queue()
+  .defer(d3.json,"boston.json")
+  .defer(d3.csv,"air18.csv")
+  .awaitAll(function(error,dataArray){
+    var air = dataArray[0];
+    var data = dataArray[1];
+    
+    data.forEach(function(d){
+      d.longitude = +d.longitude;
+      d.latitude = +d.latitude;
+    });
+    //padding = 1.5, // separation between same-color nodes
+    //clusterPadding = 6, // separation between different-color nodes
+    //maxRadius = 15;
+var geoJSON = topojson.feature(air,air.objects.boston);
+    console.log(geoJSON);
+
+  var proj = d3.geoAlbersUsa().fitSize([500,500],geoJSON);
+
+//var n = 67, // total number of nodes
+   // m = 3; // number of distinct clusters
+
+
+  var tooltip = d3.select("body")
+    .append("div")
+    .style("position", "absolute")
+    .style("z-index", "20")
+    .style("visibility", "hidden")
+    .style("color", "black")
+    .style("padding", "8px")
+    .style("background-color", "rgba(255, 255, 255, 0.9)")
+    .style("border-radius", "6px")
+    .style("font", "10px sans-serif")
+    .style("box-shadow", " 0 1px 5px rgba(0, 0, 0, 0.4)")
+    .text("");  
+
+
+  var circles= svg.selectAll(".Character")
+  .data(data)
+  .enter().append("circle")
+  .attr("class", "Character")
+  .attr("r", "1")
+    .attr("transform",function(point){
+      return "translate("+ proj([point.longitude, point.latitude])+")"
+    })
+    .attr("fill",function(d){
+      if(d.own ==1 ){
+        return "red";
+      }else{
+        return "grey";
+      }
+    })
+        .attr("opacity","0.50")
+    .on("mouseover", function(d) {
+              tooltip.html("<strong>" +d.name + "</strong><br>Host name: " + d.host_name + "<br> Location: " + d.neighbourhood + "<br>Room type: " + d.room_type +"<br>Average price: $" + d.price);
+              tooltip.style("visibility", "visible");
+      })
+      .on("mousemove", function() {
+          return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
+      })
+      .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+
+/// Adding Toggle Switches  
+
+  
+
+
+   /* nodes.append("text")
+         .attr("class","system")
+         .attr("text-anchor", "middle")
+         .text(function(d) {
+           return d.neighbourhood;
+          })
+         .attr("fill","black"); */
+ 
+});
+
+drawCircles(textempty);
+
+};
+
+
+byNei();
+
+
+
+
+
+ function scroll(n, offset, func1, func2){
+      return new Waypoint({
+        element: document.getElementById(n),
+        handler: function(direction) {
+           direction == 'down' ? func1() : func2();
+        },
+        //start 75% from the top of the div
+        offset: offset
+      });
+    };
+
+new scroll('div2', '75%', byNei2,byNei);
+
+
+</script>
+</html>

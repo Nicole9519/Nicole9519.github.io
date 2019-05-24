@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset = "utf-8" />
+		<title>
+			JavaScript Library2
+		</title>
+		<script src = "https://d3js.org/d3.v4.min.js"></script>
+		<script src="https://d3js.org/topojson.v1.min.js" charset="utf-8"></script>
+	</head>
+	    <style>
+	.province {
+		stroke: grey;
+		stroke-width: 1px;
+	}
+	div.tooltip {	
+    position: absolute;			
+    text-align: center;	
+    min-width: 80px;						
+    height: 28px;					
+    padding: 2px;				
+    font: 12px sans-serif;		
+    background: lightsteelblue;	
+    border: 1px solid #6F257F;		
+    border-radius: 0px;			
+    pointer-events: none;			
+}
+  </style>
+	<body id = "myBody">
+		<svg id="map" width="1000" height="700" align="center">
+				<rect width=1000 height=700 opacity="0" align="center"></rect>
+			</svg>
+
+	 <script>
+
+
+d3.queue()
+	.defer(d3.json,"usa.json")
+	.defer(d3.csv,"party.csv")
+	.awaitAll(function(error,dataArray){
+		var data = dataArray[0];
+		var party = dataArray[1];
+		party.forEach(function(state){
+					state.control = parseFloat(state.control);
+					});
+
+		//console.log(data);
+
+	var geoJSON = topojson.feature(data,data.objects.states);
+		console.log(geoJSON);
+
+	var proj = d3.geoAlbersUsa().fitSize([1000,700],geoJSON);
+
+	var path = d3.geoPath().projection(proj);
+
+	var states = d3.select("#map").selectAll("path").data(geoJSON.features);
+	
+	var dataExtent = d3.extent(party, function(d){
+		return d.control;
+	});
+	console.log(dataExtent)
+
+	var colorScale = d3.scaleLinear()
+						.domain([0,1,2])
+						.range(["#d9d9d9","#ff6666","#99d6ff"]);
+	var div = d3.select("body").append("div")	
+    	.attr("class", "tooltip")				
+    	.style("opacity", 0);
+
+
+	states.enter().append("path")
+		.attr("fill",function(feature){
+			var stateData = party.filter(function(d){
+				return d.shateshort == feature.id
+			})
+			//console.log(stateData);
+			if (stateData.length == 0) {
+						return "grey";
+					}		
+//console.log(stateData[0]);
+			
+			var number = stateData[0].control;
+				return colorScale(number);
+
+		})
+		.attr("stroke","white")
+		.attr("stroke-width",1)
+		.attr("d", function(feature){
+			return path(feature);
+		})
+		.on("mouseover", function(d){
+	d3.select(this)
+			.transition(100)
+			.attr("stroke-width",3.5)
+			.attr("fill","#999999");
+
+ 	var stateData = party.filter(function(csv){
+				return csv.shateshort == d.id
+			});
+
+			div.transition().duration(200).style("opacity",.9);
+			div.html(stateData[0].shateshort + ":" + stateData[0].control)
+				 .style("left", (d3.event.pageX) + "px")		
+               	 .style("top", (d3.event.pageY - 28) + "px")
+               	 .style("opacity",1.0);
+		})
+		.on("mousemove",function(d){
+			d3.select(this)
+			.attr("stroke-width",3.5)
+			.attr("fill","#999999");
+		})
+		.on("mouseout", function(d){
+			d3.select(this)
+			.attr("stroke-width",1)
+			.attr("fill",function(feature){
+			var stateData = party.filter(function(d){
+				return d.shateshort == feature.id
+			})
+			//console.log(stateData);
+			if (stateData.length == 0) {
+						return "grey";
+					}		
+//console.log(stateData[0]);
+			
+			var number = stateData[0].control;
+				return colorScale(number);
+ 			
+			})
+
+			 div.style("opacity",0.0);
+		});
+/*
+states
+	.data(geoJSON.features)
+  	.enter().append("text")
+    .attr("class", "place-label")
+    .attr("transform", function(d) {
+      return (
+         "translate(" + path.centroid(d)[0] + "," + path.centroid(d)[1] + ")"
+      );
+   })
+    //.attr("dy", ".35em")
+    
+    .attr("text-anchor", "middle")
+    .attr("font-size", "12px")
+    .attr("stroke","black")
+    .text(function(d) { return d.shateshort; });
+*/	
+});
+
+
+
+
+</script>
+</body>
+</html>
+

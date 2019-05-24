@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Media Innovation 2019 - Hanyang Dong </title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+<link rel="stylesheet" href="1.css">
+<link rel="stylesheet" href="https://camd.northeastern.edu/mediainnovation19/css/normalize.css">
+<link rel="stylesheet" href="3.css">
+
+<script src = "https://d3js.org/d3.v4.min.js"></script>
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/ScrollMagic.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/debug.addIndicators.min.js"></script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenMax.min.js"></script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/animation.gsap.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/noframework.waypoints.js"></script>
+
+
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+</head>
+
+<style>
+@import url.('https://fonts.googleapis.com/css?family=Open+Sans:300,600');
+  *{
+    margin:0;
+    padding:0;
+  }
+  html,
+  body{
+     height: 100%;
+     padding: 0;
+     scroll-behavior: smooth;
+  }
+.main{
+  position: relative;
+  background-color: #FFF;
+}
+
+
+.photo2 { 
+    /* The image used */
+    background-image: url(images/IMG_0566.jpg);
+
+    /* Set a specific height */
+    height: 700px; 
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+.photo1 { 
+    /* The image used */
+    background-image: url(images/IMG_1456.jpg);
+
+    /* Set a specific height */
+    height: 700px; 
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+
+.credit{
+  text-align: right;
+  margin-right: 50px;
+  color:#645f5d;
+}
+
+#photogallery{
+ text-align: center;
+
+}
+
+#textgallery{
+  text-align: center;
+
+}
+
+#photogallery2{
+  text-align: center;
+}
+#textgallery2{
+  text-align: center; 
+
+}
+
+</style>
+    
+<body>
+    
+<!-- Hamburger menu
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <nav role="navigation" class="nav" >
+  <div id="menuToggle">
+    <!--
+    A fake / hidden checkbox is used as click reciever,
+    so you can use the :checked selector on it.
+    -->
+    <input type="checkbox" />
+    
+    <!--
+    Some spans to act as a hamburger.
+    -->
+    <p class="nav-text">Projects</p>
+
+    <span></span>
+    <span></span>
+    <span></span>
+    
+    <ul id="menu">
+        <a href="https://camd.northeastern.edu/mediainnovation19/"><li style="font-family: 'Metric-Regular'; font-size: 1.3rem">| X | CLOSE</li></a>
+        <a href="https://camd.northeastern.edu/mediainnovation19/ben-amots"><li>Zach Ben-Amots</li></a>
+        <a href="https://camd.northeastern.edu/mediainnovation19/chen"><li>Yinlong Chen</li></a>
+        <a href="https://camd.northeastern.edu/mediainnovation19/dong"><li>Hanyang Dong</li></a>
+        <a href="https://camd.northeastern.edu/mediainnovation19/gensler"><li>Ilana Gensler</li></a>
+        <a href="https://camd.northeastern.edu/mediainnovation19/han"><li>Jianou Han</li></a>
+        <a href="https://camd.northeastern.edu/mediainnovation19/hinckley"><li>Story Hinckley</li></a>
+        <a href="https://camd.northeastern.edu/mediainnovation19/majumdar"><li>Abhishek Majumdar</li></a>
+        <a href="https://camd.northeastern.edu/mediainnovation19/mudambi"><li>Veer Mudambi</li></a>
+        <a href="https://camd.northeastern.edu/mediainnovation19/strohecker"><li>Patrick Strohecker</li></a>
+        <a href="https://camd.northeastern.edu/mediainnovation19/su"><li>Ruobing Su</li></a>
+        <a href="https://camd.northeastern.edu/mediainnovation19/tian"><li> Yuan Tian</li></a>
+        <a href="https://camd.northeastern.edu/mediainnovation19/xu"><li>Jieru Xu</li></a>
+        <a href="https://camd.northeastern.edu/mediainnovation19/zhang"><li>Ronnie Zhang</li></a>
+    </ul>
+  </div>
+</nav>
+
+  <!-- Hero image
+  –––––––––––––––––––––––––––––––––––––––––––––––––– 
+ <div class="hero"></div> -->
+    
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+<!-- Full width image. 
+Add jpg to your images folder, or delete div if you don't need a hero image -->
+
+<div class="hero"></div> 
+ 
+<!-- Story goes here
+–––––––––––––––––––––––––––––––––––––––––––––––––– -->
+<div class = "main">
+<div class="container">
+    <div class="row">
+    <div class="three columns">
+        <p class="byline">By Hanyang Dong</p>
+        
+    </div>
+      <div class="eight  columns">
+        <h1>IS AIRBNB REALLY THE PROBLEM?</h1>
+        <h2> The new Airbnb regulation was supposed to ease the housing crunch in Boston. The data leaves room for doubt.</h2>
+          
+        <p>Earlier this year, the Boston City Council overwhelmingly approved tough new restrictions on short-term rentals offered by companies like Airbnb. Starting in 2019, Boston will restrict Airbnb hoping to control rising rents, following similar laws in New York, Miami, San Francisco and other big cities. The measure eliminates investor-owned units from the marketplace while allowing owner-occupied, two- and three-family homeowners to rent out their units year-round. Under the new law, homeowners have to register with the city and pay an annual fee to rent out entire unit that is either a host’s primary residence or is part of an owner-occupied two- or three-family building.  </p>
+          
+          
+        <p> “There certainly is an affordable housing problem here.”experts say. According to <a href="https://www.bloomberg.com/news/articles/2018-10-04/home-cost-index-says-ouch-hong-kong-oh-canada-hello-dubai">a recent Bloomberg analysis</a>. The median one-bedroom rent in Boston is $2,300 a month, and the two-bedroom median is $2,700. Both are more than roughly twice the national medians of $1,185 for a one-bedroom and $1,422 for a two-bedroom.</p>
+
+    
+        <p> Supporters of the new regulations argue that rental prices have been driven up and the affordable housing reduced in Boston because some landlords turned long-term rentals into short-term rentals like Airbnb. In certain areas like Chinatown, residents have been fighting for a regulation for a long time. “It's become a huge industry that's actually eating up a lot of the housing in the city,” says Lydia Lowe, the executive director of the Chinatown Community Land Trust.</p>
+
+      </div>
+    </div>
+</div>
+
+ <div class="photo1"></div>
+
+<div class = "credit" >
+<p style = "color: #8c8c8c">The median three-bedroom rent in Boston is $2,700, according to Zillow.           /Hanyang Dong</p>
+</div>
+
+<div class="container">
+    <div class="row">
+    <div class="three columns">
+        <p class="byline"> </p>
+        
+    </div>
+      <div class="eight  columns">
+
+
+
+        <h2>Is the effect of Airbnb overblown? </h2>
+        <p>“In cities like New York and Boston, profits for Airbnb are significantly lower than many expect suggesting units are vacant more than expected,” said Arun Sundararajan, the author of “The Sharing Economy.”</p>
+        
+        <p>According to <a href = "https://www.airdna.co/market-data">AirDNA MarketMinder</a>, Airbnb hosts could earn $5,787 a month in Back Bay in September 2018, but in January they could just earn $2,007 a month and even $1,456 in Chinatown and the occupancy rate is just 50 percent and 34 percent, AirDNA reported. People would think twice before turning long-term rentals into short term, because of other cleaning, facility fees, and time-cost.</p>
+
+        <iframe id="datawrapper-chart-hDbPT" src="//datawrapper.dwcdn.net/hDbPT/4/" scrolling="no" frameborder="0" allowtransparency="true" style="width: 0; min-width: 100% !important;" height="350"></iframe><script type="text/javascript">if("undefined"==typeof window.datawrapper)window.datawrapper={};window.datawrapper["hDbPT"]={},window.datawrapper["hDbPT"].embedDeltas={"100":509,"200":417,"300":375,"400":375,"500":350,"700":350,"800":350,"900":350,"1000":350},window.datawrapper["hDbPT"].iframe=document.getElementById("datawrapper-chart-hDbPT"),window.datawrapper["hDbPT"].iframe.style.height=window.datawrapper["hDbPT"].embedDeltas[Math.min(1e3,Math.max(100*Math.floor(window.datawrapper["hDbPT"].iframe.offsetWidth/100),100))]+"px",window.addEventListener("message",function(a){if("undefined"!=typeof a.data["datawrapper-height"])for(var b in a.data["datawrapper-height"])if("hDbPT"==b)window.datawrapper["hDbPT"].iframe.style.height=a.data["datawrapper-height"][b]+"px"});</script>
+
+         <p>Since 2000, rents in Boston kept climbing 2 to 3 percent every year, according to Ries,Inc. There’s no sign that Airbnb accelerates the rents increasing rate.</p>
+
+        <p>While one standard deviation - the magnitude of Airbnb density - increase in listings is associated with rents going up by 0.4 percent, “Airbnb is surely just a small part of it,” wrote author Mark Materan in <a href ="https://www.sciencedirect.com/science/article/pii/S1051137717300876">“Is home sharing driving up rents? Evidence from Airbnb in Boston”</a> in 2015.</p>
+
+        <p>According to data collected between 2015 and 2018 by <a href = "http://insideairbnb.com/boston/?neighbourhood=Allston&filterEntireHomes=false&filterHighlyAvailable=false&filterRecentReviews=false&filterMultiListings=false">Airbnb Insider</a> -- an independent, data site -- there’s a little or no direct relationship between the increasing number of Airbnb and rising rents. As of late September, Airbnb listed 254 homes in Back Bay, 125 in Chinatown and 178 in East Boston, the rents in Back Bay only increased 1% while 11% in Chinatown and 8% in East Boston.  </p>
+
+        <p>“The rent in Boston is determined by supply and demand,” said Materan, “supply like how much land can be developed and demand like how many jobs there are and how much money people can spend on rents really matter.“</p>
+
+        <p>As an international center for higher learning, Boston is the location for 35 colleges, universities, and community colleges and annually, an influx of 95,824 students are housed off campus. Among them, 36,284 students housed in Boston, according to a municipal study.</p>
+
+        <p>“Boston is a city that has been built to attract people, with lots of universities and major companies, and its housing has not been affordable for a long time, not just because of us,” Lucian Estevez said, who started his work in Bulfinch Realty as an Airbnb host in 2016.</p>
+      </div>
+    </div>  
+ </div>
+
+
+
+<div id = "textgallery2">
+      <div class="one-third column">  
+      <img src = "images/IMG_0555.JPG" height = "280"></img>     
+       <p style = "color: #8c8c8c">Boston’s population grew nearly 5 percent in the decade leading up to 2010, and another 9 percent through 2016. The city is projected to top 700,000 residents by 2030 — the most since the 1950s.</p>
+     </div>
+     <div class="one-third column" >   
+     <img src = "images/IMG_0627.JPG" height = "280"></img>    
+      <p style = "color: #8c8c8c" >Cottonwood Management officially broke ground Tuesday on its M1M2 parcel, now known as Echelon Seaport. The project will have 733 condos, apartments and micro-units spread out over three towers. 
+      </p>
+     </div>
+     <div class="one-third column" >  
+       <img src = "images/IMG_1450.JPG" height = "280"></img>     
+       <p style = "color: #8c8c8c">Related Beal is using bond proceeds to build a mixed-use development of a 239-unit, 100 percent affordable and workforce building and hotel in downtown Boston. Twenty percent of the units will be rented to households earning no more than 50 percent of the area median income</p>
+     </div>
+
+
+</div>
+</div>     
+  
+<div class="container">
+  <div class="row">
+    <div class="three columns">
+        <p class="byline"> </p>
+        
+    </div>
+      <div class="eight  columns">
+  
+        <p>The rising rents in long-popular neighborhoods in Boston also pushed younger renters out to towns far away from the downtown area where they, in turn, are also driving up prices. That’s why rents increased far faster in neighborhoods such as Dorchester and Mattapan than in areas closer to downtown.</p>
+
+        <p>Though the city is trying to create more affordable housing, demand for affordable housing still far outstrips supply. Housing advocates argue that many of the new units are for people who can’t afford them, which cannot ease the shortage of affordable housing and prevent the displacement of residents.
+        </p>
+
+        <p>A recent city study found that Boston has the highest percentage of income-restricted housing of any major city in the country, which is in response to Mayor Martin J. Walsh's new revised version of its report in September, "Housing A Changing City: Boston 2030". It increases the city's goal for new housing creation to 69,000 units by 2030, up from its original goal in 2014 of 53,000 units. 
+        </p>
+
+      
+        <p>“There are other pieces we should be talking about and not in silos,” said Boston City Council President Andrea Campbell. </p>
+
+        </div>
+      </div>
+    </div>
+
+        <div class="photo2" ></div>
+
+<div class = "credit" >
+<p style = "color: #8c8c8c">The city officials hope to lower rental prices by building more affordable housing. Courtesy of Hanyang Dong</p>
+</div>
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="three columns">
+        <p> </p>       
+    </div>
+    <div class = "eight columns">
+      <h2>All Airbnb hosts suffered</h2>
+      <p>The new regulation sets regulations by housing type, and it effectively bans rentals in properties considered “investor units,” according to the Boston Herald.</p>
+
+      <p>The so-called "investor units" are apartments or homes listed on the Airbnb that are not occupied by their owners. Walsh argues that "investor units" take up valuable housing stock in the city.</p>
+
+      <p>“This legislation balances the rights of homeowners to earn supplemental income with protections for housing stock under pressure from the investor-owned segment of the short-term rental industry,” Councilor Lydia Edwards wrote in a statement. </p>
+  </div>
+
+   </div>
+
+</div>
+</div>
+
+
+<iframe   src="main.html" width="100%" height = "100%" frameborder="0/0"  name="iframe名称"     scrolling="yes">   
+</iframe>
+
+
+
+ <!--start-->
+<div class="container">
+        <div class = "row">
+          <div class="three columns"><p></p>
+      </div>
+
+
+        <div class = "eight columns">
+        <p>Lucian runs four Airbnb listings. He said he began his business in 2016, seeing the potential opportunity brought by the gig economy. “Airbnb is a much more effective way for people to rent their apartments to strangers,” said Lucian, ”and it also a good way for tourists to explore the authenticity of districts. ”  </p>
+
+        <p>After being an Airbnb host, Lucian’s revenue doubled, especially from late May to early October, the most attractive season in Boston. “The city should be looking to just levy us the hospitality tax, like they do to any hotels and use the revenue to create more housing, which was one of the issues or one of the reasons for this new law,”he said, “but this is a free market.”</p>
+
+        <p>The competition between Airbnb and traditional hotels is intensifying. <a href = "https://www.nber.org/papers/w24361">A paper in the National Bureau of Economic Research</a> shows that in the 10 cities with the largest Airbnb market share in the US, the entry of Airbnb resulted in 1.3 percent fewer hotel nights booked and a 1.5 percent loss in hotel revenue. During the summer in Boston, the average hotel price is more than $300, while Airbnb offers more apartments in the different price ranges, according to Greater Boston Convention & Visitor Bureau. “The government is actually helping the hotel industry.” said Lucian.</p>
+
+        <p>Though the new Boston Airbnb regulation is aimed at eliminating the deep-pocket investor, the changes could be also hard on some small Airbnb hosts, who are nevertheless affected by the regulations. “My short-term rentals are my retirement income, augment my long-term care assisted living insurance, and allow me to continue living in a neighborhood that I have been supporting and creating, since I first moved here in 1978,” said Edward LeMay, who has been an Airbnb host since 2013 and has since had over 1,000 bookings.  </p>
+
+     
+
+<div class="row">
+      <div class="one-half column">
+     <p class= "myquote">The rent in Boston is determined by supply and demand: how much land can be developed and how many jobs there are and how much money people can spend on rent.
+</p>
+    </div>
+    <div class="one-half column">
+   <p>Tiffany is a single mom, who runs three Airbnb, her home and two  which belong to friends. “I’ll be stopping two of them since I can’t do them legally. It’s a huge financial loss for me, so I’m cutting back expenses and my cleaner is looking for work.” said Tiffany, who is a single mother. “I'd actually feel okay paying the tax, but it shouldn't difficult for the government to identify those big investors”</p><br>
+    </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<div id = "textgallery">
+         <div class="one-third column" >
+        <img src = "images/airbnb.jpg" height = "280"></img>
+         <p style = "color:#8c8c8c">Sheng spent three days in an Airbnb in Boston last year. She thought Polly's house is definitely a perfect place to stay, which increased the satisfaction of her trip. Polly is willing to sharing her life and romantic stories to the guest. Courtesy of Airbnb</p>
+         </div>
+          <div class="one-third column">  
+          <img src = "images/lucian.jpg" height = "280"></img>
+         <p style = "color:#8c8c8c">Lucian's entire apartment in West End. Lucian is a realty manager in Bulfinch Realty. He runs four Airbnb listings now and have to stop all of them after the new regulation puts into effect. Courtesy of Airbnb</p>
+       </div>
+         <div class="one-third column">
+        <img src = "images/edward.jpg" height = "280"></img> 
+         <p style = "color:#8c8c8c">Edward's private room in South End. Edward is a retired professor from Massassoit Community College and a resident of Boston's South End for almost 40 years. Courtesy of Airbnb </p>
+       </div>
+</div>
+
+<div class="container">
+        <div class = "row">
+             <div class="three columns"><p></p>
+      </div>
+
+
+        <div class = "eight columns">
+        <br>
+        <h2>The backlash against Airbnb is spreading</h2>
+            <p>Since Airbnb first launched in 2008 in San Francisco, it spread aggressively to other major cities and shows no sign of slowing down. In 2006, there are 46,000 Airbnb listings in New York and 26,000 in Los Angeles, rising into the top ten cities with the highest number of Airbnb properties available. </p>
+
+        <p>A growing chorus is arguing that Airbnb turns long-term rentals into short- term rentals driving up rental prices for residents. Now, San Francisco, New York and a host of other pricey cities are implementing or considering regulations.</p>
+
+        <p>The evidence on whether these regulations work is mixed at best. San Francisco, one of the most expensive cities in the U.S. Population growth due to the booming tech industry and the difficult process to get new housing approved are two main reasons for the high rental prices, according to Curbed SF. The city began to limit Airbnb in February 2015, when it passed a law that allowed hosts present during home-stays to lease rooms year round and required them to be registered. Rents there continued to go up and passed a $4,500 threshold in 2016, but then began to drop. </p>
+
+
+  <iframe id="datawrapper-chart-eMrb5" src="//datawrapper.dwcdn.net/eMrb5/2/" scrolling="no" frameborder="0" allowtransparency="true" style="width: 0; min-width: 100% !important;" height="400"></iframe><script type="text/javascript">if("undefined"==typeof window.datawrapper)window.datawrapper={};window.datawrapper["eMrb5"]={},window.datawrapper["eMrb5"].embedDeltas={"100":467,"200":425,"300":400,"400":400,"500":400,"700":400,"800":400,"900":400,"1000":400},window.datawrapper["eMrb5"].iframe=document.getElementById("datawrapper-chart-eMrb5"),window.datawrapper["eMrb5"].iframe.style.height=window.datawrapper["eMrb5"].embedDeltas[Math.min(1e3,Math.max(100*Math.floor(window.datawrapper["eMrb5"].iframe.offsetWidth/100),100))]+"px",window.addEventListener("message",function(a){if("undefined"!=typeof a.data["datawrapper-height"])for(var b in a.data["datawrapper-height"])if("eMrb5"==b)window.datawrapper["eMrb5"].iframe.style.height=a.data["datawrapper-height"][b]+"px"});</script>
+
+        <br/><br/>
+
+
+        <p>Although rents in San Francisco in 2017 dropped for the first time in seven years, it is hard to relate it to the Airbnb regulation. Zillow attributes the small growth to increased apartment construction and more young people opting to buy their homes. </p>
+
+        <p>Nathan Ho, senior director of housing and community development for the Silicon Valley Leadership Group, even took this decline as a more serious alarm. “It’s because folks have gotten so frustrated and fed up with finding an affordable place to live that they’ve moved on,” he said. </p>
+
+        <p>Another California community, Santa Monica, instituted the toughest regulation on short-term rentals in the U.S. in 2015. The city requires anyone putting a listing on Airbnb in Santa Monica to live on the property during the renter’s stay, register for a business license and collect a 14 percent occupancy tax from users that will be payable to the city.</p>
+        <p>The city estimates that this will shut down about 1,400 of the 1,700 short-term rental listings in this upscale beach town and major tourist destination, according to a Forbes report. However, rent iis still skyrocketing. </p>
+ <iframe id="datawrapper-chart-UkECm" src="//datawrapper.dwcdn.net/UkECm/3/" scrolling="no" frameborder="0" allowtransparency="true" style="width: 0; min-width: 100% !important;" height="400"></iframe><script type="text/javascript">if("undefined"==typeof window.datawrapper)window.datawrapper={};window.datawrapper["UkECm"]={},window.datawrapper["UkECm"].embedDeltas={"100":467,"200":425,"300":400,"400":400,"500":400,"700":400,"800":400,"900":400,"1000":400},window.datawrapper["UkECm"].iframe=document.getElementById("datawrapper-chart-UkECm"),window.datawrapper["UkECm"].iframe.style.height=window.datawrapper["UkECm"].embedDeltas[Math.min(1e3,Math.max(100*Math.floor(window.datawrapper["UkECm"].iframe.offsetWidth/100),100))]+"px",window.addEventListener("message",function(a){if("undefined"!=typeof a.data["datawrapper-height"])for(var b in a.data["datawrapper-height"])if("UkECm"==b)window.datawrapper["UkECm"].iframe.style.height=a.data["datawrapper-height"][b]+"px"});</script>
+          <br><br>
+          <p>Though the Airbnb rules went into effect in many cities, there’s little evidence showing that the decrease of Airbnb listings have cooled down rents -- or even slowed the increase. </p> 
+
+          <p>The crisis of housing affordability and availability in Boston that has enormous impact on individuals and families. Though the investor units may be reduced after the new Airbnb regulations go into effect, there’s no guarantee that these units are going to become affordable. It remains to be seen if the rules will have their intended effect.</p>
+
+
+        </div> <!-- close column div -->  
+    </div> <!-- close row div -->  
+    
+   
+ </div>
+
+
+
+<!-- Footer
+------------------------------------------------------- -->
+    
+<h5><b>INNOVAT<span style="color:red">19</span>N</b> showcases the master's projects of the 2019 <a href="https://www.northeastern.edu/graduate/program/master-of-arts-in-journalism-media-innovation-track-5228/">Media Innovation program</a> at the Northeastern University School of Journalism. © 2018</h5>
+
+<!-- Slider script
+------------------------------------------------------- -->
+<!--
+<xxxx>
+var slideIndex = 1;
+showDivs(slideIndex);
+
+function plusDivs(n) {
+  showDivs(slideIndex += n);
+}
+
+function showDivs(n) {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  if (n > x.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = x.length}
+  for (i = 0; i < x.length; i++) {
+     x[i].style.display = "none";  
+  }
+  x[slideIndex-1].style.display = "block";  
+}
+</xxxx> 
+-->
+
+<script>
+/*$(document).ready(function(){
+
+  // Init ScrollMagic
+  var controller = new ScrollMagic.Controller();
+
+  // pin the intro
+  var pinIntroScene = new ScrollMagic.Scene({
+    triggerElement: '.hero',
+    triggerHook: 0
+  })
+  .setPin('.hero', {pushFollowers: false})
+  .addTo(controller);
+});
+*/
+
+
+
+//parallax
+
+</script>
+
+
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>

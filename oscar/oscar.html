@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+	  <head>
+	  	<meta charset="utf-8" /> 
+	  	<title>
+          JavaScript Library
+	  	</title>
+	  	 <script src = "https://d3js.org/d3.v4.min.js"></script>
+	  	   <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js">
+</script>
+<style>
+ .tooltip{
+	 font-family: Georgia;
+	 font-size: 16px;
+	 width: 120;
+	 height: auto;
+	 position: absolute;
+	 text-align: center;
+     border-style: solid; 
+	 border-width: 1px;
+	 background-color: white;
+	 border-radius: 5px;
+  }
+  h1{
+  	color: white;
+  }
+  .axis{
+  	stroke:white;
+  	position: absolute;
+  	top: 100px;
+  }
+  #actor{
+  	color:white;
+  	position: absolute;
+  	top: 200px;
+  }
+
+  #actress{
+  	color:white;
+  	position: absolute;
+  	top: 300px;
+  }
+
+    #sactor{
+  	color:white;
+  	position: absolute;
+  	top: 400px;
+  }
+
+    #sactress{
+  	color:white;
+  	position: absolute;
+  	top: 500px;
+  }
+
+</style>
+	  </head>
+	  
+	  <body bgcolor = "black">
+	  	<h1><div id="shiva"><span class="count">200</span></div>Oscar Winners Since 1930<h1>
+	  	<h2 id = "actor">Actor</h2>
+	  	<h2 id = "actress">Actress</h2>
+	  	<h2 id = "sactor">Supporting</h2>
+	  	<h2 id = "sactress">Supporting Actress</h2>
+
+	  		</body>
+
+
+<script>
+
+var parseDate = d3.timeParse("%Y");
+
+var margin = {top:20, bottom:20, left:20, right:20},
+ 	width = 1000 - margin.left - margin.right,
+ 	height = 500 - margin.top - margin.bottom;
+
+var svg = d3.select("body")
+			.append("svg")
+			.attr("width",width)
+			.attr("height",height)
+			.attr("transform", "translate(100, 100)");
+
+d3.csv("oscar2.csv", function(error,data){
+
+	if(error) {
+		console.log(error);
+	} else {
+				data.forEach(function (d) {
+  						d.year = +d.year;
+  						d.name =  d.name;
+  						d.award = d.award;
+  					console.log(d.name);
+
+					});
+			
+ 	var xScale = d3.scaleLinear()
+ 				.domain(d3.extent(data,function(d){ return d.year ;}))
+ 				.range([0,width]);
+
+
+ 	var xAxis = d3.axisBottom(xScale);
+	 svg.append("g")
+	 	.attr("class","axis")
+	 	.call(xAxis);
+
+	 var yScale = d3.scaleLinear()
+	 			    .domain(d3.extent(data, function(d){ return d.award; }))
+	 			    .range([ 50, 0]);
+
+	 	var yAxis = d3.axisLeft(yScale);
+	 	svg.append("g")
+	 	.attr("class","axis")
+	 	.call(yAxis);
+
+		var div = d3.select("body")
+							.append("div")
+							.attr("class","tooltip")
+							.style("opacity",0.0);
+		
+
+
+var circle = svg.selectAll("circle")
+				.data(data)
+				.enter()
+				.append("circle")
+				.attr("cx", function(d){ return xScale(d.year) ; })
+				.attr("cy", function(d){ return yScale(d.award) ;} )
+				.attr("r", 4)
+				.attr("fill","#c2c2d6")
+				.on("mouseover",function(d){
+				/*
+				鼠标移入时，
+				（1）通过 selection.html() 来更改提示框的文字
+				（2）通过更改样式 left 和 top 来设定提示框的位置
+				（3）设定提示框的透明度为1.0（完全不透明）
+				*/
+				
+			div.html(d.name)
+					.style("left", (d3.event.pageX) + "px")
+					.style("top", (d3.event.pageY + 20) + "px")
+					.style("opacity",1.0);
+			})
+			.on("mousemove",function(d){
+				/* 鼠标移动时，更改样式 left 和 top 来改变提示框的位置 */
+				
+				div.style("left", (d3.event.pageX) + "px")
+						.style("top", (d3.event.pageY + 20) + "px");
+			})
+			.on("mouseout",function(d){
+				/* 鼠标移出时，将透明度设定为0.0（完全透明）*/
+				
+				div.style("opacity",0.0);
+			});
+
+}});
+
+//actress
+d3.csv("oscarwomen.csv", function(error,data){
+
+	if(error) {
+		console.log(error);
+	} else {
+				data.forEach(function (d) {
+  						d.year = +d.year;
+  						d.name =  d.name;
+  						d.award = +d.award;
+  					console.log(d.name);
+
+					});
+			
+
+		var div = d3.select("body")
+							.append("div")
+							.attr("class","tooltip")
+							.style("opacity",0.0);
+		
+var xScale = d3.scaleLinear()
+ 				.domain(d3.extent(data,function(d){ return d.year ;}))
+ 				.range([0,width]);
+
+
+ 	var xAxis = d3.axisBottom(xScale);
+	 svg.append("g")
+	 	.attr("class","axis")
+	 	.call(xAxis);
+
+	 var yScale = d3.scaleLinear()
+	 			    .domain(d3.extent(data, function(d){ return d.award; }))
+	 			    .range([50, 0]);
+
+	 	var yAxis = d3.axisLeft(yScale);
+	 	svg.append("g")
+	 	.attr("class","axis")
+	 	.call(yAxis);
+
+//1930为什么没办奥斯卡
+
+var circle = svg.selectAll("circle.second")
+				.data(data)
+				.enter()
+				.append("circle")
+				.attr("class","second")
+				.attr("cx", function(d){ return xScale(d.year) ; })
+				.attr("cy", function(d){ return yScale(d.award) ;} )
+				.attr("r", 4)
+				.attr("fill","#CC9900")
+				.attr("transform","translate(0,100)")
+				.on("mouseover",function(d){
+				/*
+				鼠标移入时，
+				（1）通过 selection.html() 来更改提示框的文字
+				（2）通过更改样式 left 和 top 来设定提示框的位置
+				（3）设定提示框的透明度为1.0（完全不透明）
+				*/
+				
+			div.html(d.name +" got the best actree award in " + d.year +" by " +d.movie)
+					.style("left", (d3.event.pageX) + "px")
+					.style("top", (d3.event.pageY + 20) + "px")
+					.style("opacity",1.0);
+			})
+			.on("mousemove",function(d){
+				/* 鼠标移动时，更改样式 left 和 top 来改变提示框的位置 */
+				
+				div.style("left", (d3.event.pageX) + "px")
+						.style("top", (d3.event.pageY + 20) + "px");
+			})
+			.on("mouseout",function(d){
+				/* 鼠标移出时，将透明度设定为0.0（完全透明）*/
+				
+				div.style("opacity",0.0);
+			});
+
+}});
+
+
+//supporting actor
+d3.csv("supportman.csv", function(error,data){
+
+	if(error) {
+		console.log(error);
+	} else {
+				data.forEach(function (d) {
+  						d.year = +d.year;
+  						d.name =  d.name;
+  						d.award = +d.award;
+  					console.log(d.year);
+
+					});
+			
+
+		var div = d3.select("body")
+							.append("div")
+							.attr("class","tooltip")
+							.style("opacity",0.0);
+		
+var xScale = d3.scaleLinear()
+ 				.domain([1930,2018])
+ 				.range([0,width]);
+
+
+ 	var xAxis = d3.axisBottom(xScale);
+	 svg.append("g")
+	 	.attr("class","axis");
+
+	 var yScale = d3.scaleLinear()
+	 			    .domain(d3.extent(data, function(d){ return d.award; }))
+	 			    .range([50, 0]);
+
+	 	var yAxis = d3.axisLeft(yScale);
+	 	svg.append("g")
+	 	.attr("class","axis")
+	 	.call(yAxis);
+
+//1930为什么没办奥斯卡
+
+var circle = svg.selectAll("circle.third")
+				.data(data)
+				.enter()
+				.append("circle")
+				.attr("class","third")
+				.attr("cx", function(d){ return xScale(d.year) ; })
+				.attr("cy", function(d){ return yScale(d.award) ;} )
+				.attr("r", 4)
+				.attr("fill","#75A3A3")
+				.attr("transform","translate(0,200)")
+				.on("mouseover",function(d){
+				/*
+				鼠标移入时，
+				（1）通过 selection.html() 来更改提示框的文字
+				（2）通过更改样式 left 和 top 来设定提示框的位置
+				（3）设定提示框的透明度为1.0（完全不透明）
+				*/
+				
+			div.html(d.name +" got the best supporting actor award in " + d.year +" by " +d.movie)
+					.style("left", (d3.event.pageX) + "px")
+					.style("top", (d3.event.pageY + 20) + "px")
+					.style("opacity",1.0);
+			})
+			.on("mousemove",function(d){
+				/* 鼠标移动时，更改样式 left 和 top 来改变提示框的位置 */
+				
+				div.style("left", (d3.event.pageX) + "px")
+						.style("top", (d3.event.pageY + 20) + "px");
+			})
+			.on("mouseout",function(d){
+				/* 鼠标移出时，将透明度设定为0.0（完全透明）*/
+				
+				div.style("opacity",0.0);
+			});
+
+}});
+
+
+//supporting actor
+d3.csv("supportwomen.csv", function(error,data){
+
+	if(error) {
+		console.log(error);
+	} else {
+				data.forEach(function (d) {
+  						d.year = +d.year;
+  						d.name =  d.name;
+  						d.award = +d.award;
+  							console.log(d.award)
+					});
+			
+
+		var div = d3.select("body")
+							.append("div")
+							.attr("class","tooltip")
+							.style("opacity",0.0);
+		
+var xScale = d3.scaleLinear()
+ 				.domain([1930,2018])
+ 				.range([0,width]);
+
+
+ 	var xAxis = d3.axisBottom(xScale);
+	 svg.append("g")
+	 	.attr("class","axis");
+
+	 var yScale = d3.scaleLinear()
+	 			    .domain(d3.extent(data, function(d){ return d.award; }))
+	 			    .range([50, 0]);
+
+	 	var yAxis = d3.axisLeft(yScale);
+	 	svg.append("g")
+	 	.attr("class","axis")
+	 	.call(yAxis);
+
+//1930为什么没办奥斯卡
+
+var circle = svg.selectAll("circle.forth")
+				.data(data)
+				.enter()
+				.append("circle")
+				.attr("class","forth")
+				.attr("cx", function(d){ return xScale(d.year) ; })
+				.attr("cy", function(d){ return yScale(d.award) ;} )
+				.attr("r", 4)
+				.attr("fill","#FF6666")
+				.attr("transform","translate(0,300)")
+				.on("mouseover",function(d){
+				/*
+				鼠标移入时，
+				（1）通过 selection.html() 来更改提示框的文字
+				（2）通过更改样式 left 和 top 来设定提示框的位置
+				（3）设定提示框的透明度为1.0（完全不透明）
+				*/
+				
+			div.html(d.name +" got the best supporting actress award in " + d.year +" by " +d.movie)
+					.style("left", (d3.event.pageX) + "px")
+					.style("top", (d3.event.pageY + 20) + "px")
+					.style("opacity",1.0);
+			})
+			.on("mousemove",function(d){
+				/* 鼠标移动时，更改样式 left 和 top 来改变提示框的位置 */
+				
+				div.style("left", (d3.event.pageX) + "px")
+						.style("top", (d3.event.pageY + 20) + "px");
+			})
+			.on("mouseout",function(d){
+				/* 鼠标移出时，将透明度设定为0.0（完全透明）*/
+				
+				div.style("opacity",0.0);
+			});
+
+			$('.count').each(function () {
+    $(this).prop('Counter',0).animate({
+        Counter: $(this).text()
+    }, {
+        duration: 4000,
+        easing: 'swing',
+        step: function (now) {
+            $(this).text(Math.ceil(now));
+        }
+    });
+});
+
+
+}});
+
+</script>
+
+
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js">
+</script>
+	<title>Hanyang's Page</title>
+	<link href="https://fonts.googleapis.com/css?family=Oswald:300,700|Varela+Round" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="homepage.css">
+
+<script>
+		$(function(){
+			$(".moving_arrow ul li a").mouseover(function(){
+				var aclss =	$(this).attr("class");
+				$("#arrow").removeAttr("class").addClass(aclss);
+			});
+		});
+</script>
+	
+	
+</head>
+<body>
+  <div class = "moving_arrow">
+  	<ul>
+  		<li>
+			<img src = "">
+			<a href = "" class = "home">Home</a>
+  		</li>
+
+  		<li>
+			<img src = "">
+			<a href = "" class = "assignments">Assignments</a>
+  		</li>
+  			<li>
+			<img src = "">
+			<a href = "" class ="contact">Contact</a>
+  		</li>
+  	</ul>
+  </div>  
+
+  <div id = "arrow">
+  	<svg width = "12px" height = "7px">
+  			<polygon id = "arrow_thumn" points = "0,0 6,6 12,0" fill="#333" />
+  	</svg>
+  </div>
+
+	<h1> 
+		<p style = "color:grey;">Hanyang Dong's</p>
+	</h1>
+	<h2>
+		<p style = "color: grey">Assignment</p>
+	
+	<div id = "nav">
+	<ul>
+		<a href = "https://nicole9519.github.io//HDONG%20HW1.html">
+			<li>Assignment 1</li>
+		</a>
+		<a href = "https://nicole9519.github.io/hw2.html">
+			<li>Assignment 2</li>
+		</a>
+	</ul>
+</div>
+
+	<div id = "photo">
+	<img src ="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1517678727612&di=d5ceea86d8e8a47b060fa75233c9733e&imgtype=0&src=http%3A%2F%2Fimg4.duitang.com%2Fuploads%2Fitem%2F201401%2F10%2F20140110225605_FYaSn.thumb.600_0.jpeg" width="310" height="339" />
+ 	</div>
+
+
+		
+</body>
+</html>		
+

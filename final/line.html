@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	  <head>
+	  	<meta charset="utf-8" /> 
+	  	<title>
+          Map!
+	  	</title>
+	  	 <script src = "https://d3js.org/d3.v4.min.js"></script>
+	  	 <script src = "https://unpkg.com/topojson@3"></script>
+	  	 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+	  	 	
+	  </head>
+	  
+	  <body>
+	  
+	  </body>
+	
+<script>
+var parseDate = d3.timeParse("%Y");
+d3.csv("majan2.csv", function(error, data) {
+    data.forEach(function(d) {
+		d.year = parseDate(d.year);
+		d.snow = +d.snow;
+    });
+
+
+    // Nest the entries by symbol
+    var dataNest = d3.nest()
+        .key(function(d) {return d.county;})
+        .entries(data);
+
+    // Loop through each symbol / key
+    dataNest.forEach(function(d) {
+
+   
+
+
+
+	var margin = {top:20, bottom:20, left:20, right :20};
+	var height = 600 - margin.top - margin.bottom;
+	var width = 800 - margin.left - margin.right;
+	
+// Scale the range of the data
+
+    var min1 = d3.min(data,function(d){ return d.snow ; });
+    var max1 = d3.max(data,function(d){ return d.snow; });
+    var minDate = d3.min(data,function(d){ return d.year; });
+    var maxDate = d3.max(data,function(d){ return d.year; });
+
+    var y = d3.scaleLinear()
+                  .domain([min1,max1])
+                  .range([height,0]);
+    var x = d3.scaleTime()
+                  .domain([minDate,maxDate])
+                  .range([0,width]);
+    var yAxis = d3.axisLeft(y);
+    var xAxis = d3.axisBottom(x);
+
+
+
+    var svg = d3.select("body").append("svg").attr("height",600).attr("width",800);
+	
+	var chartGroup = svg.append("g")
+                  .attr("transform","translate("+margin.left+","+margin.top+")");
+
+      var line1 = d3.line()
+      				.curve(d3.curveBasis)
+                      .x(function(d){ return x(d.year); })
+                      .y(function(d){ return y(d.snow); });
+
+       //  var city = chartGroup.selectAll(".city")
+        // .data(cities)
+         //.enter()
+         //.attr("class","city");
+
+         //city.append("path")
+         //.attr("class","line")
+         //.attr("d", function(d){ return line1(d.snow); })
+
+chartGroup.append("path")
+.attr("d",line1(data))
+.attr("stroke", "red")
+.attr("fill","none")
+.attr("stroke-width","2");
+
+chartGroup.append("g").attr("class","x axis").attr("transform","translate(0,"+height+")").call(xAxis);
+chartGroup.append("g").attr("class","y axis").call(yAxis);
+
+
+
+		});
+    });
+		
+//dropdown
+
+</script>
+
+</html>

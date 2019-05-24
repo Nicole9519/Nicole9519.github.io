@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	  <head>
+	  	<meta charset="utf-8" /> 
+	  	<title>
+          JavaScript Library
+	  	</title>
+	  	
+	  </head>
+	  
+	  <body id = "myBody">
+	  		<svg id = "viz"></svg>
+ 		</body>
+	  	<script src = "https://d3js.org/d3.v4.min.js">
+	  </script>
+		<script src = "numbers.js"></script>
+			<script>
+			console.log(squared(22));
+
+			console.log(plus10(18));
+
+			console.log(numbers);
+
+			
+			var body = document.getElementById("myBody");
+			body.style.backgroundColor ="lightgrey";	
+			body.style.fontFamily = "Comic Sans MS";
+			body.id = "newId";
+
+			var body  = d3.select("body")
+				.style("background-color","lightblue")
+				.style("font-family","Times New Roman")
+				.attr("id","myBody");
+
+			var myData = [24,34,56,9,23,54];
+			var newData = [33,22,10];
+
+			var drawCircles = function(data){
+				
+				var svg = d3.select("#viz");
+
+				var dots = svg.selectAll(".dot")
+				.data(data)
+
+				//enter circles
+			dots
+				.enter()
+				.append("circle")
+				.attr("class","dot")
+				.attr("r",0)
+				.attr("cx",function(d,i){
+					return 25 + (i * 50);
+				})
+				.attr("cy",40)
+				.transition()
+				.duration(1000)
+				.attr("r", function(d){
+					return d/2 ;
+				});
+
+		//update 
+			dots
+				.transition()
+				.duration(1000)
+				.attr("r", function(d){
+					return d/2 ;
+				})
+				.attr("fill","green");
+		//exit
+			dots
+			.exit()
+			.transition()
+			.duration(1000)
+			.attr("r",0)
+			.remove();
+
+			};
+
+			
+		drawCircles(myData)
+
+			</script>
+		<h1>Hello</h1>
+
+
+</html>
+

@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html>
+	  <head>
+	  	<meta charset="utf-8" /> 
+	  	<title>
+          Map!
+	  	</title>
+	  	 <script src = "https://d3js.org/d3.v4.min.js"></script>
+	  	 <script src = "https://unpkg.com/topojson@3"></script>
+	  </head>
+	  
+	  <body>
+	  		<svg id = "map" width = 600 height = 400>
+	  		<rect width = 600 height = 400 fill = "cornflowerblue"></rect>
+	  	</svg>
+	  </body>
+	
+<script>
+
+//d3.queue()
+	//.defer(d3.json, "world.json")
+	//.defer(d3.json, "dataObject.json")
+	///.defer(d3.csv, "dataTable.csv")
+	//.defer(d3.text, "textData.txt")
+	//.awaitAll(function(error,dataArray){
+	//	var data = dataArray[0];
+		//console.log(dataArray)
+	
+
+	d3.json("world.json", function(error, data){
+
+		var geoJSON = topojson.feature(data,data.objects.countries);
+		console.log(geoJSON);
+
+			
+		geoJSON.features = geoJSON.features.filter(function(feature){
+			return feature.id != "AQ";// not include AQ
+
+		})
+console.log(geoJSON.features);
+		var proj = d3.geoMercator()
+						.fitSize([600,400],geoJSON);
+
+		var path = d3.geoPath()
+					.projection(proj);
+
+
+
+	var countries = d3.select("#map").selectAll("path")
+							.data(geoJSON.features);
+
+
+			countries.enter().append("path")
+			.attr("d",function(feature){			
+				return path(feature);
+			})
+			.attr("fill", function(feature){
+
+				if(feature.id == "CN"){
+					return "red";
+				} else{ 
+					return "forestgreen";
+				}
+
+			})
+			.attr("stroke","white")
+			.attr("stroke-width",1);
+
+			var points = [
+			{"name":"Boston","coords": [-71.0589, 42.3681]},
+			{"name":"London","coords": [-0.1278,51.5071]}
+			]
+
+			var dots = d3.select("#map").selectAll("circle")
+							.data(points);
+
+			dots.enter().append("circle")
+			.attr("transform",function(point){
+				return "translate("+proj(point.coords)+")"
+			})
+			.attr("fill","black")
+			.attr("r",8);
+	});
+
+
+</script>
+
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head>
+<title>scatter animation</title>
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+</head>
+
+<body>
+	<button id = "update">Generate new points</button>
+
+	<div id = "plot">
+	</div>
+
+</body>
+
+<script>
+
+//random data
+function randomData(samples){
+	var data = [],
+	random = d3.randomNormal();
+
+	for (i = 0 ;i< samples; i++){
+		data.push({
+			x:random(),
+			y:random()
+		});
+	}
+
+	return data;
+};
+
+var data = randomData(30);
+
+var margin = { top: 20, right:20 , bottom:20, left:20};
+var width = 800 - margin.left - margin.right;
+var height = 400 - margin.top - margin.bottom;
+
+var xScale = d3.scaleLinear()
+				.domain(d3.extent(data,function(d){ return d.x ; })).nice()
+				.range([0, width]);
+
+
+var yScale = d3.scaleLinear()
+				.domain(d3.extent(data, function(d){ return d.y ;})).nice()
+				.range([height,0]);
+
+var xAxis = d3.axisBottom(xScale).ticks(12);
+var yAxis = d3.axisLeft(yScale).ticks(12 * height /width);
+
+var svg = d3.select("#plot").append("svg")
+		.attr("width", width +margin.left+margin.right)
+		.attr("height", height +margin.top +margin.bottom);
+
+svg.append("g")
+.attr("class","x axis")
+.attr("id","axis x")
+.attr("transform", "translate("+margin.left+","+ (margin.top+height) +")")
+.call(xAxis);
+
+svg.append("g")
+.attr("class","y axis")
+.attr("transform","translate("+margin.left+","+margin.top+")")
+.call(yAxis);
+
+var dot = svg.append("g")
+.attr("id","scatter")
+.attr("transform","translate("+margin.left+","+margin.top+")")
+.selectAll(".dot")
+.data(data)
+.enter()
+.append("circle")
+.attr("class","dot")
+.attr("r",5)
+.attr("cx",function(d){ return xScale(d.x) ;})
+.attr("cy",function(d){ return yScale(d.y) ;})
+.attr("stroke", "white")
+.attr("stroke-width","2px")
+.attr("fill","#4292c6");
+
+d3.select("#update").on("click", update);
+
+function colorVals(){
+	let r = Math.floor(Math.random()*256),
+	    g = Math.floor(Math.random()*256),
+	    b = Math.floor(Math.random()*256);
+
+	    return [r,g,b];
+};
+
+function update(){
+	
+	let newData = randomData(50);
+
+	let color = d3.rgb(...colorVals());
+
+	xScale.domain(d3.extent(newData, function(d){ return d.x ; })).nice();
+	yScale.domain(d3.extent(newData, function(d){ return d.y ; })).nice();
+
+	var points = d3.selectAll("circle").data(newData).transition().duration(1000);
+
+points.attr("cy",function(d){ return yScale(d.y) ;})
+		.attr("cx", function(d){ return xScale(d.x) ;})
+		.attr("r", function() { return Math.floor(Math.random() * 20 ); })
+		.attr("stroke", "white")
+		.attr("stroke-width","2px")
+		.attr("fill", color);
+
+
+};
+
+</script>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset = "utf-8" />
+		<title>
+			JavaScript Library
+		</title>
+		<link rel="stylesheet" type="text/css" href="bluemap.css">
+		<script src = "https://d3js.org/d3.v4.min.js"></script>
+		<script src="https://d3js.org/topojson.v1.min.js" charset="utf-8"></script>
+	</head>
+	    <style>
+	.province {
+		stroke: grey;
+		stroke-width: 1px;
+	}
+  </style>
+	<body id = "myBody">
+	 <script>
+
+	 var width = 1000;
+	 var height = 1000;
+
+	 var svg = d3.select("body").append("svg").attr("width",width).attr("height", height);
+
+	 var projection = d3.geoMercator()
+	 					.center([107,31])
+	 					.scale(600)
+	 					.translate([width/2, height/2]);
+
+	 var path = d3.geoPath()
+	 				.projection(projection);
+
+	 d3.json("china.topojson",function(error,toporoot){
+
+	 	if(error){
+	 		console.log("error!");
+	 	} else{
+	 		console.log(toporoot);
+
+	 		var georoot = topojson.feature(toporoot,toporoot.objects.china);
+
+	 		console.log(georoot);
+
+	 		var china = svg.append("g");
+
+	 		var provinces = china.selectAll("path")
+	 						.data(georoot.features)
+	 						.enter()
+	 						.append("path")
+	 						.attr("class","province")
+	 						.style("fill","#ccc")
+	 						.attr("d",path);
+	 						
+
+	 		d3.json("tourism.json", function(error,data){
+	 			var values = [];
+	 			for(var i=0; i< data.provinces.length ; i++){
+	 				var name = data.provinces[i].name;
+	 				var value = data.provinces[i].value;
+	 				values[name] = value;
+	 			}
+
+	 			var max = d3.max(data.provinces, function(d){ return d.value;});
+	 			var min = 0;
+
+	 			var linear = d3.scaleLinear()
+					 			.domain([min,max])
+					 			.range([0,1]);
+
+				var a = d3.rgb(0,255,255);
+				var b = d3.rgb(0,0,255);
+
+				var computeColor = d3.interpolate(a,b);
+
+				provinces.style("fill", function(d,i){
+					var t = linear(values[d.properties.name]);
+					var color = computeColor(t);
+					return color.toString()
+					;
+				})
+				//provinces.on("mouseover",function(d,i){
+               			//		 d3.select(this)
+               			//			 .attr("fill","yellow");
+              			//	});
+
+
+	 		})
+	 	}
+
+	 });
+
+</script>
+</body>
+</html>
+

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	  <head>
+	  	<meta charset="utf-8" /> 
+	  	<title>
+           Hanyang's page
+	  	</title>
+	  	 <link rel="stylesheet" type="text/css" href="hw2.css">
+	  </head>
+	  
+	  <body bgcolor="lightgrey">
+		  <h1><p style="color:grey">Congratulations! You got a gift!</p></h1>
+
+	<script>	 
+	//	 var myUser = {
+	//	 "name" = "Hanyang"
+	//	  "favoriteColor" = "blue";
+
+
+//document.getElementById("h").innerHTML = "Hello " + myUser.color;
+</script>
+
+<!--
+<form id = "questions" method = post action = "">
+<label for= "favcolor">What is your favorite color?<input type = "text" name = "fav" id= "fav"></label>
+<input type = "submit">
+ <lable for="birthday">Birthday</lable>
+ <input type="date" name="birthday" id="birthday"><br />
+
+
+ <input type="date" name="birthday" id="birthday">
+ <lable for="birthday">Birthday</lable><br />
+
+
+-->
+<img id = "image" src = "erik-jan-leusink-427699.jpg" width = "600"; height = "400" align = "bottom";
+/>
+
+<script>
+
+function bkg(){
+	var element = document.getElementById("image");
+	if(element.src.match("erik-jan-leusink-427699")){
+		element.src =  "kartik-bhattacharjee-257547.jpg";
+	} else if(element.src.match("kartik-bhattacharjee-257547.jpg")){
+		element.src = "michael-mroczek-195362.jpg";
+	} else	{
+		element.src = "erik-jan-leusink-427699.jpg";
+	}
+};
+
+
+</script>
+
+<input type = "button" name = "bkg" id = "bkg" value = " Change to choose what you like!" onclick = "bkg()">
+
+
+
+
+	  </body>
+
+</html>
+

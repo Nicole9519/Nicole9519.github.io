@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+	  <head>
+	  	<meta charset="utf-8" /> 
+	  	<title>
+          Map!
+	  	</title>
+	  	 <script src = "https://d3js.org/d3.v4.min.js"></script>
+	  	 <script src = "https://unpkg.com/topojson@3"></script>
+	  	 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+	  	 	
+	  </head>
+	  
+	  <body>
+
+	  	<img src = "front.jpg" width = "100%" height ="100%" />
+	  		<svg id = "map" width = 1200 height = 600>
+	  		<rect width = 1200 height = 600 fill = "none"></rect>
+	  	</svg>
+
+	  </body>
+	
+<script>
+
+d3.queue()
+.defer(d3.json,"ma.json")
+.defer(d3.csv,"ma_snow.csv")
+.awaitAll(function(error,dataArray){
+    	var data = dataArray[0];
+		var csvData = dataArray[1];
+
+csvData.forEach(function(y){
+	y.snowfall = parseFloat(y.snowfall);
+
+})
+console.log(csvData);
+
+
+	var dataExtent = d3.extent(csvData,function(d){
+		return d.snowfall;
+	})
+	//console.log(dataExtent);
+console.log(dataExtent)
+	var colorScale = d3.scaleLinear()
+						.domain(dataExtent)
+						.range(["#9fbfdf", "#336699"]);
+
+
+var snowData = d3.map();
+
+
+		var geoJSON = topojson.feature(data,data.objects.cb_2015_massachusetts_county_20m);
+
+		console.log(geoJSON);
+	
+		var proj = d3.geoMercator()
+						.fitSize([1200,600],geoJSON);
+
+		var path = d3.geoPath()
+					.projection(proj);
+
+
+//1.4
+	csvData = csvData.filter(function(y){
+  		return y.date == "1/4/18";
+		});
+	//console.log(csvData.date)
+             
+        
+ 		var max = d3.max(csvData, function(y){ return y.snowfall;});
+        var min = 0;
+
+		//console.log(max);
+
+
+
+		var countries = d3.select("#map").selectAll("path3")
+							.data(geoJSON.features);
+
+		countries.enter().append("path")
+					.attr("class","path3")
+					.attr("d",function(feature){			
+						return path(feature);
+					})
+					.attr("fill", function(feature){
+						
+						var countyData = csvData.filter(function(y){
+				    		return y.county == feature.properties.NAME;
+					
+					//console.log(feature.properties.NAME)
+					//console.log(y.county)
+				    	});
+
+				    	console.log(countyData);
+
+
+				if(countyData.length > 0 ){
+					var snowfall = countyData[0].snowfall;
+					//console.log(countryName, ranking);
+					return colorScale(snowfall);
+				}
+				else{
+					return "gray";
+				}
+				})	;	
+					})
+				
+
+//1.5
+	
+
+
+
+
+
+
+
+
+
+</script>
+
+</html>

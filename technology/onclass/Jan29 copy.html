@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	  <head>
+	  	<meta charset="utf-8" /> 
+	  	<title>
+           Nicole's page
+	  	</title>
+	  	 <link href="https://fonts.googleapis.com/css?family=Supermercado+One" rel="stylesheet">
+          <link href="style.css" rel="stylesheet">
+	  </head>
+	  
+	  <body bgcolor="lightyellow">
+		  <h1>
+		  	<p style="color:blue";>Jan 29, 2018</p>
+		  </h1>
+		  
+
+		  <p id = "redParagraph">
+		  	Welcome to the page!
+		  </p>
+
+		  <h2 class = "comicsans">
+			Here's another paragraph
+			</h2>		 
+	
+		  <p>
+		  	some <i>intro</i>
+		  </p>
+
+		 <script>
+		 	var myNumber = 32;
+		 	myNumber = myNumber + 10;
+		 	console.log(myNumber)
+
+			var myString = "JavaScript is cool!";
+			
+			console.log("D3 and " + myString);	 	
+
+			var bigMumber = myNumber >20;
+
+			console.log(bigMumber);  <!--boolum-->
+
+			var myArray = ["one",bigMumber,myNumber,"four"];
+
+			console.log(myArray);
+
+			var myUser = {
+				"name": "Hanyang",
+				"color": "yellow",
+				"last login ": "1/1/2018"
+			};
+
+			var myKey = "name"
+			console.log(myUser[myKey])  <!--["name"]-->
+
+
+<!-- scope in name only for sayHello    cannot assign new one -->
+		var sayHello = function(name){
+			var newBumber = 500;
+			var newBumber2 = myNumber+ 500
+
+			console.log(newBumber2)
+			console.log("Hello "+ name +"!")
+		};
+			sayHello("Hanyang");
+			sayHello("kate");
+
+var plusTen = function(num){
+	var x = num+ 8;
+	return x;
+}
+
+//var thirty = plusTen(20);
+//console.log(thirty)
+console.log(plusTen(20))
+
+
+
+  
+		 </script>
+	  </body>
+
+</html>
+

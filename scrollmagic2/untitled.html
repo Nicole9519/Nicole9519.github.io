@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/noframework.waypoints.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/ScrollMagic.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/debug.addIndicators.min.js"></script>
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+
+
+
+  <style>
+
+.bg { 
+    /* The image used */
+    background-image: url("IMG_1450.JPG");
+
+    /* Full height */
+    height: 700px; 
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.div1 {
+    height: 300px;
+    max-width: 440px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    line-height: 1.5;
+    left: 500px;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 1s ease-out;
+    background-color: black;
+  }
+
+.cont{
+
+}
+
+.div1.fade-in{
+  opacity: 0.8;
+    transform: translateY(0);
+}
+
+.div2{
+  position: fixed;
+  background-color: #FFF;
+  height: 100%;
+  width: 100%
+}
+
+    </style>
+</head>
+
+<body>
+
+<div class= "bg"></div>
+
+<div class = "div1">
+  <p style = "color:white">Wright led the country’s first fully accredited hip-hop studies program at McNally Smith College of Music. The program was awarded Best Transformative Higher Learning Model by the Hip-Hop Education Center at New York University. He regularly tours the world performing and teaching in Africa, Europe, and China. As an organizer, Wright led the youth nonprofit organization Yo! The Movement, facilitating seven Twin Cities Celebration of Hip-Hop festivals and other community actions. He also helped to establish Hip-Hop at H.E.A.L.S., teaching performance to former child soldiers in Gulu, Uganda, and promoting the careers of hip-hop artists in Croatia and Sierra Leone.</p>
+
+</div>
+
+
+<div class= "div2">
+  <p>"I am honored to have a leadership role at such a prestigious institution. The faculty and students are some of the top creative minds in the world," said Wright. "I look to continue striving for excellence in all aspects of my position. I've had a particular way of combining formal education with experiential learning, technology, goal-oriented projects, wellness, and community networking."</p>
+  <p>"I am honored to have a leadership role at such a prestigious institution. The faculty and students are some of the top creative minds in the world," said Wright. "I look to continue striving for excellence in all aspects of my position. I've had a particular way of combining formal education with experiential learning, technology, goal-oriented projects, wellness, and community networking."</p>
+
+</div>
+<script>
+
+$(document).ready(function(){
+
+//init scrollmagic
+
+  var controller = new ScrollMagic.Controller();
+
+  //pin the intro
+  var pinIntroScene = new ScrollMagic.Scene({
+    triggerElement:".bg",
+    triggerHook:0,
+    duration:"100%"
+  })
+  .setPin(".bg", {pushFollowers:false})
+  .addTo(controller);
+
+  //build a scene
+  var ourScene = new ScrollMagic.Scene({
+    triggerElement :".div1",
+    //duration:"90%", //when to end  "px"
+    triggerHook: 0.9, 
+    //where the trigger hook is
+    //reverse:false
+     //animation only once
+
+
+  })
+  .setClassToggle(".div1","fade-in")
+  .addIndicators({
+    name:"fade scene",
+    colorTrigger:"black",
+    //indent:200,
+    colorStart:"#75C695",
+    colorEnd:"pink"
+    })
+  .addTo(controller)
+
+  });
+</script>
+
+
+
+</body>
+</html>

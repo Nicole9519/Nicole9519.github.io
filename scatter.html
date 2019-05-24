@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset = "utf-8" />
+<title>
+	scatter</title>
+	<script src = "https://d3js.org/d3.v4.min.js"></script>
+<style>
+	#tooltip{
+		position: absolute;
+		display: none;
+		background-color: white;
+		border: 1px solid black;
+		padding:10px;
+	}
+
+</style>
+
+</head>
+
+<body id = "mybody">
+	  		<svg id = "viz">
+	  			<g id = "xAxis"></g>
+	  		</svg>
+	  		<div id = "tooltip"></div>
+ 		</body>
+
+ <script>
+ var margin = 30,
+ 		width = 1000,
+ 		height = 550;
+
+ 		var xScale = d3.scaleLinear()
+ 		.range([0, width]);
+
+ 		var yScale = d3.scaleLinear()
+ 		.range([height , 0]);
+
+ 		var color = d3.scaleOrdinal(d3.schemeCategory20);
+
+ 		var xAxis = d3.axisBottom(xScale);
+
+ 		var yAxis = d3.axisLeft(yScale);
+
+ 		var svg =d3.select("#viz"). attr("width", width + margin).
+ 		attr("height", height + margin);
+
+
+ 		d3.tsv("scatter.tsv", function(error, data){
+
+ 			if (error) throw error;
+
+ 			data.forEach(function(d){
+ 				d.sepalLength =  +d.sepalLength;
+ 				d.sepalWidth = +d.sepalWidth;
+ 			});
+
+ 			xScale.domain(d3.extent(data, function(d){ return d.sepalWidth; }));
+ 			yScale.domain(d3.extent(data, function(d){ return d.sepalLength;}));
+
+ 		svg.append("g")
+ 			.attr("class", "x axis")
+ 			.attr("transform","translate(0, 550)")
+ 			.call(xAxis)
+ 		
+
+		svg.append("g")
+ 			.attr("class", "y axis")
+ 			.attr("transform","translate(60, 0)")
+ 			.call(yAxis)
+ 			
+svg.selectAll(".dot")
+.data(data)
+.enter()
+.append("circle")
+.attr("class","dot")
+.attr("r",3.5)
+.attr("cx", function(d){ return xScale(d.sepalWidth); })
+.attr("cy", function(d){ return yScale(d.sepalLength); })
+.style("fill", function(d){ return color(d.species); })
+.on("mouseenter", function(d){
+	 						d3.select("#tooltip")
+	 						.style("display","block")
+	 						.style("top", xScale(d.sepalWidth) + "px")
+	 						.style("left", yScale(d.sepalLength) + "px")
+	 						.text(d.species);
+	 					})
+	 					.on("mouseleave", function(d){
+	 						d3.select("#tooltip")
+	 						.style("display","none");
+	 					})
+
+ 		});
+
+
+
+	  	</script>
+	  </html>

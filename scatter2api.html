@@ -1,0 +1,90 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>plot</title>
+	<script src = "https://d3js.org/d3.v4.min.js">
+	  </script>
+</head>
+<body>
+
+<script>
+
+var width = 500;
+var height = 500;
+
+var data = {};//object
+
+d3.json("https://atlas.media.mit.edu/hs92/export/2010/show/all/all/",
+	function(error_2010,json_2010){
+	if(error_2010) return console.log(error_2010);
+	json_2010.data.forEach(function(d){
+		data[d.origin_id] = {
+			export_val_2010: d.export_val,
+			id: d.origin_id
+		};
+	});
+
+	d3.json("https://atlas.media.mit.edu/hs92/export/2011/show/all/all/",
+	function(error_2011,json_2011){
+	if(error_2011) return console.log(error_2011);
+	json_2011.data.forEach(function(d){
+		if(data[d.origin_id]) {
+			data[d.origin_id]["export_val_2011"] = d.export_val;
+		};
+	});
+	
+console.log(data);
+
+	var svg = d3.select("body").append("svg")
+				.attr("width",width)
+				.attr("height",height);
+
+
+	var xScale = d3.scaleLog()
+					.domain(d3.extent(d3.values(data), function(d){ return
+					 d.export_val_2010; }))
+					.range([0, width]);
+
+			var yScale = d3.scaleLog()
+					.domain(d3.extent(d3.values(data), function(d){ return 
+						d.export_val_2011; }))
+					.range([height,0]);		
+ 
+ 	var xAxis = d3.axisBottom(xScale);
+	 svg.append("g")
+	 .attr("class","axis")
+	 	.attr("transform","translate(0,150)")
+	 	.call(xAxis);
+
+
+ 	var yAxis = d3.axisLeft(yScale);
+	 svg.append("g")
+	 	.attr("class","axis")
+	 	.call(xAxis);
+
+
+
+	var country_g = svg.selectAll("g.country")
+	.data(d3.values(data))
+	.enter()
+	.append("g")
+	.attr("class","country");
+
+	country_g.append("circle")
+	.attr("cx",function(d){ return xScale(d["export_val_2010"]); })
+	.attr("cy", function(d){ if (d["export_val_2011"]){
+			return yScale(d["export_val_2011"]);
+		}
+			return yScale.range()[0]; 
+	})
+	.attr("r",5)
+	.attr("fill", "blue");
+});
+
+});
+
+
+</script>
+
+</body>
+</html>

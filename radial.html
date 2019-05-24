@@ -1,0 +1,251 @@
+
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8" />
+    <title> Ted Talks </title>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://d3js.org/d3-collection.v1.min.js"></script>
+    <script src="https://d3js.org/d3-dispatch.v1.min.js"></script>
+    <script src="https://d3js.org/d3-quadtree.v1.min.js"></script>
+    <script src="https://d3js.org/d3-timer.v1.min.js"></script>
+    <script src="https://d3js.org/d3-force.v1.min.js"></script>
+
+
+    <style>
+
+
+      a {
+        color: black;
+        background-color: transparent;
+        text-decoration: none;
+      }
+      a:visited {
+        color: gray;
+        background-color: transparent;
+        text-decoration: none;
+      }
+      a:hover {
+        color: #e62b1e;
+        background-color: transparent;
+        text-decoration: none;
+      }
+
+      #explainer {
+        text-align: right;
+        font-family: "Helvetica";
+        font-size: 12px;
+        background-color: white;;
+        position: fixed;
+        top: 20px;
+        right: 80px;
+        display: block;
+      }
+
+      #left-container {
+        position: fixed;
+        left: 80px;
+        top: 100px;
+      }
+
+      #right-container {
+        position: fixed;
+        right: 80px;
+        top: 220px;
+      }
+
+      #svg-container {
+        position: fixed;
+        top: 80px;
+        left: -150px;
+      }
+
+      #tooltipRight {
+        background-color: #e62b1e;
+        padding-left: 20px;
+        font-family: "Helvetica";
+        font-size: 16px;
+        color: white;
+        height: 50px;
+      }
+
+      #tooltipLeft {
+        background-color: #bf1c11;
+        padding-left: 20px;
+        font-family: "Helvetica";
+        font-size: 16px;
+        color: white;
+        height: 50px;
+        width: 340px;
+      }
+
+      #links {
+        height: 300px;
+        max-width: 340px;
+        padding:10px;
+        font-family: "Helvetica";
+        font-size: 12px;
+        background-color: white;
+        text-align: left;
+      }
+
+      .talk-description {
+        font-style: italic;
+      }
+
+    </style>
+
+  </head>
+
+  <body>
+
+    <!--Draw SVG DIV-->
+    <div id="svg-container">
+      <svg id="viz"></svg>
+    </div>
+
+    <!--Intro and Logo-->
+    <div id="explainer">
+      <img src="https://pi.tedcdn.com/r/pl.tedcdn.com/social/ted-logo-fb.png?v=wAff13s?" alt="" style="width:20%">
+      </br>
+      Explore more than 2,000 Ted talks to learn about the topics. </br>
+      If any spark your curiousity you can go ahead and watch them too.
+    </div>
+
+    <!--<div id="right-container">
+    </div>-->
+
+    <div id="right-container">
+      <!--Chosen topic-->
+      <div id="tooltipLeft"></div>
+      <div style="background-color:white; height: 10px;"></div>
+      <!--Add where the links will be listed-->
+      <div id="links" style="overflow:scroll;"></div>
+      <div style="background-color:white; height: 10px;"></div>
+      <!--Hovering topic-->
+      <div id="tooltipRight"></div>
+    </div>
+
+
+
+    <!--Start Script-->
+    <script>
+
+    var width = window.innerWidth,
+        height = window.innerHeight;
+
+    var svg = d3.select("#viz")
+      .attr("width", width)
+      .attr("height", height)
+      .append("g")
+      .attr("transform", "translate(0,0)")
+
+    //Make a scale for circles
+    var radiusScale = d3.scaleSqrt().domain([1,674]).range([2,35])
+
+    //Start simulation (collection of forces)
+    var simulation = d3.forceSimulation()
+      //create a force .force("name of it", define it)
+      //Moving them to center of SVG
+      .force("xCenter", d3.forceX(width/2).strength(.05))
+      .force("yCenter", d3.forceY(height/2).strength(.06))
+      //Keep them from colliding (radius of the area that we want
+      //collision to avoid)
+      .force("noCollision", d3.forceCollide(function (d) {
+        return radiusScale(d.numberTalks) + 2;
+      }))
+
+    //Create queue and function to run viz
+    d3.queue()
+      .defer(d3.csv, "tedData_tags.csv")
+      .defer(d3.csv, "tedData_raw.csv")
+      .await(ready);
+
+
+    //Function to create viz
+    function ready( error, tagnames, rawdata ) {
+
+      //Change the numberTalks to numbers not strings
+      tagnames.forEach(function(talk) {
+        talk.numberTalks = parseFloat(talk.numberTalks);
+      });
+
+      var updatingCircles = svg.selectAll("circles")
+        .data(tagnames)
+        .enter().append("circle")
+        .attr("class", "tag")
+        .attr("r", function(d) {
+          return radiusScale(d.numberTalks)
+        })
+        .attr("fill", "#e62b1e");
+
+      var circles = updatingCircles
+      .on("mousemove", function(d) {
+        //var mouseX = d3.event.pageX;
+        //var mouseY = d3.event.pageY;
+        //console.log(mouseX,mouseY);
+
+        d3.select(this)
+          .style("fill", "#bf1c11")
+          .attr("r", function(d) {
+            return radiusScale(d.numberTalks * 1.2)
+          })
+        d3.select("#tooltipRight")
+            .html("</b><br>" + "" + d.tagName + "</b><br>" + "" + "</b><br>");
+      })
+      .on("mouseleave", function(d) {
+        d3.select(this)
+          .style("fill", "#e62b1e")
+          .attr("r", function(d) {
+            return radiusScale(d.numberTalks)
+          });
+          d3.select("#tooltipRight")
+             .html("");
+      })
+      .on("click", clicked);
+
+      //Feed simualtion the data
+      simulation.nodes(tagnames)
+        .on('tick', ticked)
+
+      //Control the tick - updates data points with cx and cy
+      function ticked (d) {
+        circles
+          .attr("cx", function (d) {
+            return d.x
+          })
+          .attr("cy", function (d) {
+            return d.y
+          })
+      }
+
+      //Click to filter the other data file
+      var tagNumbers = d3.range(1, 28, 1);
+      function clicked (d) {
+        console.log(d);
+        var talks = rawdata.filter(function(r) {
+          var tags = tagNumbers.map(function(t) {
+            return r["tag_" + t].toLowerCase();
+          });
+          return tags.indexOf(d.tagName.toLowerCase()) >= 0;
+        })
+        console.log(talks);
+
+        d3.select("#links").selectAll("*").remove();
+          talks.forEach(function(talk) {
+            d3.select("#links").append("talk")
+            .html("<b>" + talk.headline + "</b><br>" + "<span class='talk-description'>" + talk.description + "</span><br>" + "</b><br>Watch: <a target='_blank' href='" + talk.url + "'>" + talk.url + "</a>" + "</b><br>" + "</b><br>" + "</b><br>");
+        });
+
+        d3.select("#tooltipLeft")
+            .html("</b><br>" + "" + d.tagName + "</b><br>" + "" + "</b><br>");
+      }
+    }
+
+
+    </script>
+
+  </body>
+
+</html>

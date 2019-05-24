@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html>
+	  <head>
+	  	<meta charset="utf-8" /> 
+	  	<title>
+          JavaScript Library
+	  	</title>
+	  	 <script src = "https://d3js.org/d3.v4.min.js"></script>
+	  </head>
+	  
+	  <body>
+	  
+	
+<script>
+
+d3.csv("ma_snow.csv",function(error, data){
+		if(error){
+			console.log("error!");
+		} else{
+			
+
+			console.log(data);
+				
+				}//parseFloat  ---to a number
+		
+	});
+
+
+
+	d3.json("ma.json",function(error, data){
+			if(error){
+				console.log("error!");
+			} else{
+		
+				console.log(data);
+			}
+			});
+
+</script>
+
+
+
+
+		
+</body>
+
+</html>

@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>HOME</title>
+    <link rel="stylesheet" type="text/css" href="identityEarth-style.css">
+    <link rel="stylesheet" href="https://use.typekit.net/dbh8opd.css">
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+  </head>
+  <body id="Body" background="assets/space-bg.jpg">
+    <h1>UNE SYSTEM PLANET COMPARISON</h1>
+    <svg id="space">
+      <g id="xAxis"></g>
+    </svg>
+    <div class="custom-select">
+      <select id="planetSelect" onchange="planetUpdate()">
+        <option value="Mercury">Mercury
+        <option value="Venus">Venus
+        <option value="Mars">Mars
+        <option value="Jupiter">Jupiter
+        <option value="Saturn">Saturn
+        <option value="Uranus">Uranus
+        <option value="Neptune">Neptune
+      </select>
+    </div>
+    <div class="custom-select">
+      <select id="dataPointSelect" onchange="indicatorUpdate()" class="custom-select">
+        <option value="radius">Radius
+        <option value="gravity">Gravity
+        <option value="dayLength">Average Day Length
+        <option value="moons">Number of Moons
+      </select>
+    </div>
+  </body>
+  <script>
+    //Global Variables
+    var planetData;
+    var filteredData;
+    var indicator = "radius";
+
+    //Data Loading
+    d3.queue()
+      .defer(d3.csv, "identityEarth.csv")
+      .awaitAll(function(error, dataArray) {
+        planetData = dataArray[0];
+        planetData.forEach(function(planet) {
+          planet.radius = parseFloat(planet.radius);
+          planet.gravity = parseFloat(planet.gravity);
+          planet.dayLength = parseFloat(planet.dayLength);
+          planet.surfaceTempLow = parseFloat(planet.surfaceTempLow);
+          planet.surfaceTempHigh = parseFloat(planet.surfaceTempHigh);
+          planet.moons = parseFloat(planet.moons);
+        });
+        console.log(planetData);
+        planetUpdate();
+        indicatorUpdate();
+      });
+
+    //Helper Functions
+    function otherPlanet() {
+      var x = document.getElementById("planetSelect").value;
+        return x;
+    };
+    console.log(document.getElementById("planetSelect").value)
+
+    function getIndicator() {
+      var x = document.getElementById("dataPointSelect").value;
+        return x;
+    };
+
+    function planetUpdate() {
+      filteredData = planetData.filter(function(d) {
+        return d.name == "Earth" || d.name == otherPlanet();
+      });
+      console.log(filteredData);
+      drawPlanets();
+    };
+
+    function indicatorUpdate() {
+      indicator = getIndicator();
+      drawPlanets();
+    };
+
+    //SVG Styles
+    var padding = 100;
+    // var maxIndicator = d3.max(filteredData, function(d) {
+    //   return dataPoint[indicator];
+    // });
+    // var xScale = d3.scaleLinear()
+    //   .domain([0, maxIndicator])
+    //   .range([padding, window.innerWidth - padding * 2]);
+    var svg = d3.select("#space")
+      .attr("width", window.innerWidth)
+      .attr("height", 500);
+
+    //Draw Functions
+    var drawPlanets = function() {
+      var svg = d3.select("#space")
+      var planets = svg.selectAll(".planet")
+        .data(filteredData);
+      planets.enter().append("circle")
+        .attr("class", "planet")
+        .attr("r", 10)
+        .attr("fill", "yellow")
+        .attr("cx", padding)
+        .attr("cy", [window.innerHeight / 2])
+        .transition()
+        // .attr("cx", function(d) {
+        //   return xScale(dataPoint[indicator]);
+        // })
+        .duration(1000)
+        // .attr("r", function(dataPoint) {
+        //   return (dataPoint[indicator] / 200);
+        // })
+      // update circles
+      planets
+        .transition()
+        .duration(1000)
+        .attr("cx", function(dataPoint, index) {
+          return padding + (dataPoint[indicator] / 2);
+        })
+        // .attr("r", function(dataPoint) {
+        //   return dataPoint[indicator];
+        // })
+      // exit circles
+      planets.exit()
+        .transition()
+        .duration(1000)
+        .attr("r", 0)
+        .remove();
+    };
+
+    </script>
+</html>

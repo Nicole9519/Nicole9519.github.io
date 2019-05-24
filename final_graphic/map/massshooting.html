@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset = "utf-8" />
+		<title>
+			JavaScript Library2
+		</title>
+		<script src = "https://d3js.org/d3.v4.min.js"></script>
+		<script src="https://d3js.org/topojson.v1.min.js" charset="utf-8"></script>
+	</head>
+	    <style>
+	.province {
+		stroke: grey;
+		stroke-width: 1px;
+	}
+	div.tooltip {	
+    position: absolute;			
+    text-align: center;	
+    min-width: 80px;						
+    min-height: 28px;					
+    padding: 2px;				
+    font: 12px sans-serif;		
+    background: lightsteelblue;	
+    border: 1px solid #6F257F;		
+    border-radius: 0px;			
+    pointer-events: none;			
+}
+
+#tooltip2{		
+				margin-left: 850px;
+				margin-top: -400px;
+				width: 230px;
+				height: 400px;
+				font-family:Optima,Sans-serif;
+				font-size: 15px;
+				background-color:white;
+				color:black;
+				text-align: left;
+				stroke: 1px;                
+			}
+
+  </style>
+	<body id = "myBody">
+		<svg id="map" width="1000" height="700" align="center">
+				<rect width=1000 height=700 opacity="0" align="center"></rect>
+			</svg>
+
+			<div id="tooltip2">
+				<div id="cases"></div>
+				<br>
+				<div id="place"></div>
+				<div id="year"></div>
+				<div id="victim"></div>
+				<div id="fatalities"></div>
+				<br>
+				<div id="summary"></div>
+				<div><a id="story-link" href="" target="_blank"></a></div>
+				
+			</div>
+
+	 <script>
+
+
+d3.queue()
+	.defer(d3.json,"usa.json")
+	.defer(d3.csv,"gun.csv")
+	.defer(d3.csv,"mass.csv")
+	.awaitAll(function(error,dataArray){
+		var data = dataArray[0];
+		var shooting = dataArray[1];
+		var shooting2 = dataArray[2];
+		shooting.forEach(function(d){
+					d.per_capita = parseFloat(d.per_capita);
+					var Weapon_registered = parseFloat(d.Weapon_registered);
+					var shateshort = d.shateshort;
+				});
+					//console.log(shateshort); 
+		shooting2.forEach(function(d){
+			d.longitude = +d.longitude;
+			d.latitude = +d.latitude;
+		});
+
+
+		//console.log(data);
+
+	var geoJSON = topojson.feature(data,data.objects.states);
+		console.log(geoJSON);
+
+	var proj = d3.geoAlbersUsa().fitSize([900,700],geoJSON);
+
+	var path = d3.geoPath().projection(proj);
+
+	var states = d3.select("#map").selectAll("path").data(geoJSON.features);
+	
+	var dataExtent = d3.extent(shooting, function(d){
+		return d.per_capita;
+	});
+	console.log(dataExtent)
+
+
+	var colorScale = d3.scaleLinear()
+						.domain([0,0.01,0.02,0.03,0.04,0.05,0.06,0.23])
+						.range(["#d8f0f3","#80ced6","#52bbc7","#32909a","#256c74","#1f5a60","#13363a","#0c2427"]);
+	var div = d3.select("body").append("div")	
+    	.attr("class", "tooltip")				
+    	.style("opacity", 0);
+
+
+	states.enter().append("path")
+		.attr("fill",function(feature){
+			var stateData = shooting.filter(function(d){
+				return d.shateshort == feature.id
+			})
+			console.log(stateData);
+			if (stateData.length == 0) {
+						return "grey";
+					}		
+//console.log(stateData[0]);
+			
+			var number = stateData[0].per_capita;
+				return colorScale(number);
+
+		})
+		.attr("stroke","white")
+		.attr("stroke-width",1)
+		.attr("d", function(feature){
+			return path(feature);
+		})
+		.on("mouseover", function(d){
+	d3.select(this)
+			.transition(100)
+			.attr("stroke-width",3.5)
+			.attr("fill","#999999");
+
+ 	var stateData = shooting.filter(function(csv){
+				return csv.shateshort == d.id
+			});
+
+			div.transition().duration(200).style("opacity",.9);
+			div.html(stateData[0].state+ "<br>Gun Ownership:" + stateData[0].Weapon_registered + "<br/>Population" + stateData[0].Population)
+				 .style("left", (d3.event.pageX) + "px")		
+               	 .style("top", (d3.event.pageY - 28) + "px")
+               	 .style("opacity",1.0);
+		})
+		.on("mousemove",function(d){
+			d3.select(this)
+			.attr("stroke-width",3.5)
+			.attr("fill","#999999");
+		})
+		.on("mouseout", function(d){
+			d3.select(this)
+			.attr("stroke-width",1)
+			.attr("fill",function(feature){
+			var stateData = shooting.filter(function(d){
+				return d.shateshort == feature.id
+			})
+			//console.log(stateData);
+			if (stateData.length == 0) {
+						return "grey";
+					}		
+//console.log(stateData[0]);
+			
+			var number = stateData[0].per_capita;
+				return colorScale(number);
+ 			
+			})
+
+			 div.style("opacity",0.0);
+		});
+/* try to make the country name in the middle of the area
+states
+	.data(geoJSON.features)
+  	.enter().append("text")
+    .attr("class", "place-label")
+    .attr("transform", function(d) {
+      return (
+         "translate(" + path.centroid(d)[0] + "," + path.centroid(d)[1] + ")"
+      );
+   })
+    //.attr("dy", ".35em")
+    
+    .attr("text-anchor", "middle")
+    .attr("font-size", "12px")
+    .attr("stroke","black")
+    .text(function(d) { return d.shateshort; });
+*/	
+
+	var dots = d3.select("#map").selectAll("circle").data(shooting2);
+
+	dots.enter().append("circle")
+		.attr("transform",function(point){
+			return "translate("+ proj([point.longitude, point.latitude])+")"
+		})
+		.attr("fill","grey")
+		.attr("stroke-width",".4")
+		.attr("r","4")
+		.attr("opacity","0.90")
+		.on("mouseenter", function(d) {
+				    d3.select(this)
+				    .attr("r","8")
+				    .attr("fill","red")
+				      .attr("class", "hoveredpoints")
+				      .attr("fill","red");
+
+				    d3.select("#tooltip2")
+						.transition()
+						.style("opacity",1)
+						.style("stroke","black");
+				    
+				    d3.select("#cases").text(d.case);
+				    d3.select("#year").text("Year: " + d.year)
+				    d3.select("#place").text("Place: " + d.place);
+				    d3.select("#fatalities").text("Fatalities: " + d.fatalities);
+				    d3.select("#victim").text("Total victims: " + d.total);
+				    d3.select("#summary").text(d.summary);
+				    d3.select("#story-link").attr("href", d.sources).html("Click here to view story.");
+				    
+				})
+		.on("mouseleave", function(d) {
+			    d3.select(this)
+				      .attr("r", "5")
+				      .attr("fill", "grey")
+				      .attr("class", "points")
+				      .attr("opacity",0.75);
+});
+
+
+});
+
+
+
+
+</script>
+</body>
+</html>
+

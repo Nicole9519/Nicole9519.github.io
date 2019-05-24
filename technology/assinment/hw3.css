@@ -1,0 +1,21 @@
+#viz{
+	position: absolute;
+	left: 200px;
+	top:100px;
+}
+
+h1{
+	font-family: 'PT Sans', sans-serif;
+}
+
+#text_y{
+	font-family: 'PT Sans', sans-serif;
+
+}
+
+.note{
+	font-family: 'Inconsolata', monospace;
+	font-size: 12px;
+	position: absolute;
+	left: 200px;
+}

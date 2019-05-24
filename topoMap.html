@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset = "utf-8" />
+		<title>
+			JavaScript Library
+		</title>
+		<link rel="stylesheet" type="text/css" href="bluemap.css">
+		<script src = "https://d3js.org/d3.v4.min.js"></script>
+		<script src="https://d3js.org/topojson.v1.min.js" charset="utf-8"></script>
+	</head>
+	    <style>
+	.province {
+		stroke: grey;
+		stroke-width: 1px;
+	}
+  </style>
+	<body id = "myBody">
+	 <script>
+
+	 var width = 1000;
+	 var height = 1000;
+
+	 var svg = d3.select("body").append("svg").attr("width",width).attr("height", height);
+
+
+		var eps = 1e-4;
+
+	 		var graticule = d3.geoGraticule()
+	 							.extent([[71,-16],[137,54]])
+	 							.step([5,5]);
+
+	 		var grid = graticule();
+
+	 		console.log(grid);
+
+	 var projection = d3.geoMercator()
+	 					.center([107,31])
+	 					.scale(600)
+	 					.translate([width/2, height/2]);
+
+	 var path = d3.geoPath()
+	 				.projection(projection);
+
+
+	 svg.append("path")
+	 		.datum(grid)
+	 		.attr("class","graticule")
+	 		.attr("d",path)
+	 		.style("stroke","black");
+
+	 d3.json("china.topojson",function(error,toporoot){
+
+	 	if(error){
+	 		console.log("error!");
+	 	} else{
+	 		console.log(toporoot);
+
+	 		var georoot = topojson.feature(toporoot,toporoot.objects.china);
+
+	 		console.log(georoot);
+
+	 		var southeast = d3.set(["广东","海南","福建","浙江","江西","江苏"]);
+
+	 		var mergedPolygon = topojson.merge(toporoot,toporoot.objects.china.geometries.filter(
+	 			function(d){
+	 				return southeast.has(d.properties.name);
+	 			}))
+
+	 		console.log(mergedPolygon);
+
+	 		var china = svg.append("g");
+
+	 		var provinces = china.selectAll("path")
+	 						.data(georoot.features)
+	 						.enter()
+	 						.append("path")
+	 						.attr("class","province")
+	 						.style("fill","#ccc")
+	 						.attr("d",path);
+	 						
+	 		var color =  d3.scaleSequential(d3.interpolateRainbow).domain([0,10]);
+
+	 		var groups = svg.append("g")
+	 		
+	 		groups.selectAll("path")
+	 				.data(georoot.features.filter(function(d){
+	 					return !southeast.has(d.properties.name);
+	 				}))
+	 				.enter()
+	 				.append("path")
+	 				.attr("class","province")
+	 				.style("fill","#ccc")		
+	 				.attr("d",path);
+
+	 		svg.append("path")
+	 						.datum(mergedPolygon)
+	 						.attr("class","province")
+	 						.style("fill","blue")
+	 						.attr("d",path);
+
+
+
+
+	 		}
+	 	}
+
+	 );
+
+</script>
+</body>
+</html>
+

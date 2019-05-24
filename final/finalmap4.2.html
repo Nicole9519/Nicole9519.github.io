@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html>
+	  <head>
+	  	<meta charset="utf-8" /> 
+	  	<title>
+          Map!
+	  	</title>
+	  	 <script src = "https://d3js.org/d3.v4.min.js"></script>
+	  	 <script src = "https://unpkg.com/topojson@3"></script>
+	  	 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+	  	 <link rel="stylesheet" type="text/css" href="finalmap.css">
+	  	 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js">
+
+</script>
+
+    <script src="js/jquery-1.8.0.js"></script>  
+	  	 <style>
+#frontpage{
+background-image:url("front.jpg");
+background-size:cover;
+background-position: bottom center;
+height:700px;
+width:100%;
+}
+
+.line {
+  fill: none;
+  stroke-width: 2px;
+}
+
+
+#frontpage h1{
+color: #5c6b93;
+text-align:center;
+position: absolute;
+top: 200px;
+left: 270px;
+font-size: 55px;
+}
+
+#content h1{
+	text-align: center;
+}
+
+#content{
+	margin:0 auto;
+	padding:40px;
+	text-align: center;
+	width:400px;
+	height:450px;
+}
+
+#content2{
+	margin:0 auto;
+	padding:40px;
+	text-align: center;
+	width:400px;
+	height:200px;
+}
+
+#button{
+	text-align: center;
+}
+
+/*linechart*/
+.tooltip{
+   font-family: Georgia;
+   font-size: 16px;
+   width: 120;
+   height: auto;
+   position: absolute;
+   text-align: center;
+     border-style: solid; 
+   border-width: 1px;
+   background-color: white;
+   border-radius: 5px;
+     position: absolute;
+   left: 400px;
+   top: 300px;
+     }
+
+#label{
+	position: absolute;
+	left: 270px;
+	top: 1750px;
+}
+
+#linechart{
+	text-align: center;
+}
+
+#Dropdown{
+	text-align: center;
+}
+
+#days{
+		position: absolute;
+	left: 280px;
+	top: 1650px;
+	font-size: 30px;
+	text-align: center;
+}
+
+#label1{
+	position: absolute;
+	left: 270px;
+	top: 1760px;
+}
+#label2{
+	position: absolute;
+	left: 320px;
+	top: 1760px;
+}
+#label3{
+	position: absolute;
+	left: 360px;
+	top: 1760px;
+}
+#label4{
+	position: absolute;
+	left: 410px;
+	top: 1760px;
+}
+
+	  	 </style>
+	  </head>
+	  
+	  <body>
+	  	<div id = "frontpage">
+	  		<h1>Snowy January in Massachusetts<h1>
+	  	</div>
+
+	  	<div id = "content">
+	  		<h1>When bombogenesis comes</h1>
+	  		<p>In January 2018, a strong storm headed straight for East Coast of the United States and Canada, causing extreme weather and heavy snow. </p>
+	  		<p>"Bombogenesis" has long been used by meteorologists. The technical definition of bombogenesis is when the atmospheric pressure drops at least 24 millibars over 24 hours.</p>
+	  		<p>Being the most geographically proximate to the storm's track, Massachusetts bore the highest impacts of all American states. Winds gusted to hurricane-force at 76 miles per hour on Nantucket and over 70 miles per hour on mainland Massachusetts.</p>
+
+			<p>At least 17.0 inches of snow fell on the Boston area, and 14.1 inches fell in Providence, Rhode Island. In Boston, a storm tide of 15.16 ft  was recorded during the blizzard which flooded areas of the financial district, including a subway station. This beat the previous record set in 1978 by the Blizzard of 1978. Significant coastal flooding occurred in Maine and New Hampshire.</p>
+			<p  style = "color:#808080">Source: NOAA</p>
+	  	</div>
+
+<div id = "days">
+		<p id = "span1">January 3</p>
+</div>
+
+	</div>
+	  	<div>
+	  		<svg id = "map" width = 1200 height = 600>
+	  		<rect width = 1200 height = 600 fill = "none"></rect>
+	  	</svg>
+	</div>
+
+
+	<div>
+		<svg id = "label">
+	<rect width = 50 height = 10 fill = "#d9d9d9"></rect>
+	<rect x = 48 width = 50 height = 10 fill = "#bfcef6"></rect>
+	<rect x = 92 width = 50 height = 10 fill = "#9fadcf"></rect>
+	<rect x = 136 width = 50 height = 10 fill = "#5c6b93"></rect>
+	<div id = "label1">0</div>
+		<div id = "label2">6</div>
+			<div id = "label3">12</div>
+				<div id = "label4">18+ in</div>
+	</svg>
+</div>
+
+	<div id = "content2">
+		<h1>Snowy January in history</h1>
+		
+		<p>According to NOAA, for the last three year, 2018 seemes to have the most snowy January. Bristol received more than 22 inches snowfall in total in January. Meanwhile, Nantacket saw the least snowfall.
+		<p>For the last three years, which county had the most snowfall? Check answers below.</p>
+	</div>
+  <div id = "Dropdown"></div>
+   <div id="graph"></div>
+	 <div id = "linechart" style="text-align:center">
+	 	<script type="text/javascript" src="linechart2.js"></script>
+
+
+	 </div>
+
+	  </body> 
+	
+<script>
+
+
+ var num = 3;  
+            var t = setInterval(function(){  
+               num++;  
+               var span1 = document.getElementById("span1");  
+               span1.innerText = "January " + num;  
+                    if(num == 6){  
+                       clearInterval(t);  
+                    } 
+
+            },3000);  
+
+d3.queue()
+.defer(d3.json,"ma.json")
+.defer(d3.csv,"ma_snow.csv")
+.awaitAll(function(error,dataArray){
+    	var data = dataArray[0];
+		var csvData = dataArray[1];
+
+csvData.forEach(function(y){
+	y.snowfall = parseFloat(y.snowfall);
+
+})
+console.log(csvData);
+
+
+	var dataExtent = d3.extent(csvData,function(d){
+		return d.snowfall;
+	})
+	//console.log(dataExtent);
+console.log(dataExtent)
+	var colorScale = d3.scaleLinear()
+						.domain([0,3,9,16.8])
+						.range(["#d9d9d9","#bfcef6","#9fadcf","#5c6b93"]);
+
+
+
+	var snowData = d3.map();
+
+
+		var geoJSON = topojson.feature(data,data.objects.cb_2015_massachusetts_county_20m);
+
+		console.log(geoJSON);
+	
+		var proj = d3.geoMercator()
+						.fitSize([1200,600],geoJSON);
+
+		var path = d3.geoPath()
+					.projection(proj);
+
+
+d3.csv("ma_snow.csv",function(csvData){
+	csvData.forEach(function(y){
+	y.snowfall = parseFloat(y.snowfall);
+})
+
+	csvData = csvData.filter(function(y){
+  		return y.date == "1/3/18";
+		});
+	//console.log(csvData.date);
+             
+        
+ 		var max = d3.max(csvData, function(y){ return y.snowfall;});
+        var min = 0;
+
+		//console.log(max);
+
+		var div = d3.select("body") //can't assign a svg
+              .append("div")
+              .attr("class","tooltip")
+              .style("opacity",0.0);
+    
+
+		var countries = d3.select("#map").selectAll("path3")
+							.data(geoJSON.features);
+
+		var countriesEnter = countries.enter().append("path")
+					.attr("class","path3")
+					.attr("d",function(feature){			
+						return path(feature);
+					})
+					.attr("fill", function(feature){
+						
+						var countyData = csvData.filter(function(y){
+				    		return y.county == feature.properties.NAME;
+					
+					//console.log(feature.properties.NAME)
+					//console.log(y.county)
+				    	})
+				    ;
+
+				    	console.log(countyData);
+
+
+				if(countyData.length > 0 ){
+					var snowfall = countyData[0].snowfall;
+					//console.log(countryName, ranking);
+					return colorScale(snowfall);
+				}
+				else{
+					return "grey";
+				}
+
+						
+					})
+				.attr("stroke-width",2)
+				.attr("stroke","white");
+
+		
+			countries.merge(countriesEnter) // m
+				.on("mouseover",function(d){ 
+					var countyData = csvData.filter(function(y){
+				    		return y.county == d.properties.NAME;});
+				  csvData.forEach(function(y){
+						 y.snowfall = parseFloat(y.snowfall);
+
+					      div.html("Snowfall in " + countyData[0].county +" is " + y.snowfall) //countyData is a variable
+					          .style("left", (d3.event.pageX) + "px")
+					          .style("top", (d3.event.pageY + 20) + "px")
+					          .style("opacity",1.0);
+						
+                        });
+				  d3.select(this)
+                            .attr("stroke-width",5);
+					      })
+      			.on("mousemove",function(d){
+				      
+				        div.style("left", (d3.event.pageX) + "px")
+				            .style("top", (d3.event.pageY + 20) + "px");
+				      })
+      			.on("mouseout",function(d){
+			       
+			        div.style("opacity",0.0);
+			        d3.select(this)
+                     	.attr("stroke-width",2);
+			      });
+				
+
+});
+});
+
+
+var inter1 = setInterval(function() {
+
+             	   map14();
+        }, 3000); 
+
+var inter2 = setInterval(function() {
+               
+                map15();
+        }, 6000); 
+
+var inter3 = setInterval(function() {
+                map16();
+        }, 9000); 
+
+
+
+
+//1.4
+
+function map14(){
+
+d3.queue()
+.defer(d3.json,"ma.json")
+.defer(d3.csv,"ma_snow.csv")
+.awaitAll(function(error,dataArray){
+    	var data = dataArray[0];
+		var csvData = dataArray[1];
+
+csvData.forEach(function(y){
+	y.snowfall = parseFloat(y.snowfall);
+
+})
+console.log(csvData);
+
+
+	var dataExtent = d3.extent(csvData,function(d){
+		return d.snowfall;
+	})
+	//console.log(dataExtent);
+console.log(dataExtent)
+	var colorScale = d3.scaleLinear()
+						.domain([0,3,9,16.8])
+						.range(["#d9d9d9","#bfcef6","#9fadcf","#5c6b93"]);
+
+						//.domain([0,16.8])
+						//.range(["#d9d9d9", " #0088cc"]);
+
+
+
+	var snowData = d3.map();
+
+
+		var geoJSON = topojson.feature(data,data.objects.cb_2015_massachusetts_county_20m);
+
+		console.log(geoJSON);
+	
+		var proj = d3.geoMercator()
+						.fitSize([1200,600],geoJSON);
+
+		var path = d3.geoPath()
+					.projection(proj);
+
+
+d3.csv("ma_snow.csv",function(csvData){
+	csvData.forEach(function(y){
+	y.snowfall = parseFloat(y.snowfall);
+})
+
+	csvData = csvData.filter(function(y){
+  		return y.date == "1/4/18";
+		});
+	//console.log(csvData.date);
+             
+        
+ 		var max = d3.max(csvData, function(y){ return y.snowfall;});
+        var min = 0;
+
+		//console.log(max);
+
+		var div = d3.select("body") //can't assign a svg
+              .append("div")
+              .attr("class","tooltip")
+              .style("opacity",0.0);
+    
+
+
+		var countries = d3.select("#map").selectAll("path1")
+							.data(geoJSON.features);
+
+		var countriesEnter = countries.enter().append("path")
+					.attr("class","path1")
+					.attr("d",function(feature){			
+						return path(feature);
+					})
+					.attr("fill", function(feature){
+						
+						var countyData = csvData.filter(function(y){
+				    		return y.county == feature.properties.NAME;
+					
+					//console.log(feature.properties.NAME)
+					//console.log(y.county)
+				    	});
+
+				    	console.log(countyData)
+				    	;
+
+
+				if(countyData.length > 0 ){
+					var snowfall = countyData[0].snowfall;
+					//console.log(countryName, ranking);
+					return colorScale(snowfall);
+				}
+				else{
+					return "grey";
+				}	
+					})
+				.attr("stroke-width",2)
+				.attr("stroke","white");
+
+			
+			countries.merge(countriesEnter) // m
+				.on("mouseover",function(d){ 
+					var countyData = csvData.filter(function(y){
+				    		return y.county == d.properties.NAME;});
+				  csvData.forEach(function(y){
+						 y.snowfall = parseFloat(y.snowfall);
+
+					      div.html("County: " + countyData[0].county + " Snowfall: "+ y.snowfall) //countyData is a variable
+					          .style("left", (d3.event.pageX) + "px")
+					          .style("top", (d3.event.pageY + 20) + "px")
+					          .style("opacity",1.0);
+						
+                        });
+				  d3.select(this)
+                            .attr("stroke-width",5);
+					      })
+      			.on("mousemove",function(d){
+				      
+				        div.style("left", (d3.event.pageX) + "px")
+				            .style("top", (d3.event.pageY + 20) + "px");
+				      })
+      			.on("mouseout",function(d){
+			       
+			        div.style("opacity",0.0);
+			        d3.select(this)
+                     	.attr("stroke-width",2);
+			      });
+
+});
+});
+};
+
+
+
+
+
+//1.5
+
+function map15(){
+d3.queue()
+.defer(d3.json,"ma.json")
+.defer(d3.csv,"ma_snow.csv")
+.awaitAll(function(error,dataArray){
+    	var data = dataArray[0];
+		var csvData = dataArray[1];
+
+csvData.forEach(function(y){
+	y.snowfall = parseFloat(y.snowfall);
+
+})
+console.log(csvData);
+
+
+	var dataExtent = d3.extent(csvData,function(d){
+		return d.snowfall;
+	})
+	//console.log(dataExtent);
+console.log(dataExtent)
+	var colorScale = d3.scaleLinear()
+						.domain([0,3,9,16.8])
+						.range(["#d9d9d9","#bfcef6","#9fadcf","#5c6b93"]);
+
+
+
+	var snowData = d3.map();
+
+
+		var geoJSON = topojson.feature(data,data.objects.cb_2015_massachusetts_county_20m);
+
+		console.log(geoJSON);
+	
+		var proj = d3.geoMercator()
+						.fitSize([1200,600],geoJSON);
+
+		var path = d3.geoPath()
+					.projection(proj);
+
+
+d3.csv("ma_snow.csv",function(csvData){
+	csvData.forEach(function(y){
+	y.snowfall = parseFloat(y.snowfall);
+})
+
+	csvData = csvData.filter(function(y){
+  		return y.date == "1/5/18";
+		});
+	//console.log(csvData.date);
+             
+        
+ 		var max = d3.max(csvData, function(y){ return y.snowfall;});
+        var min = 0;
+
+		//console.log(max);
+
+
+
+		var countries = d3.select("#map").selectAll("path2")
+							.data(geoJSON.features);
+
+		var countriesEnter = countries.enter().append("path")
+					.attr("class","path2")
+					.attr("d",function(feature){			
+						return path(feature);
+					})
+					.attr("fill", function(feature){
+						
+						var countyData = csvData.filter(function(y){
+				    		return y.county == feature.properties.NAME;
+					
+					//console.log(feature.properties.NAME)
+					//console.log(y.county)
+				    	});
+
+				    	console.log(countyData);
+
+
+				if(countyData.length > 0 ){
+					var snowfall = countyData[0].snowfall;
+					//console.log(countryName, ranking);
+					return colorScale(snowfall);
+				}
+				else{
+					return "gray";
+				}
+
+						
+					})
+				.attr("stroke-width",2)
+				.attr("stroke","white");
+					
+
+
+			countries.merge(countriesEnter) // m
+				.on("mouseover",function(d){ 
+					var countyData = csvData.filter(function(y){
+				    		return y.county == d.properties.NAME;});
+				  csvData.forEach(function(y){
+						 y.snowfall = parseFloat(y.snowfall);
+
+					      div.html("Snowfall in " + countyData[0].county +" is " + y.snowfall) //countyData is a variable
+					          .style("left", (d3.event.pageX) + "px")
+					          .style("top", (d3.event.pageY + 20) + "px")
+					          .style("opacity",1.0);
+						
+                        });
+				  d3.select(this)
+                            .attr("stroke-width",5);
+					      })
+      			.on("mousemove",function(d){
+				      
+				        div.style("left", (d3.event.pageX) + "px")
+				            .style("top", (d3.event.pageY + 20) + "px");
+				      })
+      			.on("mouseout",function(d){
+			       
+			        div.style("opacity",0.0);
+			        d3.select(this)
+                     	.attr("stroke-width",2);
+			      });
+				
+
+});
+});
+};
+
+
+
+
+//1.6
+
+
+
+
+function map16(){
+
+d3.queue()
+.defer(d3.json,"ma.json")
+.defer(d3.csv,"ma_snow.csv")
+.awaitAll(function(error,dataArray){
+    	var data = dataArray[0];
+		var csvData = dataArray[1];
+
+csvData.forEach(function(y){
+	y.snowfall = parseFloat(y.snowfall);
+
+})
+console.log(csvData);
+
+
+	var dataExtent = d3.extent(csvData,function(d){
+		return d.snowfall;
+	})
+	//console.log(dataExtent);
+console.log(dataExtent)
+	var colorScale = d3.scaleLinear()
+						.domain([0,3,9,16.8])
+						.range(["#d9d9d9","#bfcef6","#9fadcf","#5c6b93"]);
+
+
+
+	var snowData = d3.map();
+
+
+		var geoJSON = topojson.feature(data,data.objects.cb_2015_massachusetts_county_20m);
+
+		console.log(geoJSON);
+	
+		var proj = d3.geoMercator()
+						.fitSize([1200,600],geoJSON);
+
+		var path = d3.geoPath()
+					.projection(proj);
+
+
+d3.csv("ma_snow.csv",function(csvData){
+	csvData.forEach(function(y){
+	y.snowfall = parseFloat(y.snowfall);
+})
+
+	csvData = csvData.filter(function(y){
+  		return y.date == "1/6/18";
+		});
+	//console.log(csvData.date);
+             
+        
+ 		var max = d3.max(csvData, function(y){ return y.snowfall;});
+        var min = 0;
+
+		//console.log(max);
+
+
+		var div = d3.select("body") //can't assign to a svg
+              .append("div")
+              .attr("class","tooltip")
+              .style("opacity",0.0);
+    
+		var countries = d3.select("#map").selectAll("path4")
+							.data(geoJSON.features);
+
+		var countriesEnter = countries.enter().append("path")
+					.attr("class","path4")
+					.attr("d",function(feature){			
+						return path(feature);
+					})
+					.attr("fill", function(feature){
+						
+						var countyData = csvData.filter(function(y){
+				    		return y.county == feature.properties.NAME;
+					
+					//console.log(feature.properties.NAME)
+					//console.log(y.county)
+				    	});
+
+				    	console.log(countyData);
+
+
+				if(countyData.length > 0 ){
+					var snowfall = countyData[0].snowfall;
+					//console.log(countryName, ranking);
+					return colorScale(snowfall);
+				}
+				else{
+					return "gray";
+				}
+
+						
+					})
+				.attr("stroke-width",2)
+				.attr("stroke","white");
+					
+		
+			countries.merge(countriesEnter) // m
+				.on("mouseover",function(d){ 
+					var countyData = csvData.filter(function(y){
+				    		return y.county == d.properties.NAME;});
+				  csvData.forEach(function(y){
+						 y.snowfall = parseFloat(y.snowfall);
+
+					      div.html("Snowfall in " + countyData[0].county +" is " + y.snowfall) //countyData is a variable
+					          .style("left", (d3.event.pageX) + "px")
+					          .style("top", (d3.event.pageY + 20) + "px")
+					          .style("opacity",1.0);
+						
+                        });
+				  d3.select(this)
+                            .attr("stroke-width",5);
+					      })
+      			.on("mousemove",function(d){
+				      
+				        div.style("left", (d3.event.pageX) + "px")
+				            .style("top", (d3.event.pageY + 20) + "px");
+				      })
+      			.on("mouseout",function(d){
+			       
+			        div.style("opacity",0.0);
+			        d3.select(this)
+                     	.attr("stroke-width",2);
+			      });
+
+});
+});
+};
+
+
+</script>
+
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	  <head>
+	  	<meta charset="utf-8" /> 
+	  	<title>
+          JavaScript Library
+	  	</title>
+	  	 <script src = "https://d3js.org/d3.v4.min.js"></script>
+	  </head>
+	  
+	  <body>
+	  
+	
+<script>
+
+
+	d3.json("dataObject.json",function(error, data){
+			if(error){
+				console.log("error!");
+			} else{
+				console.log("JSON Array");
+				console.log(data);
+			}
+			});
+
+	d3.text("textData.txt",function(error, data){
+		if(error){
+			console.log("error!");
+		} else{
+			console.log("TEXT Array");
+
+			console.log(data);
+		}
+		});
+
+	d3.csv("dataTable.csv",function(error, data){
+		if(error){
+			console.log("error!");
+		} else{
+			console.log("CSV Array");
+
+			console.log(data);
+				console.log(data[0].country);
+				data.forEach(function(d){
+					console.log(parseFloat(d.value));
+				})//parseFloat  ---to a number
+		}
+	});
+
+
+	var url = "https://api.datausa.io/api/?required=income&show=geo&sumlevel=state";
+	d3.json(url, function(error,data){
+		console.log("API data")
+		console.log(data);
+	});
+
+
+	  var data2 = [];
+		for (var i = 0; i < 10; i++) {
+			var newNumber = Math.random()*100;
+			data2.push(newNumber);
+		};
+
+var svg = d3.select("body").append("svg").attr("width",1000).attr("height",1000);
+
+var rect = svg.selectAll("rect")
+			.data(data2)
+			.enter().append("rect")
+			.attr("x",function(d,i){ return i*20; })
+			.attr("y",function(d){ return 100  ;})
+			.attr("height", 0)
+			.attr("width",20)
+			.transition()
+			.duration(1000)
+			.attr("x",function(d,i){ return i*20; })
+			.attr("y",function(d){ return 100 - d ;})
+			.attr("height", function(d){ return d; })
+			.attr("width",20);
+
+</script>
+
+
+
+
+		
+</body>
+
+</html>
