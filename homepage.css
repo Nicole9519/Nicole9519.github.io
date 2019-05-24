@@ -4,11 +4,15 @@ body{
 	margin:0 auto;
 }
 
+<<<<<<< HEAD
 div.moving_arrow{
 	width:640px;
 	height: 25px;
 	margin:50px auto;
 }
+=======
+
+>>>>>>> 96a614d950019bf296eeb2bb9b1f26d6baa408be
 
 ul{
 	margin:30px auto;
@@ -28,6 +32,7 @@ li{
 	text-transform: uppercase;
 	display: inline-block;
 	width:100px;
+<<<<<<< HEAD
 	float: left;
 
 }
@@ -49,6 +54,8 @@ li{
 
 .moving_arrow ul li a{
 	text-decoration: none;
+=======
+>>>>>>> 96a614d950019bf296eeb2bb9b1f26d6baa408be
 
 }
 

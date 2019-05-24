@@ -1,0 +1,77 @@
+
+h1{
+	color: black; 
+	font-size : 32px;
+	font-family: 'Krona One', sans-serif;
+	text-align: center;
+}
+
+h2{
+	color: black; 
+	font-size : 16px;
+	font-family: 'Krona One', sans-serif;
+	text-align: center;
+}
+
+p {
+	color:black;
+	font-family: Georgia;
+}
+
+.comicsans{
+	font-family: 'Supermercado One', cursive;
+}
+
+#text1{
+	width: 300px;
+	position: absolute;
+	top: 200px;
+	left: 200px;
+}
+
+#img{
+	position: absolute;
+	top: 220px;
+	left: 600px;
+}
+
+#img2{
+	position: absolute;
+	top: 570px;
+	left: 170px;
+
+}
+
+#img3{
+	position: absolute;
+	top: 570px;
+	left: 570px;
+}
+
+h3{
+	position: absolute;
+	top: 450px;
+	left: 200px;
+}
+
+#text2{
+	width: 700px;
+	position: absolute;
+	top: 480px;
+	left: 200px;
+}
+
+#text3{
+	width: 700px;
+	position: absolute;
+	top: 880px;
+	left: 200px;
+}
+
+
+h4{
+	position: absolute;
+	top: 830px;
+	left: 200px;
+	font-size: 18px;
+}

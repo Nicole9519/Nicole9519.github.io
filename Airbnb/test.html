@@ -30,7 +30,11 @@ div.tooltip {
 	  		<svg id = "viz" width = "1024" height = "20"></svg>
   
     <div id="chart"></div>
+<<<<<<< HEAD
     <p>bad Airbnb host(listings > 5)   good Airbnb host(listings <5)<p>
+=======
+
+>>>>>>> 96a614d950019bf296eeb2bb9b1f26d6baa408be
     <script src="https://d3js.org/d3.v4.js"></script>
  </body> 
   
@@ -62,7 +66,11 @@ var radiusScale = d3.scaleSqrt().domain([0, 1]).range([0, 1])
 // STEP ONE: get them to the middle
 // STEP TWO: don't have them collide!
 
+<<<<<<< HEAD
 var forceX = d3.forceX(function(d){
+=======
+var forceXSplit = d3.forceX(function(d){
+>>>>>>> 96a614d950019bf296eeb2bb9b1f26d6baa408be
     if(d.own == 1) {
       return (width * .30)
     } else {
@@ -70,15 +78,27 @@ var forceX = d3.forceX(function(d){
     }
   }).strength(0.15)
 
+<<<<<<< HEAD
 
 var forceCollide = d3.forceCollide(function(d){
     return radiusScale(d.coli) + 0.1
+=======
+var forceXCombine = d3.forceX((width)/2).strength(0.1)
+
+var forceCollide = d3.forceCollide(function(d){
+    return radiusScale(d.coli) + 1
+>>>>>>> 96a614d950019bf296eeb2bb9b1f26d6baa408be
   })
 
 
 var simulation = d3.forceSimulation()
+<<<<<<< HEAD
   .force("x", forceX)
   .force("y", d3.forceY(height / 2).strength(0.15))
+=======
+  .force("x", forceXCombine)
+  .force("y", d3.forceY(height / 2).strength(0.1))
+>>>>>>> 96a614d950019bf296eeb2bb9b1f26d6baa408be
   .force("collide", forceCollide) 
 
 
@@ -126,6 +146,75 @@ function ready (error, data) {
       .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
 
   
+<<<<<<< HEAD
+=======
+
+/// Adding Toggle Switches  
+  
+  var atRight = true
+
+  var rect = svg.append("rect")
+            .attr("x", 10)
+            .attr("y", 10)
+            .attr("rx", 22)
+            .attr("ry", 22)
+            .style("fill", "lightgray")
+            .attr("width", 64)
+            .attr("height", 40)
+            .on("click", function(){
+        if(atRight === true){
+        simulation
+          .force("x", forceXSplit)
+          .alphaTarget(0.2)
+          .force("collide", forceCollide)
+        setAtRight(!atRight)
+        } else {
+        simulation
+          .force("x", forceXCombine)
+          .alphaTarget(0.07)  
+        setAtRight(!atRight)
+        } 
+      });
+
+    var circle = svg.append("circle")
+            .attr("cx", 30)
+            .attr("cy", 30)
+            .attr("r", 16)
+            .style("fill", "white")
+            .on("click", function(){
+        if(atRight === true){
+        simulation 
+          .restart()
+          .force("x", forceXSplit)
+          .alphaTarget(0.2)
+          .force("collide", forceCollide)
+        setAtRight(!atRight)
+        } else {
+        simulation
+          .restart()
+          .force("x", forceXCombine)
+          .alphaTarget(0.2) 
+        setAtRight(!atRight)
+        } 
+      });
+
+    var setAtRight = function(newValue) {
+        atRight = newValue;
+        circle.transition().duration(250)
+                .attr("cx", (atRight? (30) : (54)))
+                .style("fill", "white");
+        rect.transition().duration(250)
+            .style("fill", atRight? "lightgray" : "#C06C84");  
+    };
+
+
+    var res = {
+        'getValue': function() { return atRight; },
+        'setValue': setAtRight,
+        'remove': function() { circle.remove(); }
+    };
+
+>>>>>>> 96a614d950019bf296eeb2bb9b1f26d6baa408be
    
   simulation.nodes(data)
     .on('tick', ticked)
@@ -139,9 +228,13 @@ function ready (error, data) {
       .attr("cy", function(d) {
         return d.y
       })
+<<<<<<< HEAD
   }
 
    
+=======
+  } 
+>>>>>>> 96a614d950019bf296eeb2bb9b1f26d6baa408be
 }   
 
 

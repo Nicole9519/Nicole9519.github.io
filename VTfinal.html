@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+	  <head>
+	  	<meta charset="utf-8" /> 
+	  	<title>
+          JavaScript Library
+	  	</title>
+	  	<script src = "https://d3js.org/d3.v4.min.js"></script>
+   		<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    	<script src="https://d3js.org/topojson.v2.min.js"></script>
+      <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js">
+</script>
+
+	  </head>
+	  
+	  <body>
+	  	 
+	  	  <div class="container">
+        <!-- Title -->
+     
+          </div>
+        <div class="columns">
+          <div class="column is-half">
+            <svg class="snow" width="480" height="600"></svg>
+          </div>
+         
+        </div>
+<div id="shiva"><span class="count">200</span></div>
+	
+<script>
+var snow_domain = [0,3,6,9,12,15,18];
+
+var snow_color = d3.scaleThreshold()
+    .domain(snow_domain)
+    .range(d3.schemeGreens[6]);
+
+var snowData = d3.map();
+
+var povertyData = d3.map();
+
+
+var a = d3.rgb(0,255,255);
+        var b = d3.rgb(0,0,255);
+
+var computeColor = d3.interpolate(a,b);
+
+//load typo
+d3.queue()
+.defer(d3.json,"ma.json")
+.defer(d3.csv,"majan2016.csv", function(d){
+	snowData.set(d.county , +d.snowfall);
+})
+    .await(ready);
+
+
+
+
+
+
+function ready(error,data) {
+	if(error) throw error;
+
+	var massa = topojson.feature(data,{
+	type:"GeometryCollection",
+	geometries:data.objects.cb_2015_massachusetts_county_20m.geometries
+});
+
+//identify projection&path
+    var projection = d3.geoAlbersUsa()
+    .fitExtent([[20,20],[460,580]],massa);
+
+    var geoPath = d3.geoPath()
+    .projection(projection);
+    
+
+d3.csv("1.3jan.csv", function(error, data){
+  
+     if(error) {
+            console.log(error);
+     } else {
+     var values = [];
+
+        data.forEach(function(d,i){
+          
+
+              d.snowfall = +d.snowfall;
+              d.date = +d.date;
+              d.county = d.county;
+              d.rainfall = +d.rainfall;
+              var name = d.county;
+              values[name] = d.snowfall;
+      console.log(d.snowfall);
+      
+          });
+      
+
+
+        var max = d3.max(data, function(d){ return d.snowfall;});
+        var min = 0;
+
+        var linear = d3.scaleLinear()
+                .domain([min,max])
+                .range([0,1]);
+
+        var a = d3.rgb(255,255,255);
+        var b = d3.rgb(102, 153, 0);
+
+        var computeColor = d3.interpolate(a,b);
+
+
+    d3.select("svg.snow").selectAll("path.third")
+    .data(massa.features)
+    .enter()
+    .append("path")
+    .attr("opacity", 1)
+    .attr("class","third")
+    .attr("d",geoPath)
+    .transition()
+    .duration(2000)
+    .attr("opacity",0)
+    .attr("fill", function(d){
+      return snow_color(d.snowfall = snowData.get(d.properties.NAME));
+   })
+    ;
+
+        d3.select("svg.snow").selectAll("path.third").style("fill", function(d,i){
+          var t = linear(values[d.properties.NAME]);
+          var color = computeColor(t);
+          return color.toString()
+          ;
+        })
+        .style("stroke", "grey")
+        //provinces.on("mouseover",function(d,i){
+                    //     d3.select(this)
+                    //       .attr("fill","yellow");
+                    //  });
+
+
+      }});
+
+
+d3.csv("1.4jan.csv", function(error, data){
+  
+     if(error) {
+            console.log(error);
+     } else {
+     var values = [];
+
+        data.forEach(function(d,i){
+          
+
+              d.snowfall = +d.snowfall;
+              d.date = +d.date;
+              d.county = d.county;
+              d.rainfall = +d.rainfall;
+              var name = d.county;
+              values[name] = d.snowfall;
+      console.log(d.snowfall);
+      
+          });
+      
+
+
+        var max = d3.max(data, function(d){ return d.snowfall;});
+        var min = 0;
+
+        var linear = d3.scaleLinear()
+                .domain([min,max])
+                .range([0,1]);
+
+        var a = d3.rgb(255,255,255);
+        var b = d3.rgb(102, 153, 0);
+
+        var computeColor = d3.interpolate(a,b);
+
+
+    d3.select("svg.snow").selectAll("path")
+    .data(massa.features)
+    .enter()
+    .append("path")
+    .attr("opacity", 0)
+    .attr("d",geoPath)
+    .attr("transform","translate(0,0)")
+    .transition()
+    .duration(3000)
+    .attr("opacity",1)
+    .attr("fill", function(d){
+      return snow_color(d.snowfall = snowData.get(d.properties.NAME));
+   })
+    .transition()
+    .duration(3000)
+    .attr("opacity", 0);
+
+        d3.select("svg.snow").selectAll("path")
+        .style("fill", function(d,i){
+          var t = linear(values[d.properties.NAME]);
+          var color = computeColor(t);
+          return color.toString()
+          ;
+        })
+        .style("stroke", "grey")
+        //provinces.on("mouseover",function(d,i){
+                    //     d3.select(this)
+                    //       .attr("fill","yellow");
+                    //  });
+
+
+      }});
+
+d3.csv("1.5jan.csv", function(error, data){
+  
+     if(error) {
+            console.log(error);
+     } else {
+     var values = [];
+
+        data.forEach(function(d,i){
+          
+
+              d.snowfall = +d.snowfall;
+              d.date = +d.date;
+              d.county = d.county;
+              d.rainfall = +d.rainfall;
+              var name = d.county;
+              values[name] = d.snowfall;
+      console.log(d.snowfall);
+      
+          });
+      
+
+
+        var max = d3.max(data, function(d){ return d.snowfall;});
+        var min = 0;
+
+        var linear = d3.scaleLinear()
+                .domain([min,max])
+                .range([0,1]);
+
+        var a = d3.rgb(255,255,255);
+        var b = d3.rgb(102, 153, 0);
+
+        var computeColor = d3.interpolate(a,b);
+
+
+    d3.select("svg.snow").selectAll("path.second")
+    .data(massa.features)
+    .enter()
+    .append("path")
+    .attr("opacity", 0)
+    .attr("class","second")
+    .attr("d",geoPath)
+    .attr("transform","translate(0,0)")
+    .transition()
+    .duration(4000)
+    .attr("opacity",1)
+    .attr("fill", function(d){
+      return snow_color(d.snowfall = snowData.get(d.properties.NAME));
+   })
+    ;
+
+        d3.select("svg.snow").selectAll("path.second").style("fill", function(d,i){
+          var t = linear(values[d.properties.NAME]);
+          var color = computeColor(t);
+          return color.toString()
+          ;
+        })
+        .style("stroke", "grey")
+        //provinces.on("mouseover",function(d,i){
+                    //     d3.select(this)
+                    //       .attr("fill","yellow");
+                    //  });
+
+
+      }});
+
+$('.count').each(function () {
+    $(this).prop('Counter',0).animate({
+        Counter: $(this).text()
+    }, {
+        duration: 4000,
+        easing: 'swing',
+        step: function (now) {
+            $(this).text(Math.ceil(now));
+        }
+    });
+});
+
+};
+</script>
+
+</body>
+</html>
